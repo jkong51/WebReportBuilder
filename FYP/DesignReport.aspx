@@ -3,15 +3,31 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head runat="server">
+    <style>
+        .draggable {
+            width: 150px;
+            height: 150px;
+            padding: 0.5em;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".draggable").draggable();
+        });
+    </script>
     <style type="text/css">
         body {
             height: 100%;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             text-align: center;
-            background: rgb(204,204,204); 
-            height:100%;
+            background: rgb(204,204,204);
+            height: 100%;
         }
+
         #sidebar {
             height: 100%;
             width: 20%;
@@ -19,25 +35,28 @@
             z-index: 1;
             top: 0;
             left: 0;
-            background-color:white;
+            background-color: white;
             overflow-x: hidden;
             padding-top: 20px;
             box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
         }
-        #sidebar table{
-            width:100%;
-            height:100%;
-            z-index:1;
-            top:0;
-            margin-top:-20px;
-        }
-        .border{
+
+            #sidebar table {
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                top: 0;
+                margin-top: -20px;
+            }
+
+        .border {
             border: rgb(204,204,204) solid 0.5px;
-            border-left:none;
-            border-right:none;
-            border-top:none;
+            border-left: none;
+            border-right: none;
+            border-top: none;
             border-collapse: collapse;
         }
+
         .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             background-color: rgb(80, 142, 245);
@@ -52,35 +71,42 @@
             transition-duration: 0.4s;
             border: 2px solid rgb(80, 142, 245);
         }
-        .button:hover {
+
+            .button:hover {
                 background-color: white;
                 color: rgb(80, 142, 245);
-                cursor:pointer;
-        }
+                cursor: pointer;
+            }
+
         page {
             background: white;
             display: block;
             margin: 0 auto;
             margin-bottom: 0.5cm;
             box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-            padding:40px;
+            padding: 40px;
             font-family: 'Times New Roman';
         }
-        page[size="A4"] {
-            width: 21cm;
-            height: 29.7cm;
-        }
-        .reportHeader1{
-            font-size:30px;
-            font-variant:small-caps;
-            text-transform:uppercase;
-            font-weight:bold;
-        }
-        .reportHeader2{
-            font-size:20px;
+
+            page[size="A4"] {
+                width: 21cm;
+                height: 29.7cm;
+            }
+
+        .reportHeader1 {
+            font-size: 30px;
+            font-variant: small-caps;
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
-
+        .reportHeader2 {
+            font-size: 20px;
+        }
+        .Mouse
+        {
+            cursor: move;
+        }
     </style>
     <title>I-Report Builder</title>
 </head>
@@ -100,7 +126,7 @@
                 <table>
                     <tr>
                         <td>
-                            <asp:Button ID="Button1" runat="server" Text="A" />
+                            <asp:Button ID="Button1" runat="server" Text="A" OnClick="Button1_Click1" />
                         </td>
                         <td>Text</td>
                         <td><asp:Button ID="Button2" runat="server" Text="A" /></td>
@@ -145,10 +171,10 @@
         </div>
         </form>
     <div style="padding:50px;padding-left:300px">
-        <page size="A4">
-            <asp:Label ID="lblRptTitle" CssClass="reportHeader1" runat="server"></asp:Label><br />
-            <asp:Label ID="lblRptDesc" CssClass="reportHeader2" runat="server"></asp:Label><br />
-            <asp:Label ID="lblDate" CssClass="reportHeader2" runat="server"></asp:Label>
+        <page size="A4">            
+            <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse" runat="server"></asp:Label><br />
+            <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
+            <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
         </page>
     </div>
 </body>
