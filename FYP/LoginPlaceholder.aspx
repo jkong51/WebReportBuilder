@@ -9,6 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <!-- change back to homepage after testing-->
             <asp:Login ID="Login1" runat="server" DestinationPageUrl="~/Homepage.aspx" OnAuthenticate="Login1_Authenticate"></asp:Login>
         </div>
     </form>

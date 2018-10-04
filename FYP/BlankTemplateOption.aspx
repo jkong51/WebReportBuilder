@@ -84,17 +84,26 @@
         
         <tr>
             <td class="td1">
-                <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;"></asp:Label>
+                <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the form to be used&lt;/strong&gt;"></asp:Label>
             </td>
             <td>
-                <asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId">
+                          <asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="true">
                     <asp:ListItem>Select Table</asp:ListItem>
                 </asp:DropDownList>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT [formId], [title] FROM [Form] WHERE ([staffId] = @staffId)">
-                    <SelectParameters>
-                        <asp:SessionParameter Name="staffId" SessionField="staffId" Type="Int32" />
+                          <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT formId, title FROM Form WHERE (staffId = @staffId)">
+                <SelectParameters>
+                        <asp:SessionParameter Name="staffId" SessionField="userId" />
                     </SelectParameters>
-                </asp:SqlDataSource>
+                          </asp:SqlDataSource>
+                      </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="false"></asp:Label>
+            </td>
+            <td>
+                <asp:CheckBoxList ID="CheckBoxList1" runat="server" Visible="false">
+                </asp:CheckBoxList>
             </td>
         </tr>
         <tr>

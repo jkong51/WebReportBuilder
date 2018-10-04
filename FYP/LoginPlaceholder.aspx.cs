@@ -36,6 +36,7 @@ namespace FYP
                         Session["staffName"] = staffName;
                         Session["userId"] = userId;
                         Session["posId"] = posId;
+                        // change back to homepage.aspx after testing
                         Response.Redirect("Homepage.aspx");
                     }
                 }
