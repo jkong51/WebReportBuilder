@@ -9,15 +9,17 @@
         .draggable {
             width: 150px;
             height: 150px;
-            padding: 0.5em;
+            /*padding: 0.5em;*/
         }
     </style>
+   
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function () {
             $(".draggable").draggable();
-        });
+            $(".draggable" ).draggable({ containment: "page", scroll: false });
+        });    
     </script>
     <style type="text/css">
         body {
@@ -30,7 +32,7 @@
 
         #sidebar {
             height: 100%;
-            width: 20%;
+            width: 23%;
             position: fixed;
             z-index: 1;
             top: 0;
@@ -84,7 +86,6 @@
             margin: 0 auto;
             margin-bottom: 0.5cm;
             box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-            padding: 40px;
             font-family: 'Times New Roman';
         }
 
@@ -103,9 +104,12 @@
         .reportHeader2 {
             font-size: 20px;
         }
-        .Mouse
-        {
+
+        .Mouse {
             cursor: move;
+        }
+        .padding{
+            padding:7px;
         }
     </style>
     <title>I-Report Builder</title>
@@ -122,32 +126,23 @@
         </tr>
         <tr class="border">
             <td style="padding-top:15px;vertical-align:top" colspan="2">
-                Header & Footer <br />
-                <table>
+                <strong style="font-size:larger">Header & Footer</strong> <br />
+                <table style="padding:3px;text-align:left">
                     <tr>
                         <td>
-                            <asp:Button ID="Button1" runat="server" Text="A" OnClick="Button1_Click1" />
+                            Report Title:
                         </td>
-                        <td>Text</td>
-                        <td><asp:Button ID="Button2" runat="server" Text="A" /></td>
-                        <td>Image</td>
+                        <td>
+                            <asp:TextBox ID="txtRptTitle" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
+                        </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
-                            <table>
-                                <tr>
-                                    <td colspan="3">Text Decoration</td>
-                                </tr>
-                                <tr>
-                                    <td><asp:Button ID="Button3" runat="server" Text="A" /></td>
-                                    <td><asp:Button ID="Button4" runat="server" Text="A" /></td>
-                                    <td><asp:Button ID="Button5" runat="server" Text="A" /></td>
-                                </tr>
-                            </table>
-
+                        <td>
+                            Report Description:
                         </td>
-                        <td><asp:Button ID="Button6" runat="server" Text="A" /></td>
-                        <td>Date</td>
+                        <td>
+                            <asp:TextBox ID="txtRptDesc" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;"></asp:TextBox>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -169,14 +164,21 @@
 
     </table>
         </div>
-        </form>
-    <div style="padding:50px;padding-left:300px">
+
+    <div style="padding:50px;padding-left:350px" id="containment-wrapper">
         <page size="A4">            
-            <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse" runat="server"></asp:Label><br />
+            <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content" runat="server"></asp:Label><br />
             <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
+            <br />
+            
+            <%-- Report Content (Table) --%>
+            <div id="reportContent">
+                
+            </div>
         </page>
     </div>
+                </form>
 </body>
 
 </html>
