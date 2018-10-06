@@ -5,21 +5,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
-    <style>
-        .draggable {
-            width: 150px;
-            height: 150px;
-            /*padding: 0.5em;*/
-        }
-    </style>
-   
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function () {
-            $(".draggable").draggable();
-            $(".draggable" ).draggable({ containment: "page", scroll: false });
-        });    
+            $(".draggable").draggable(
+                { containment: "page", scroll: true },
+                {
+                    drag: function () {
+                        var offset = $(this).offset();
+					    var xPos = offset.left;
+					    var yPos = offset.top;
+					    $('#posX').text(xPos);
+					    $('#posY').text(yPos);
+                    }
+                });
+
+        });
     </script>
     <style type="text/css">
         body {
@@ -48,7 +50,7 @@
                 height: 100%;
                 z-index: 1;
                 top: 0;
-                margin-top: -20px;
+
             }
 
         .border {
@@ -108,8 +110,12 @@
         .Mouse {
             cursor: move;
         }
+
         .padding{
             padding:7px;
+            border-radius: 10px 10px;
+            font-size: 15px;
+
         }
     </style>
     <title>I-Report Builder</title>
@@ -124,13 +130,13 @@
                 i-Report Builder
             </td>
         </tr>
-        <tr class="border">
-            <td style="padding-top:15px;vertical-align:top" colspan="2">
+        <tr class="border" style="border-bottom:none">
+            <td style="padding-top:15px;vertical-align:central" colspan="2">
                 <strong style="font-size:larger">Header & Footer</strong> <br />
-                <table style="padding:3px;text-align:left">
+                <table style="padding:5px;text-align:left">
                     <tr>
                         <td>
-                            Report Title:
+                            Report Title
                         </td>
                         <td>
                             <asp:TextBox ID="txtRptTitle" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
@@ -138,18 +144,23 @@
                     </tr>
                     <tr>
                         <td>
-                            Report Description:
+                            Report Description
                         </td>
                         <td>
                             <asp:TextBox ID="txtRptDesc" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;"></asp:TextBox>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            Location
+                        </td>
+                        <td>
+                            <asp:Label ID="posX" runat="server" Text="x"></asp:Label>, <asp:Label ID="posY" runat="server" Text="y"></asp:Label>
+                        </td>
+                    </tr>
+                    
+
                 </table>
-            </td>
-        </tr>
-        <tr class="border">
-            <td style="padding-top:15px;vertical-align:top" colspan="2">
-                Body
             </td>
         </tr>
         <tr>

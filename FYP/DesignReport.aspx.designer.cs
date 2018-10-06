@@ -40,6 +40,24 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.TextBox txtRptDesc;
         
         /// <summary>
+        /// posX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label posX;
+        
+        /// <summary>
+        /// posY control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label posY;
+        
+        /// <summary>
         /// lblRptTitle control.
         /// </summary>
         /// <remarks>
