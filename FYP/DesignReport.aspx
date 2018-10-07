@@ -117,6 +117,18 @@
             font-size: 15px;
 
         }
+        #reportContent{
+            width:100%;
+            padding:40px;
+        }
+        .rpttable{ 
+            width: 90%; 
+            background-color: #fff;       
+        }
+        .tableheader{
+            background-color:aqua;
+        }
+
     </style>
     <title>I-Report Builder</title>
 </head>
@@ -182,12 +194,11 @@
             <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
             <br />
-            
+            <br />
+            <br />
             <%-- Report Content (Table) --%>
             <div id="reportContent">
-                <asp:PlaceHolder ID="displayData" runat="server"/>
-                <asp:GridView ID="reportGridView" runat="server">
-
+                <asp:GridView ID="reportGridView" runat="server" CssClass="rpttable" CellPadding="10" HeaderStyle-CssClass="tableheader">
                 </asp:GridView>
             </div>
         </page>
