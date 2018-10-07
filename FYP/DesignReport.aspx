@@ -185,7 +185,10 @@
             
             <%-- Report Content (Table) --%>
             <div id="reportContent">
-                
+                <asp:PlaceHolder ID="displayData" runat="server"/>
+                <asp:GridView ID="reportGridView" runat="server">
+
+                </asp:GridView>
             </div>
         </page>
     </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,7 +15,7 @@ namespace FYP
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -32,6 +33,15 @@ namespace FYP
             {
                 tDate = "no";
             }
+
+            List<string> checkboxSelection = new List<string>();
+            foreach (ListItem listItem in CheckBoxList1.Items) {
+                if (listItem.Selected) {
+                    checkboxSelection.Add(listItem.Value);
+                }
+            }
+
+            Session["SelectedTables"] = checkboxSelection;
             Session.Add("wantDate", tDate);
             Response.Redirect("~/DesignReport.aspx");
         }
@@ -43,6 +53,7 @@ namespace FYP
             string connStr = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connStr))
             {
+                // think about getting and passing formId if needed
                 SqlCommand cmd = new SqlCommand("SELECT mappingId, colName FROM Mapping WHERE formId = @formId", con);
                 cmd.Parameters.AddWithValue("@formId", DropDownList1.SelectedValue);
                 con.Open();
