@@ -4,6 +4,24 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+ $("#addFilterBtn").click(function () {
+     $("#filterTable").each(function () {
+         var tds = '<tr>';
+         jQuery.each($('tr:last td', this), function () {
+             tds += '<td>' + $(this).html() + '</td>';
+         });
+         tds += '</tr>';
+         if ($('tbody', this).length > 0) {
+             $('tbody', this).append(tds);
+         } else {
+             $(this).append(tds);
+         }
+     });
+});
+    </script>
     <title></title>
     <style type="text/css">
         body {
@@ -87,7 +105,7 @@
                 <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the form to be used&lt;/strong&gt;"></asp:Label>
             </td>
             <td>
-                          <asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="true">
+                          <asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="true" AppendDataBoundItems="true">
                     <asp:ListItem>Select Table</asp:ListItem>
                 </asp:DropDownList>
                           <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT formId, title FROM Form WHERE (staffId = @staffId)">
@@ -127,6 +145,22 @@
                 <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" />
             </td>
         </tr>
+    </table>
+    <table align="center" id="filterTable">
+        <tr><th colspan="2">Choose Filters</th></tr>
+        <tbody>
+        <tr>
+            <asp:PlaceHolder ID="filterPlaceholder" runat="server"/>
+            <td>
+                <asp:DropDownList ID="selectedItemDDL1" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="conditionsDDL1" runat="server"></asp:DropDownList>
+                <asp:TextBox ID="filterBox1" runat="server"></asp:TextBox>
+            </td>
+            <td>
+                <asp:Button ID="addFilterBtn" runat="server" Text="Add Filter"/>
+            </td>
+        </tr>
+            </tbody>
     </table>
 
 </div>
