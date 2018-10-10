@@ -79,6 +79,7 @@
     <Content Include="ChooseTemplate1.aspx" />
     <Content Include="Homepage.aspx" />
     <Content Include="LoginPlaceholder.aspx" />
+    <Content Include="RetrieveReport.aspx" />
     <Content Include="WebForm2.aspx" />
     <None Include="packages.config" />
     <Content Include="Home.Master" />
@@ -144,6 +145,13 @@
     </Compile>
     <Compile Include="Homepage.aspx.designer.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RetrieveReport.aspx.cs">
+      <DependentUpon>RetrieveReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RetrieveReport.aspx.designer.cs">
+      <DependentUpon>RetrieveReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForm2.aspx.cs">
       <DependentUpon>WebForm2.aspx</DependentUpon>
