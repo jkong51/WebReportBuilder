@@ -34,18 +34,16 @@ namespace FYP
                 tDate = "no";
             }
 
-            List<string> checkboxSelection = new List<string>();
-            foreach (ListItem listItem in CheckBoxList1.Items) {
-                if (listItem.Selected) {
-                    checkboxSelection.Add(listItem.Value);
-                }
-            }
+            
+            // build sql query here.
+            string query = QueryBuilder();
             // add error message if first option is selected.
-            Session["SelectedTables"] = checkboxSelection;
+            Session.Add("query",query);
             Session.Add("wantDate", tDate);
             Response.Redirect("~/DesignReport.aspx");
         }
 
+        // display check box list items when choose form ddl is selected
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Label7.Visible = true;
@@ -57,64 +55,59 @@ namespace FYP
             CheckBoxList1.DataBind();
         }
 
+        // display filter conditions upon selection of the column name in filter function
         protected void SelectedItemDDL1_SelectedIndexChanged(object sender, EventArgs e)
         {
             // optimize this
             DataTable dt = getDBInfo(selectedItemDDL1.SelectedValue);
+            
             string rowType = "";
             // returns only a single record, so change DT to something else later.
             foreach (DataRow row in dt.Rows) {
                 rowType = getColumnType(row["colName"].ToString(),row["tableName"].ToString());
             }
+            conditionDDL.Items.Clear();
             switch (rowType) {
                 case "string":
-                    DropDownList conditionStringDDL = new DropDownList();
-                    conditionStringDDL.Items.Insert(0, new ListItem("equals", "="));
-                    conditionStringDDL.Items.Insert(1, new ListItem("does not equal", "<>"));
-                    filterPlaceholder.Controls.Add(conditionStringDDL);
+                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
+                    conditionDDL.Items.Insert(1, new ListItem("does not equal", "<>"));
                     break;
                 case "date":
-                    DropDownList dateStringDDL = new DropDownList();
-                    dateStringDDL.Items.Insert(0, new ListItem("equals", "="));
-                    dateStringDDL.Items.Insert(1, new ListItem("less than", "<"));
-                    dateStringDDL.Items.Insert(2, new ListItem("more than", ">"));
-                    dateStringDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-                    dateStringDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-                    filterPlaceholder.Controls.Add(dateStringDDL);
+                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
+                    conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
+                    conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
+                    conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
+                    conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
                     break;
                 case "int":
-                    DropDownList intStringDDL = new DropDownList();
-                    intStringDDL.Items.Insert(0, new ListItem("equals", "="));
-                    intStringDDL.Items.Insert(1, new ListItem("less than", "<"));
-                    intStringDDL.Items.Insert(2, new ListItem("more than", ">"));
-                    intStringDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-                    intStringDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-                    filterPlaceholder.Controls.Add(intStringDDL);
+                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
+                    conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
+                    conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
+                    conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
+                    conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
+                    
                     break;
                 case "decimal":
-                    DropDownList decimalStringDDL = new DropDownList();
-                    decimalStringDDL.Items.Insert(0, new ListItem("equals", "="));
-                    decimalStringDDL.Items.Insert(1, new ListItem("less than", "<"));
-                    decimalStringDDL.Items.Insert(2, new ListItem("more than", ">"));
-                    decimalStringDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-                    decimalStringDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-                    filterPlaceholder.Controls.Add(decimalStringDDL);
+                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
+                    conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
+                    conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
+                    conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
+                    conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
                     break;
                 case "double":
-                    DropDownList doubleStringDDL = new DropDownList();
-                    doubleStringDDL.Items.Insert(0, new ListItem("equals", "="));
-                    doubleStringDDL.Items.Insert(1, new ListItem("less than", "<"));
-                    doubleStringDDL.Items.Insert(2, new ListItem("more than", ">"));
-                    doubleStringDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-                    doubleStringDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-                    filterPlaceholder.Controls.Add(doubleStringDDL);
+                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
+                    conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
+                    conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
+                    conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
+                    conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
                     break;
                 default:
                     break;
             }
-
+            //filterPlaceholder.Controls.Add(conditionDDL);
         }
 
+        // add items to filter dropdownlist if any checkbox item is checked.
         protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedItemDDL1.Items.Clear();
@@ -131,6 +124,33 @@ namespace FYP
             if (CheckBoxList1.SelectedIndex == -1) {
                 filterTablePlaceHolder.Visible = false;
             }
+        }
+
+        //query builder
+        private string QueryBuilder() {
+            //check if filter option is selected.
+            //checks if dropdownlist item is selected
+            List<string> checkboxSelection = new List<string>();
+            foreach (ListItem listItem in CheckBoxList1.Items)
+            {
+                if (listItem.Selected)
+                {
+                    checkboxSelection.Add(listItem.Value);
+                }
+            }
+            DataTable dt = getMappingData(DropDownList1.SelectedValue);
+            string query = getColAndTable(dt);
+            if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
+            {
+                string filteredColName = selectedItemDDL1.SelectedItem.Text;
+                string condition = conditionDDL.SelectedValue;
+                query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
+                return query;
+            }
+            else
+                return null;
+                // return non filtered query here.
+            
         }
 
         // add dbName to param when needed
@@ -217,6 +237,41 @@ namespace FYP
             }
         }
 
+        private string getColAndTable(DataTable colNameDT)
+        {
+                string tableNames = "";
+                string columns = "";
+                // add in filters here
+                for (int i = 0; i < colNameDT.Rows.Count; i++)
+                {
+                    //syntax dt.Rows[rowindex][columnName/columnIndex]
+                    if (i == 0)
+                    {
+                        tableNames = colNameDT.Rows[i]["tableName"].ToString();
+                        columns = colNameDT.Rows[i]["colName"].ToString();
+                    }
+                    else if (i == colNameDT.Rows.Count - 1)
+                    {
+                        if (!colNameDT.Rows[i]["tableName"].ToString().Equals(colNameDT.Rows[i - 1]["tableName"].ToString()))
+                        {
+                            tableNames += ", " + colNameDT.Rows[i]["tableName"].ToString() + " ";
+                        }
+                        columns += ", " + colNameDT.Rows[i]["colName"].ToString() + " ";
+                    }
+                    else
+                    {
+                        if (!colNameDT.Rows[i]["tableName"].ToString().Equals(colNameDT.Rows[i - 1]["tableName"].ToString()))
+                        {
+                            tableNames += ", " + colNameDT.Rows[i]["tableName"].ToString();
+                        }
+                        columns += ", " + colNameDT.Rows[i]["colName"].ToString();
+                    }
+                }
+                // insert query string here
+                string query = "SELECT " + columns + "FROM " + tableNames;
+                return query;
+        }
+
         protected void EnableFilterBtn_Click(object sender, EventArgs e)
         {
 
@@ -227,4 +282,6 @@ namespace FYP
             filterTablePlaceHolder.Visible = true;
         }
     }
+
+
 }

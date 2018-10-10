@@ -248,12 +248,13 @@
         <tr>
             <td>
                 <asp:DropDownList ID="selectedItemDDL1" runat="server" OnSelectedIndexChanged="SelectedItemDDL1_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                <asp:PlaceHolder ID="filterPlaceholder" runat="server"/>
+                <asp:DropDownList ID="conditionDDL" runat="server"></asp:DropDownList>
+               <%-- <asp:PlaceHolder ID="filterPlaceholder" runat="server"/>--%>
                 <asp:TextBox ID="filterBox1" runat="server"></asp:TextBox>
             </td>
-            <td>
+           <%-- <td>
                 <asp:Button ID="addFilter" runat="server" Text="Add Filter"/>
-            </td>
+            </td>--%>
         </tr>
             </tbody>
     </table>
