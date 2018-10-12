@@ -24,7 +24,7 @@ namespace FYP
             String rptDesc = txtRptDesc.Text;            
             Session.Add("rptTitle", rptTitle);
             Session.Add("rptDesc", rptDesc);
-            String tDate = "yes";
+            String tDate = "";
             if (chkDate.Checked)
             {
                 tDate = "yes";
@@ -40,6 +40,7 @@ namespace FYP
             // add error message if first option is selected.
             Session.Add("query",query);
             Session.Add("wantDate", tDate);
+            // in the future, if more elements are added remember to generate a hidden field for each element intialized.
             Response.Redirect("~/DesignReport.aspx");
         }
 
@@ -104,7 +105,6 @@ namespace FYP
                 default:
                     break;
             }
-            //filterPlaceholder.Controls.Add(conditionDDL);
         }
 
         // add items to filter dropdownlist if any checkbox item is checked.
@@ -140,6 +140,8 @@ namespace FYP
             }
             DataTable dt = getMappingData(DropDownList1.SelectedValue);
             string query = getColAndTable(dt);
+
+
             if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
             {
                 string filteredColName = selectedItemDDL1.SelectedItem.Text;
@@ -148,7 +150,7 @@ namespace FYP
                 return query;
             }
             else
-                return null;
+                return query;
                 // return non filtered query here.
             
         }
@@ -157,7 +159,6 @@ namespace FYP
         private string getColumnType(string colName , string tableName)
         {
             //change this to use with any different form databases.
-            
             string connStr = ConfigurationManager.ConnectionStrings["FormDBConnection"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connStr))
             {
@@ -270,11 +271,6 @@ namespace FYP
                 // insert query string here
                 string query = "SELECT " + columns + "FROM " + tableNames;
                 return query;
-        }
-
-        protected void EnableFilterBtn_Click(object sender, EventArgs e)
-        {
-
         }
 
         protected void AddFilterBtn_Click(object sender, EventArgs e)

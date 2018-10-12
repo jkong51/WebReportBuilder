@@ -81,7 +81,7 @@
                         <td style="padding:60px 30px" class="content">Get report details so that you can update the report details</td>
                     </tr>
                     <tr>
-                        <td><asp:Button ID="btnUpdate" runat="server" Text="Get Started" CssClass="button" /></td>
+                        <td><asp:Button ID="btnUpdate" runat="server" Text="Get Started" CssClass="button" OnClick="BtnUpdate_Click"/></td>
                     </tr>
                 </table>
             </td>

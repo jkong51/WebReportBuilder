@@ -9,27 +9,32 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web.UI.HtmlControls;
 
 namespace FYP
 {
     public partial class DesignReport : System.Web.UI.Page
     {
+        protected string PostBackString;
         protected void Page_Load(object sender, EventArgs e)
         {
+            PostBackString = Page.ClientScript.GetPostBackEventReference(this,"getPos");
+            if (Page.IsPostBack) {
+                BtnSave_Click();
+            }
             if (!Page.IsPostBack)
             {
                 string tdate = DateTime.Now.ToString("yyyy-MM-dd");
                 string txtTitle = Session["rptTitle"].ToString();
                 string txtDesc = Session["rptDesc"].ToString();
                 string wantDate = Session["wantDate"].ToString();
-
                 if (wantDate == "yes")
                 {
                     lblDate.Text = tdate;
                 }
                 else if (wantDate == "no")
                 {
-                    lblDate.Text = " ";
+                    lblDate.Text = "";
                 }
 
                 lblRptTitle.Text = txtTitle;
@@ -44,6 +49,9 @@ namespace FYP
                 DataTable formTable = getFormData(query);
                 reportGridView.DataSource = formTable;
                 reportGridView.DataBind();
+                //implement a way to dynamically add/assign position for hidden fields based on position
+
+                
                 Session.Remove("rptTitle");
                 Session.Remove("rptDesc");
             }
@@ -65,6 +73,63 @@ namespace FYP
                 }
             }
             return dt;
+        }
+
+        protected void BtnSave_Click()
+        {
+            // get all controls
+            string query = Session["query"].ToString();
+            string titlePosition = hiddenRptTitle.Value;
+            string descPosition = hiddenRptDesc.Value;
+
+            if (hiddenRptDate.Value == "") { 
+            string datePosition = hiddenRptDate.Value;
+            }
+        }
+
+        //private HtmlInputHidden createHiddenField(Label label, int hiddenFieldID) {
+        //    HtmlInputHidden hf = new HtmlInputHidden();
+        //    hf.ID = hiddenFieldID.ToString();
+        //    hf.Attributes["class"] = "hiddenFieldClass";
+        //    return hf;
+        //}
+
+        //private int InitHiddenFields() {
+        //    int objCount = 0;
+        //    foreach (Control c in reportHeader.Controls) {
+        //        //add additional types as they get added.
+        //        if (c.GetType() == typeof(Label)) {
+        //            Label tempLabel = (Label)c;
+        //            HtmlInputHidden hf = createHiddenField(tempLabel,objCount);
+        //            hiddenPanel.Controls.Add(hf);
+        //            objCount++;
+        //        }
+        //    }
+        //    return objCount;
+        //}
+
+        //private int countElements()
+        //{
+        //    int objCount = 0;
+        //    foreach (Control c in reportHeader.Controls)
+        //    {
+        //        //add additional types as they get added.
+        //        if (c.GetType() == typeof(Label))
+        //        {
+        //            objCount++;
+        //        }
+        //    }
+        //    return objCount;
+        //}
+
+        protected void BtnClear_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BtnCancel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

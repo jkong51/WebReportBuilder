@@ -18,5 +18,10 @@ namespace FYP
         {
             Response.Redirect("ChooseTemplate1.aspx");
         }
+
+        protected void BtnUpdate_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("RetrieveReport.aspx");
+        }
     }
 }

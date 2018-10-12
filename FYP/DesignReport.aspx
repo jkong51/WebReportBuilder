@@ -15,13 +15,37 @@
                     drag: function () {
                         var offset = $(this).offset();
 					    var xPos = offset.left;
-					    var yPos = offset.top;
+                        var yPos = offset.top;
 					    $('#posX').text(xPos);
-					    $('#posY').text(yPos);
+                        $('#posY').text(yPos);
                     }
                 });
 
+            // get data from hiddenfield to be stored in db
+            $('#<%=BtnSave.ClientID%>').click(function () {
+                alert("Entered");
+                var lblTitle = $("#lblRptTitle");
+                var lblDesc = $("#lblRptDesc");
+                var lblDate = $("#lblDate");
+                document.getElementById('posX').value = "Changed.";
+                var positionTitle = lblTitle.position();
+                var positionDesc = lblDesc.position();
+
+                document.getElementById('<%=hiddenRptTitle.ClientID%>').value = positionTitle.left + "," + positionTitle.top;
+                document.getElementById('<%=hiddenRptDesc.ClientID%>').value = positionDesc.left + "," + positionDesc.top;
+                if (document.getElementById('<%=hiddenRptDate.ClientID%>').value == "") {
+                    var positionDate = lblDate.position();
+                    document.getElementById('<%=hiddenRptDate.ClientID%>').value = positionDate.left + "," + positionDate.top;
+                }
+            });
+
         });
+        // update data everytime an object is moved.
+
+
+
+        
+        
     </script>
     <style type="text/css">
         body {
@@ -177,22 +201,29 @@
         </tr>
         <tr>
             <td colspan="2" style="vertical-align:bottom;padding: 5px 5px">
-                <button class="button">Clear</button>
+                <asp:Button runat="server" id="BtnClear" class="button" Text="Clear" OnClick="BtnClear_Click " />
             </td>
         </tr>
         <tr>
-            <td style="vertical-align:bottom;height:30px;padding: 5px 5px"><button class="button">Save</button></td>
-            <td style="vertical-align:bottom;height:30px;padding: 5px 5px"><button class="button">Cancel</button></td>
+            <td style="vertical-align:bottom;height:30px;padding: 5px 5px"><asp:Button runat="server" id="BtnSave" class="button" Text="Save"/></td>
+            <td style="vertical-align:bottom;height:30px;padding: 5px 5px"><asp:Button runat="server" id="BtnCancel" class="button" Text="Cancel" OnClick="BtnCancel_Click"/></td>
         </tr>
 
     </table>
         </div>
 
     <div style="padding:50px;padding-left:350px" id="containment-wrapper">
-        <page size="A4">            
-            <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content" runat="server"></asp:Label><br />
+        <page size="A4">
+            <asp:Panel runat="server" ID="hiddenPanel">
+                <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
+                <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
+                <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
+            </asp:Panel>
+            <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
+            <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server"></asp:Label><br />
             <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
+            </asp:Panel>
             <br />
             <br />
             <br />
@@ -201,6 +232,9 @@
                 <asp:GridView ID="reportGridView" runat="server" CssClass="rpttable" CellPadding="10" HeaderStyle-CssClass="tableheader">
                 </asp:GridView>
             </div>
+            <asp:Panel ID="reportFooter" runat="server">
+
+            </asp:Panel>
         </page>
     </div>
                 </form>

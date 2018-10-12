@@ -103,9 +103,6 @@
                                         
                                     </tr>
                                     <tr>
-
-                                    </tr>
-                                    <tr>
                                         <td style="text-align:left;font-weight:200;font-size:15px;">
                                             <div style="padding-bottom:10px">USERNAME</div>
                                             <asp:TextBox ID="UserName" placeholder="Please enter your username" runat="server" CssClass="txtcss"></asp:TextBox>
