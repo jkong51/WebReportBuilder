@@ -23,14 +23,11 @@
 
             // get data from hiddenfield to be stored in db
             $('#<%=BtnSave.ClientID%>').click(function () {
-                alert("Entered");
                 var lblTitle = $("#lblRptTitle");
                 var lblDesc = $("#lblRptDesc");
                 var lblDate = $("#lblDate");
-                document.getElementById('posX').value = "Changed.";
                 var positionTitle = lblTitle.position();
                 var positionDesc = lblDesc.position();
-
                 document.getElementById('<%=hiddenRptTitle.ClientID%>').value = positionTitle.left + "," + positionTitle.top;
                 document.getElementById('<%=hiddenRptDesc.ClientID%>').value = positionDesc.left + "," + positionDesc.top;
                 if (document.getElementById('<%=hiddenRptDate.ClientID%>').value == "") {
@@ -38,7 +35,7 @@
                     document.getElementById('<%=hiddenRptDate.ClientID%>').value = positionDate.left + "," + positionDate.top;
                 }
             });
-
+            <%=PostBackString %>
         });
         // update data everytime an object is moved.
 
@@ -209,7 +206,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" /></td>
+                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" OnClick="BtnSave_Click"/></td>
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
@@ -230,6 +227,7 @@
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
             </asp:Panel>
+
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
             <asp:UpdatePanel ID="updatePanel1" runat="server">
                 <ContentTemplate>

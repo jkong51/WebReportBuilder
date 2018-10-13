@@ -14,41 +14,44 @@ using System.Text.RegularExpressions;
 
 namespace FYP
 {
-    public class reportElement {
-        public int ReportID { get { return ReportID; } set { ReportID = value; } }
-        public string Value { get { return Value; } set { Value = value; } }
-        public string PosX { get { return PosX; } set { PosX = value; } }
-        public string PosY { get { return PosY; } set { PosY = value; } }
-        public string EleTypeName { get { return EleTypeName; } set { EleTypeName = value; } }
-        public string FontType
-        {
-            get { return FontType; }
-            set { FontType = value; }
-        }
+    public class ReportElement {
+        public int ReportID { get; set; }
+        public string Value { get; set; }
+        public string PosX { get; set; }
+        public string PosY { get; set; }
+        public string EleTypeName { get; set; }
+        public string FontType { get; set; }
+        
 
 
-        public reportElement(int ReportID, string Value, string PosX, string PosY, string EleTypeName, string FontType)
+        public ReportElement(int reportID, string value, string posX, string posY, string eleTypeName, string fontType)
         {
-            this.ReportID = ReportID;
-            this.Value = Value;
-            this.PosX = PosX;
-            this.PosY = PosY;
-            this.EleTypeName = EleTypeName;
-            this.FontType = FontType;
+            ReportID = reportID;
+            Value = value;
+            PosX = posX;
+            PosY = posY;
+            EleTypeName = eleTypeName;
+            FontType = fontType;
         }
 
     }
+
     public partial class DesignReport : System.Web.UI.Page
     {
         private Style primaryStyle = new Style();
         protected string PostBackString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Page.IsPostBack) {
+                if (Request["__EVENTARGUMENT"] == "saveOnClick")
+                {
+                   // BtnSave_Click();
+                }
+            }
            
             if (!Page.IsPostBack)
             {
-
+                PostBackString = Page.ClientScript.GetPostBackEventReference(this, "saveOnClick");
                 string tdate = DateTime.Now.ToString("yyyy-MM-dd");
                 string txtTitle = Session["rptTitle"].ToString();
                 string txtDesc = Session["rptDesc"].ToString();
@@ -95,6 +98,7 @@ namespace FYP
             {
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
+                // if user uncheck filter, remove the condition
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -125,17 +129,18 @@ namespace FYP
              - Report_body, store query
              - Element_type, add name, fonttype
              */
-           
+
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             //insert data for report
             parameters.Add("@name", lblRptTitle.Text);
-            parameters.Add("@staffId", Session["staffName"].ToString());
+            parameters.Add("@staffId", Session["userId"].ToString());
             parameters.Add("@status", 1);
             if (hiddenRptDate.Value == "")
             {
                 parameters.Add("@dateGenerated", lblDate.Text);
             }
-            else {
+            else
+            {
                 parameters.Add("@dateGenerated", DateTime.Now.ToString("yyyy-MM-dd"));
             }
             parameters.Add("@description", lblRptDesc.Text);
@@ -146,43 +151,44 @@ namespace FYP
 
             int reportId = getReportID(parameters["@staffId"].ToString(), parameters["@name"].ToString());
             // init reportElement for title
-            parameters = null;
+            parameters.Clear();
             string titlePosition = hiddenRptTitle.Value;
+            // solve the problem here, unable to split string.
             string[] coords = Regex.Split(titlePosition, ",");
-            reportElement reportEleTitle = new reportElement(reportId, lblRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
-            parameters.Add("@title",reportEleTitle);
+            ReportElement reportEleTitle = new ReportElement(reportId, lblRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
+            parameters.Add("@title", reportEleTitle);
             coords = null;
 
             // init reportElement for desc
             string descPosition = hiddenRptDesc.Value;
             coords = Regex.Split(descPosition, ",");
-            reportElement reportEleDesc = new reportElement(reportId, lblRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
+            ReportElement reportEleDesc = new ReportElement(reportId, lblRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
             parameters.Add("@desc", reportEleDesc);
             coords = null;
 
             // init reportElement for date
-            if (hiddenRptDate.Value != "")
+            if (lblDate.Text != "")
             {
                 string datePosition = hiddenRptDate.Value;
                 coords = Regex.Split(hiddenRptDate.Value, ",");
-                reportElement reportEleDate = new reportElement(reportId, lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name);
+                ReportElement reportEleDate = new ReportElement(reportId, lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name);
                 parameters.Add("@date", reportEleDate);
                 coords = null;
             }
 
             //add element_type
             sql = "INSERT INTO Element_type" + " (name, fontType) " + "VALUES " + "(@name, @fontType)";
-            rowsAffected = InsertUpdate(sql,parameters);
-            parameters = null;
+            rowsAffected = InsertUpdate(sql, parameters);
 
 
+            parameters.Clear();
             sql = "INSERT INTO Report_body " + "(reportID, query)" + " VALUES " + "(@reportID, @query)";
             string query = Session["query"].ToString();
-            parameters.Add("@reportID",reportId);
-            parameters.Add("@query",query);
-            rowsAffected = InsertUpdate(sql,parameters);
+            parameters.Add("@reportID", reportId);
+            parameters.Add("@query", query);
+            rowsAffected = InsertUpdate(sql, parameters);
 
-            // add footer code if needed.
+            //add footer code if needed.
         }
         
         protected void BtnClear_Click(object sender, EventArgs e)
@@ -221,43 +227,51 @@ namespace FYP
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-
+                Boolean isReportEle = false;
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.CommandType = CommandType.Text;
-                Boolean isReportEle = false;
+                int count = 0;
                 foreach (string key in parameters.Keys)
                 {
-                    if (parameters[key] is string) {
+                    if (parameters[key] is string || parameters[key] is int) {
                         cmd.Parameters.AddWithValue(key, parameters[key]);
                     }
-                    else if (parameters[key] is reportElement) {
+                    else if (parameters[key] is ReportElement) {
                         isReportEle = true;
-                        reportElement reportEle = (reportElement)parameters[key];
-                        cmd.Parameters.AddWithValue("@name", reportEle.EleTypeName);
-                        cmd.Parameters.AddWithValue("@fontType", reportEle.FontType);
-                        cmd.ExecuteNonQuery();
+                        count++;
+                        ReportElement reportEle = (ReportElement)parameters[key];
+                        using (cmd) {
+                            cmd.CommandText = "INSERT INTO Element_type" + " (name, fontType) " + "VALUES " + "(@name, @fontType)";
+                            cmd.Parameters.AddWithValue("@name", reportEle.EleTypeName);
+                            cmd.Parameters.AddWithValue("@fontType", reportEle.FontType);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
 
-                        cmd.Parameters.Clear();
-                        cmd.CommandText = "SELECT MAX(eleTypeId) FROM Element_type";
-                        SqlDataReader reader = cmd.ExecuteReader();
                         int eleTypeId = 0;
-                        if (reader.Read())
-                        {
-                            eleTypeId = reader.GetInt32(0);
+                        
+                            cmd.CommandText = "SELECT MAX(eleTypeId) FROM Element_type";
+                        using (SqlDataReader reader = cmd.ExecuteReader()) { 
+                            if (reader.Read())
+                            {
+                                eleTypeId = reader.GetInt32(0);
+                                cmd.Parameters.Clear();
+                            }
+                            else
+                            {
+                                //error handling here
+                            }
                         }
-                        else {
-                            //error handling here
+                        using (cmd) { 
+                            cmd.CommandText = "INSERT INTO Header_element" + "(reportID, value, eleTypeId, xPosition, yPosition)" + " VALUES " + "(@reportID, @value, @eleTypeId, @xPosition, @yPosition)";
+                            cmd.Parameters.AddWithValue("@reportID", reportEle.ReportID);
+                            cmd.Parameters.AddWithValue("@value", reportEle.Value);
+                            cmd.Parameters.AddWithValue("@eleTypeId", eleTypeId);
+                            cmd.Parameters.AddWithValue("@xPosition", reportEle.PosX);
+                            cmd.Parameters.AddWithValue("@yPosition", reportEle.PosY);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
                         }
-
-                        cmd.CommandText = "INSERT INTO " + "(reportID, value, eleTypeId, xPosition, yPosition)" + " VALUES " + "(@reportID, @value, @eleTypeId, @xPosition, @yPosition)";
-                        cmd.Parameters.AddWithValue("@reportID",reportEle.ReportID);
-                        cmd.Parameters.AddWithValue("@value", reportEle.Value);
-                        cmd.Parameters.AddWithValue("@eleTypeId", eleTypeId);
-                        cmd.Parameters.AddWithValue("@xPosition", reportEle.PosX);
-                        cmd.Parameters.AddWithValue("@yPosition", reportEle.PosY);
-                        cmd.ExecuteNonQuery();
-
-                        cmd.Parameters.Clear();
                     }
                 }
                 if (isReportEle == false)
