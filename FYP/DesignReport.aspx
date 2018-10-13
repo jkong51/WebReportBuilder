@@ -158,10 +158,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
-<%--        <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server">
+        <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server">
         </asp:ScriptManager>
-        <asp:Panel runat="server" ID="fontProperty">
-            <asp:UpdatePanel ID="updatePanel" runat="server">
+<%--        <asp:UpdatePanel ID="updatePanel" runat="server">
                 <ContentTemplate>--%>
                     <div id="sidebar">
                         <table class="border">
@@ -220,22 +219,26 @@
                         </table>
 
                     </div>
-<%--                </ContentTemplate>
-            </asp:UpdatePanel>
-        </asp:Panel>--%>
+<%--                            </ContentTemplate>
+            </asp:UpdatePanel>--%>
         <div style="padding: 50px; padding-left: 350px" id="containment-wrapper">
-
-            <page size="A4">
+            
+            <page size="A4"> 
+                
             <asp:Panel runat="server" ID="hiddenPanel">
                 <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
-            <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server"></asp:Label><br />
+            <asp:UpdatePanel ID="updatePanel1" runat="server">
+                <ContentTemplate>
+                <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server"></asp:Label><br />
             <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
-            </asp:Panel>
+            </ContentTemplate>
+            </asp:UpdatePanel>
+                    </asp:Panel>
             <br />
             <br />
             <br />
@@ -246,10 +249,12 @@
             </div>
             <asp:Panel ID="reportFooter" runat="server">
 
-            </asp:Panel>
+            </asp:Panel>                    
+<%--        </asp:Panel>--%>
+                
         </page>
+        </div>                           
 
-        </div>
     </form>
 </body>
 
