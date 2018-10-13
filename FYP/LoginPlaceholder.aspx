@@ -97,7 +97,7 @@
                     <table align="center" cellpadding="18" style="border-collapse:collapse;padding:10px">
                         <tr>
                             <td>
-                                <table cellpadding="8">
+                                <table align="center" cellpadding="8">
                                     <tr>
                                         <th style="font-weight:500;text-align:left;font-size:23px;">ACCOUNT LOGIN</th>
                                         

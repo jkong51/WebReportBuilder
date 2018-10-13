@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DesignReport.aspx.cs" Inherits="FYP.DesignReport" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditReport.aspx.cs" Inherits="FYP.EditReport" %>
 
 <!DOCTYPE html>
 
@@ -99,12 +99,21 @@
             transition-duration: 0.4s;
             border: 2px solid rgb(80, 142, 245);
         }
-
-        .button:hover {
-            background-color: white;
-            color: rgb(80, 142, 245);
-            cursor: pointer;
+        .button2{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: rgb(80, 142, 245);
+            color: white;
+            padding: 5px 32px;
+            text-decoration: none;
+            display: inline-block;
+            border: 2px solid rgb(80, 142, 245);
         }
+
+            .button:hover {
+                background-color: white;
+                color: rgb(80, 142, 245);
+                cursor: pointer;
+            }
 
         page {
             background: white;
@@ -152,18 +161,13 @@
         .tableheader{
             background-color:aqua;
         }
-
     </style>
-    <title>I-Report Builder</title>
+    <title>Edit Report</title>
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server">
-        </asp:ScriptManager>
-<%--        <asp:UpdatePanel ID="updatePanel" runat="server">
-                <ContentTemplate>--%>
-                    <div id="sidebar">
-                        <table class="border">
+    <div id="sidebar">
+        <table class="border">
                             <tr class="border">
                                 <td style="font-size: 30px;" colspan="2">
                                     <img src="Tunku-Abdul-Rahman-University-College-TARC.png" width="180" height="70" /><br />
@@ -213,32 +217,24 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnCancel" class="button" Text="Cancel" OnClick="BtnCancel_Click" /></td>
+                                    <asp:Button runat="server" ID="BtnCancel" class="button" Text="Cancel" /></td>
                             </tr>
 
                         </table>
+        </div>
 
-                    </div>
-<%--                            </ContentTemplate>
-            </asp:UpdatePanel>--%>
-        <div style="padding: 50px; padding-left: 350px" id="containment-wrapper">
-            
-            <page size="A4"> 
-                
+    <div style="padding:50px;padding-left:350px" id="containment-wrapper">
+        <page size="A4">
             <asp:Panel runat="server" ID="hiddenPanel">
                 <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
-            <asp:UpdatePanel ID="updatePanel1" runat="server">
-                <ContentTemplate>
-                <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server"></asp:Label><br />
-            <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
-            <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
-            </ContentTemplate>
-            </asp:UpdatePanel>
-                    </asp:Panel>
+            <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server">Gebainfdasid</asp:Label><br />
+            <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server">Hello</asp:Label><br />
+            <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server">Bello</asp:Label>
+            </asp:Panel>
             <br />
             <br />
             <br />
@@ -249,13 +245,10 @@
             </div>
             <asp:Panel ID="reportFooter" runat="server">
 
-            </asp:Panel>                    
-<%--        </asp:Panel>--%>
-                
+            </asp:Panel>
         </page>
-        </div>                           
-
-    </form>
+    </div>
+                </form>
 </body>
 
 </html>
