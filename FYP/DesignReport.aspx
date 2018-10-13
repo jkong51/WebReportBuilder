@@ -65,7 +65,7 @@
             left: 0;
             background-color: white;
             overflow-x: hidden;
-            padding-top: 20px;
+            padding-top: 0px;
             box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
         }
 
@@ -100,11 +100,11 @@
             border: 2px solid rgb(80, 142, 245);
         }
 
-            .button:hover {
-                background-color: white;
-                color: rgb(80, 142, 245);
-                cursor: pointer;
-            }
+        .button:hover {
+            background-color: white;
+            color: rgb(80, 142, 245);
+            cursor: pointer;
+        }
 
         page {
             background: white;
@@ -158,62 +158,74 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div id="sidebar">
-    <table class="border">
-        <tr class="border">
-            <td style="font-size:30px;" colspan="2">
-                <img src="Tunku-Abdul-Rahman-University-College-TARC.png" width="180" height="70"/><br />
-                i-Report Builder
-            </td>
-        </tr>
-        <tr class="border" style="border-bottom:none">
-            <td style="padding-top:15px;vertical-align:central" colspan="2">
-                <strong style="font-size:larger">Header & Footer</strong> <br />
-                <table style="padding:5px;text-align:left">
-                    <tr>
-                        <td>
-                            Report Title
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtRptTitle" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Report Description
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtRptDesc" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Location
-                        </td>
-                        <td>
-                            <asp:Label ID="posX" runat="server" Text="x"></asp:Label>, <asp:Label ID="posY" runat="server" Text="y"></asp:Label>
-                        </td>
-                    </tr>
-                    
+<%--        <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server">
+        </asp:ScriptManager>
+        <asp:Panel runat="server" ID="fontProperty">
+            <asp:UpdatePanel ID="updatePanel" runat="server">
+                <ContentTemplate>--%>
+                    <div id="sidebar">
+                        <table class="border">
+                            <tr class="border">
+                                <td style="font-size: 30px;" colspan="2">
+                                    <img src="Tunku-Abdul-Rahman-University-College-TARC.png" width="180" height="70" /><br />
+                                    i-Report Builder
+                                </td>
+                            </tr>
+                            <tr class="border" style="border-bottom: none">
+                                <td style="padding-top: 15px; vertical-align: central" colspan="2">
+                                    <strong style="font-size: larger">Header & Footer</strong>
+                                    <br />
+                                    <table style="padding: 5px; text-align: left">
+                                        <tr>
+                                            <td>Font Style
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ClientIDMode="Static"  ID="fontFamilyDrpDwnList" AutoPostBack="True" runat="server" Width="100%" OnSelectedIndexChanged="ChangeFont">
+                                                </asp:DropDownList>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Report Title
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtRptTitle" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Report Description
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtRptDesc" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Table Content
+                                            </td>
+                                            <td>
+                                                <asp:Button runat="server" ID="Button1" class="button2" Text="Edit" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
+                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
+                                    <asp:Button runat="server" ID="BtnCancel" class="button" Text="Cancel" OnClick="BtnCancel_Click" /></td>
+                            </tr>
 
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="vertical-align:bottom;padding: 5px 5px">
-                <asp:Button runat="server" id="BtnClear" class="button" Text="Clear" OnClick="BtnClear_Click " />
-            </td>
-        </tr>
-        <tr>
-            <td style="vertical-align:bottom;height:30px;padding: 5px 5px"><asp:Button runat="server" id="BtnSave" class="button" Text="Save"/></td>
-            <td style="vertical-align:bottom;height:30px;padding: 5px 5px"><asp:Button runat="server" id="BtnCancel" class="button" Text="Cancel" OnClick="BtnCancel_Click"/></td>
-        </tr>
+                        </table>
 
-    </table>
-        </div>
+                    </div>
+<%--                </ContentTemplate>
+            </asp:UpdatePanel>
+        </asp:Panel>--%>
+        <div style="padding: 50px; padding-left: 350px" id="containment-wrapper">
 
-    <div style="padding:50px;padding-left:350px" id="containment-wrapper">
-        <page size="A4">
+            <page size="A4">
             <asp:Panel runat="server" ID="hiddenPanel">
                 <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
@@ -236,8 +248,9 @@
 
             </asp:Panel>
         </page>
-    </div>
-                </form>
+
+        </div>
+    </form>
 </body>
 
 </html>

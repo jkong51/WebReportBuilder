@@ -15,15 +15,19 @@ namespace FYP
 {
     public partial class DesignReport : System.Web.UI.Page
     {
+        private Style primaryStyle = new Style();
         protected string PostBackString;
         protected void Page_Load(object sender, EventArgs e)
         {
             PostBackString = Page.ClientScript.GetPostBackEventReference(this,"getPos");
             if (Page.IsPostBack) {
                 BtnSave_Click();
+                lblRptTitle.Text = txtRptTitle.Text;
+                lblRptDesc.Text = txtRptDesc.Text;
             }
             if (!Page.IsPostBack)
             {
+
                 string tdate = DateTime.Now.ToString("yyyy-MM-dd");
                 string txtTitle = Session["rptTitle"].ToString();
                 string txtDesc = Session["rptDesc"].ToString();
@@ -51,6 +55,10 @@ namespace FYP
                 reportGridView.DataBind();
                 //implement a way to dynamically add/assign position for hidden fields based on position
 
+                foreach (FontFamily font in FontFamily.Families)
+                {
+                    fontFamilyDrpDwnList.Items.Add(font.Name.ToString());
+                }
                 
                 Session.Remove("rptTitle");
                 Session.Remove("rptDesc");
@@ -73,6 +81,15 @@ namespace FYP
                 }
             }
             return dt;
+        }
+        protected void ChangeFont(object sender, EventArgs e)
+        {
+                primaryStyle.Font.Name =
+                fontFamilyDrpDwnList.SelectedItem.Text;
+                lblRptTitle.ApplyStyle(primaryStyle);
+                lblRptDesc.ApplyStyle(primaryStyle);
+                lblDate.ApplyStyle(primaryStyle);
+            
         }
 
         protected void BtnSave_Click()
@@ -129,7 +146,7 @@ namespace FYP
 
         protected void BtnCancel_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("ChooseTemplate1.aspx");
         }
     }
 }

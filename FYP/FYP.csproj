@@ -77,9 +77,11 @@
     </Content>
     <Content Include="BlankTemplateOption.aspx" />
     <Content Include="ChooseTemplate1.aspx" />
+    <Content Include="EditReport.aspx" />
     <Content Include="Homepage.aspx" />
     <Content Include="LoginPlaceholder.aspx" />
     <Content Include="RetrieveReport.aspx" />
+    <Content Include="ViewReport.aspx" />
     <Content Include="WebForm2.aspx" />
     <None Include="packages.config" />
     <Content Include="Home.Master" />
@@ -124,6 +126,13 @@
     <Compile Include="DesignReport.aspx.designer.cs">
       <DependentUpon>DesignReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EditReport.aspx.cs">
+      <DependentUpon>EditReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditReport.aspx.designer.cs">
+      <DependentUpon>EditReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="LoginPlaceholder.aspx.cs">
       <DependentUpon>LoginPlaceholder.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -152,6 +161,13 @@
     </Compile>
     <Compile Include="RetrieveReport.aspx.designer.cs">
       <DependentUpon>RetrieveReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewReport.aspx.cs">
+      <DependentUpon>ViewReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewReport.aspx.designer.cs">
+      <DependentUpon>ViewReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForm2.aspx.cs">
       <DependentUpon>WebForm2.aspx</DependentUpon>

@@ -22,6 +22,15 @@ namespace FYP {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// fontFamilyDrpDwnList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList fontFamilyDrpDwnList;
+        
+        /// <summary>
         /// txtRptTitle control.
         /// </summary>
         /// <remarks>
@@ -40,31 +49,13 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.TextBox txtRptDesc;
         
         /// <summary>
-        /// posX control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label posX;
-        
-        /// <summary>
-        /// posY control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label posY;
-        
-        /// <summary>
-        /// BtnClear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnClear;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
         /// BtnSave control.
