@@ -119,7 +119,6 @@
     </Compile>
     <Compile Include="DesignReport.aspx.cs">
       <DependentUpon>DesignReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DesignReport.aspx.designer.cs">
       <DependentUpon>DesignReport.aspx</DependentUpon>

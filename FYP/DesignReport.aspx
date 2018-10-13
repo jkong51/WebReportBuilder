@@ -205,7 +205,7 @@
             </td>
         </tr>
         <tr>
-            <td style="vertical-align:bottom;height:30px;padding: 5px 5px"><asp:Button runat="server" id="BtnSave" class="button" Text="Save"/></td>
+            <td style="vertical-align:bottom;height:30px;padding: 5px 5px"><asp:Button runat="server" id="BtnSave" class="button" Text="Save" OnClick="BtnSave_Click"/></td>
             <td style="vertical-align:bottom;height:30px;padding: 5px 5px"><asp:Button runat="server" id="BtnCancel" class="button" Text="Cancel" OnClick="BtnCancel_Click"/></td>
         </tr>
 
