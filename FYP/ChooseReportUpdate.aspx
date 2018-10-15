@@ -6,19 +6,17 @@
         <h3>Select report for editing purposes</h3>
     </div>
     <div style="width:100%;padding:20px;">
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT reportID, name, dateGenerated, description FROM Report WHERE (staffId = @staffId) AND (status = 1)">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT DISTINCT Report.reportID, Report.name, Report.dateGenerated, Report.description FROM Report INNER JOIN report_right ON Report.reportID = report_right.reportId WHERE (Report.status = 1) AND (Report.staffId = @staffId) OR (Report.status = 1) AND (report_right.rights LIKE '%E%')">
             <SelectParameters>
                 <asp:SessionParameter Name="staffId" SessionField="userId" />
             </SelectParameters>
         </asp:SqlDataSource>
-        <asp:GridView ID="GridView1" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1" OnRowDataBound="GridView1_RowDataBound">
+        <asp:GridView ID="GridView1" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1">
             <Columns>
                 <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
-                <asp:Button ID="editReportBtn" runat="server" CausesValidation="false"
+                 <asp:Button ID="editReportBtn" runat="server" CausesValidation="false"
                  Text="Edit" />
-                 <asp:Button ID="viewReportBtn" runat="server" CausesValidation="false"
-                 Text="View" />
                 </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
