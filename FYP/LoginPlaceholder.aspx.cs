@@ -15,7 +15,7 @@ namespace FYP
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+                Session.Clear();
         }
 
         protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)

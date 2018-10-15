@@ -14,5 +14,13 @@ namespace FYP
 
         }
 
+        protected void viewReportBtn_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            string reportId = gvr.Cells[1].Text;
+            Session["reportId"] = reportId;
+            Response.Redirect("ViewReport.aspx");
+        }
     }
 }

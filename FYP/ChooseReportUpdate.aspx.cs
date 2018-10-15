@@ -13,5 +13,10 @@ namespace FYP
         {
 
         }
+
+        protected void editReportBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

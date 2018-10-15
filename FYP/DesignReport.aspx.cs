@@ -190,8 +190,16 @@ namespace FYP
                 parameters.Add("@query", query);
                 rowsAffected = InsertUpdate(sql, parameters);
 
+                //Add permissions
+                parameters.Clear();
+                sql = "INSERT INTO report_right " + "(reportId, staffId, rights)" + "VALUES " + "(@reportId, @staffId, @rights)";
+                parameters.Add("@reportId",reportId);
+                parameters.Add("@staffId", Session["userId"].ToString());
+                parameters.Add("@rights", "R,E");
+                rowsAffected = InsertUpdate(sql,parameters);
+
                 //add footer code if needed.
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Report saved successfully.')", true);
+                Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
                 Response.Redirect("Homepage.aspx");
             }
             catch (SqlException ex) {
