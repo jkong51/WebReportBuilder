@@ -12,6 +12,8 @@ namespace FYP
         protected void Page_Load(object sender, EventArgs e)
         {
             staffNamelbl.Text = (string)Session["staffName"];
+            Label2.Text = (string)Session["faculty"];
+            Label3.Text = (string)Session["department"];
         }
     }
 }

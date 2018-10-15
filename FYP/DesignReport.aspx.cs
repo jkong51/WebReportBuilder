@@ -43,10 +43,10 @@ namespace FYP
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Page.IsPostBack) {
-                if (Request["__EVENTARGUMENT"] == "saveOnClick")
-                {
-                   // BtnSave_Click();
-                }
+                //if (Request["__EVENTARGUMENT"] == "saveOnClick")
+                //{
+                //   // BtnSave_Click();
+                //}
             }
            
             if (!Page.IsPostBack)
@@ -86,6 +86,7 @@ namespace FYP
                 
                 Session.Remove("rptTitle");
                 Session.Remove("rptDesc");
+                Session.Remove("wantDate");
             }
         }
         
@@ -129,66 +130,73 @@ namespace FYP
              - Report_body, store query
              - Element_type, add name, fonttype
              */
+            try {
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
+                //insert data for report
+                parameters.Add("@name", lblRptTitle.Text);
+                parameters.Add("@staffId", Session["userId"].ToString());
+                parameters.Add("@status", 1);
+                if (hiddenRptDate.Value == "")
+                {
+                    parameters.Add("@dateGenerated", lblDate.Text);
+                }
+                else
+                {
+                    parameters.Add("@dateGenerated", DateTime.Now.ToString("yyyy-MM-dd"));
+                }
+                parameters.Add("@description", lblRptDesc.Text);
+                string sql = "INSERT INTO Report" + "(name, staffId, status, dateGenerated, description)" +
+                    " VALUES(@name, @staffId, @status, @dateGenerated, @description)";
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            //insert data for report
-            parameters.Add("@name", lblRptTitle.Text);
-            parameters.Add("@staffId", Session["userId"].ToString());
-            parameters.Add("@status", 1);
-            if (hiddenRptDate.Value == "")
-            {
-                parameters.Add("@dateGenerated", lblDate.Text);
-            }
-            else
-            {
-                parameters.Add("@dateGenerated", DateTime.Now.ToString("yyyy-MM-dd"));
-            }
-            parameters.Add("@description", lblRptDesc.Text);
-            string sql = "INSERT INTO Report" + "(name, staffId, status, dateGenerated, description)" +
-                " VALUES(@name, @staffId, @status, @dateGenerated, @description)";
+                int rowsAffected = InsertUpdate(sql, parameters);
 
-            int rowsAffected = InsertUpdate(sql, parameters);
-
-            int reportId = getReportID(parameters["@staffId"].ToString(), parameters["@name"].ToString());
-            // init reportElement for title
-            parameters.Clear();
-            string titlePosition = hiddenRptTitle.Value;
-            // solve the problem here, unable to split string.
-            string[] coords = Regex.Split(titlePosition, ",");
-            ReportElement reportEleTitle = new ReportElement(reportId, lblRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
-            parameters.Add("@title", reportEleTitle);
-            coords = null;
-
-            // init reportElement for desc
-            string descPosition = hiddenRptDesc.Value;
-            coords = Regex.Split(descPosition, ",");
-            ReportElement reportEleDesc = new ReportElement(reportId, lblRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
-            parameters.Add("@desc", reportEleDesc);
-            coords = null;
-
-            // init reportElement for date
-            if (lblDate.Text != "")
-            {
-                string datePosition = hiddenRptDate.Value;
-                coords = Regex.Split(hiddenRptDate.Value, ",");
-                ReportElement reportEleDate = new ReportElement(reportId, lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name);
-                parameters.Add("@date", reportEleDate);
+                int reportId = getReportID(parameters["@staffId"].ToString(), parameters["@name"].ToString());
+                // init reportElement for title
+                parameters.Clear();
+                string titlePosition = hiddenRptTitle.Value;
+                // solve the problem here, unable to split string.
+                string[] coords = Regex.Split(titlePosition, ",");
+                ReportElement reportEleTitle = new ReportElement(reportId, lblRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
+                parameters.Add("@title", reportEleTitle);
                 coords = null;
+
+                // init reportElement for desc
+                string descPosition = hiddenRptDesc.Value;
+                coords = Regex.Split(descPosition, ",");
+                ReportElement reportEleDesc = new ReportElement(reportId, lblRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
+                parameters.Add("@desc", reportEleDesc);
+                coords = null;
+
+                // init reportElement for date
+                if (lblDate.Text != "")
+                {
+                    string datePosition = hiddenRptDate.Value;
+                    coords = Regex.Split(hiddenRptDate.Value, ",");
+                    ReportElement reportEleDate = new ReportElement(reportId, lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name);
+                    parameters.Add("@date", reportEleDate);
+                    coords = null;
+                }
+
+                //add element_type
+                sql = "INSERT INTO Element_type" + " (name, fontType) " + "VALUES " + "(@name, @fontType)";
+                rowsAffected = InsertUpdate(sql, parameters);
+
+
+                parameters.Clear();
+                sql = "INSERT INTO Report_body " + "(reportID, query)" + " VALUES " + "(@reportID, @query)";
+                string query = Session["query"].ToString();
+                Session.Remove("query");
+                parameters.Add("@reportID", reportId);
+                parameters.Add("@query", query);
+                rowsAffected = InsertUpdate(sql, parameters);
+
+                //add footer code if needed.
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Report saved successfully.')", true);
+                Response.Redirect("Homepage.aspx");
             }
-
-            //add element_type
-            sql = "INSERT INTO Element_type" + " (name, fontType) " + "VALUES " + "(@name, @fontType)";
-            rowsAffected = InsertUpdate(sql, parameters);
-
-
-            parameters.Clear();
-            sql = "INSERT INTO Report_body " + "(reportID, query)" + " VALUES " + "(@reportID, @query)";
-            string query = Session["query"].ToString();
-            parameters.Add("@reportID", reportId);
-            parameters.Add("@query", query);
-            rowsAffected = InsertUpdate(sql, parameters);
-
-            //add footer code if needed.
+            catch (SqlException ex) {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error saving report.')", true);
+            }
         }
         
         protected void BtnClear_Click(object sender, EventArgs e)
