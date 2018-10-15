@@ -76,6 +76,8 @@
       <DependentUpon>ElementDataDatabase.mdf</DependentUpon>
     </Content>
     <Content Include="BlankTemplateOption.aspx" />
+    <Content Include="ChooseReportUpdate.aspx" />
+    <Content Include="ChooseRetrieveUses.aspx" />
     <Content Include="ChooseTemplate1.aspx" />
     <Content Include="EditReport.aspx" />
     <Content Include="Homepage.aspx" />
@@ -111,6 +113,20 @@
     </Compile>
     <Compile Include="BlankTemplateOption.aspx.designer.cs">
       <DependentUpon>BlankTemplateOption.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChooseReportUpdate.aspx.cs">
+      <DependentUpon>ChooseReportUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChooseReportUpdate.aspx.designer.cs">
+      <DependentUpon>ChooseReportUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChooseRetrieveUses.aspx.cs">
+      <DependentUpon>ChooseRetrieveUses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChooseRetrieveUses.aspx.designer.cs">
+      <DependentUpon>ChooseRetrieveUses.aspx</DependentUpon>
     </Compile>
     <Compile Include="ChooseTemplate1.aspx.cs">
       <DependentUpon>ChooseTemplate1.aspx</DependentUpon>

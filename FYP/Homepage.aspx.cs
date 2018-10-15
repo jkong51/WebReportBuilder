@@ -21,7 +21,7 @@ namespace FYP
 
         protected void BtnUpdate_Click(object sender, EventArgs e)
         {
-            Response.Redirect("RetrieveReport.aspx");
+            Response.Redirect("ChooseRetrieveUses.aspx");
         }
     }
 }

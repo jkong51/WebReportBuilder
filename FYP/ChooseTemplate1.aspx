@@ -219,7 +219,7 @@
                                                 <asp:Button ID="addFilterBtn" runat="server" Text="Add Filter" OnClick="AddFilterBtn_Click"/>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <%--<tr>
                                             <th colspan="2" style="padding-bottom: 20px">FOOTER
                                             </th>
                                         </tr>
@@ -238,27 +238,33 @@
                                             <td>
                                                 <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" />
                                             </td>
-                                        </tr>
+                                        </tr>--%>
 
                                     </table>
                                     <asp:PlaceHolder id="filterTablePlaceHolder" Visible="false" runat="server">
-        <table align="center" id="filterTable">
-        <tr><th colspan="2">Choose Filters</th></tr>
-        <tbody>
-        <tr>
-            <td>
-                <asp:DropDownList ID="selectedItemDDL1" runat="server" OnSelectedIndexChanged="SelectedItemDDL1_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                <asp:DropDownList ID="conditionDDL" runat="server"></asp:DropDownList>
-               <%-- <asp:PlaceHolder ID="filterPlaceholder" runat="server"/>--%>
-                <asp:TextBox ID="filterBox1" runat="server"></asp:TextBox>
-            </td>
-           <%-- <td>
+                                        <table align="center" id="filterTable">
+                                            <tr>
+                                                <th colspan="2">Choose Filters</th>
+                                            </tr>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <asp:DropDownList ID="selectedItemDDL1" runat="server" OnSelectedIndexChanged="SelectedItemDDL1_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                                        <asp:DropDownList ID="conditionDDL" runat="server"></asp:DropDownList>
+                                                        <%-- <asp:PlaceHolder ID="filterPlaceholder" runat="server"/>--%>
+                                                        <asp:TextBox ID="filterBox1" runat="server"></asp:TextBox>
+                                                    </td>
+                                                    <%-- <td>
                 <asp:Button ID="addFilter" runat="server" Text="Add Filter"/>
             </td>--%>
-        </tr>
-            </tbody>
-    </table>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                         </asp:PlaceHolder>
+                                    <div>
+                                        
+                                        <hr />
+                                    </div>
                                     <asp:Button ID="Button1" runat="server" Text="Create" OnClick="Button1_Click" CssClass="button" />
                                 </div>
                             </ContentTemplate>

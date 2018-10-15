@@ -74,11 +74,11 @@
                 <table class="border2">
                     <tr>
                         <td>
-                            <p style="font-size:30px" class="head">UPDATE REPORT</p>
+                            <p style="font-size:30px" class="head">RETRIEVE REPORT</p>
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding:60px 30px" class="content">Get report details so that you can update the report details</td>
+                        <td style="padding:60px 30px" class="content">Get report details so that you can update or view the report details</td>
                     </tr>
                     <tr>
                         <td><asp:Button ID="btnUpdate" runat="server" Text="Get Started" CssClass="button" OnClick="BtnUpdate_Click"/></td>

@@ -1,9 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="RetrieveReport.aspx.cs" Inherits="FYP.Retrieve_report" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="ChooseReportUpdate.aspx.cs" Inherits="FYP.ChooseReportUpdate" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div style="text-align:left;padding-left:20px;background-color:white">
-        <h3>Select report for viewing purposes</h3>
+<div style="text-align:left;padding-left:20px;background-color:white">
+        <h3>Select report for editing purposes</h3>
     </div>
     <div style="width:100%;padding:20px;">
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT reportID, name, dateGenerated, description FROM Report WHERE (staffId = @staffId) AND (status = 1)">
@@ -36,5 +36,4 @@
             <SortedDescendingHeaderStyle BackColor="#242121" />
         </asp:GridView>
     </div>
-
 </asp:Content>
