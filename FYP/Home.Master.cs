@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -15,5 +16,6 @@ namespace FYP
             Label2.Text = (string)Session["faculty"];
             Label3.Text = (string)Session["department"];
         }
+
     }
 }

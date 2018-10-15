@@ -66,7 +66,7 @@
             }
         
     </style>
-    <title></title>
+    <title>i-Report Builder</title>
 </head>
 <body>
     <header>

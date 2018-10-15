@@ -23,6 +23,16 @@
         }
         
     </style>
+    <script type="text/javascript">
+        $("#btnLogout").ready(function () {
+            if (document.referrer != 'http://localhost:8181/') {
+                history.pushState(null, null, 'login');
+                window.addEventListener('popstate', function () {
+                    history.pushState(null, null, 'login');
+                });
+            }
+        });
+    </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -59,6 +69,11 @@
                     </td>  
                     <td>
                         <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button id="btnLogout"><a href="LoginPlaceholder.aspx">Logout</a></button>
                     </td>
                 </tr>
             </table>

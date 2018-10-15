@@ -151,7 +151,7 @@
         }
 
     </style>
-    <title>I-Report Builder</title>
+    <title>i-Report Builder</title>
 </head>
 <body>
     <form id="form1" runat="server">
