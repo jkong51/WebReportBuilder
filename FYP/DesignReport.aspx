@@ -122,12 +122,12 @@
             font-variant: small-caps;
             text-transform: uppercase;
             font-weight: bold;
-            position:absolute;
+            /*position:absolute;*/
         }
 
         .reportHeader2 {
             font-size: 20px;
-            position:absolute;
+            /*position:absolute;*/
         }
 
         .Mouse {

@@ -19,8 +19,8 @@
         }
         .lgcss{
             text-align:center;
-            padding-left:475px;
             overflow-x: hidden;
+
             /*padding-top: 20px;*/
             
         }
@@ -82,58 +82,64 @@
     </header>
     <form id="form1" runat="server">
         <div class="lgcss" style="text-align:center;">
-            <!-- change back to homepage after testing-->
-            <asp:Login ID="Login1" 
-                LoginButtonStyle-CssClass="lgbtncss" 
-                UserNameLabelText="Username: "  
-                runat="server" 
-                CssClass="loginCss" 
-                DestinationPageUrl="~/Homepage.aspx" 
-                OnAuthenticate="Login1_Authenticate"
-                TitleText="Login" 
-                DisplayRememberMe="false" 
-                TextBoxStyle-CssClass="txtcss">
-                <LayoutTemplate>
-                    <table align="center" cellpadding="18" style="border-collapse:collapse;padding:10px">
-                        <tr>
-                            <td>
-                                <table align="center" cellpadding="8">
+            <table align="center">
+                <tr>
+                    <td>
+                        <!-- change back to homepage after testing-->
+                        <asp:Login ID="Login1"
+                            LoginButtonStyle-CssClass="lgbtncss"
+                            UserNameLabelText="Username: "
+                            runat="server"
+                            CssClass="loginCss"
+                            DestinationPageUrl="~/Homepage.aspx"
+                            OnAuthenticate="Login1_Authenticate"
+                            TitleText="Login"
+                            DisplayRememberMe="false"
+                            TextBoxStyle-CssClass="txtcss">
+                            <LayoutTemplate>
+                                <table align="center" cellpadding="18" style="border-collapse: collapse; padding: 10px">
                                     <tr>
-                                        <th style="font-weight:500;text-align:left;font-size:23px;">ACCOUNT LOGIN</th>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align:left;font-weight:200;font-size:15px;">
-                                            <div style="padding-bottom:10px">USERNAME</div>
-                                            <asp:TextBox ID="UserName" placeholder="Please enter your username" runat="server" CssClass="txtcss"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align:left;font-weight:200;font-size:15px">
-                                            <div style="padding-bottom:10px">PASSWORD</div>
-                                            <asp:TextBox ID="Password" placeholder="Please enter your password" runat="server" CssClass="txtcss" TextMode="Password"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center" style="text-align:center;font-weight:200;font-size:15px;color:red;width:200px">
-                                            <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center">
-                                            <asp:Button ID="LoginButton" runat="server" CommandName="Login" CssClass="lgbtncss" Text="Log In" ValidationGroup="Login1" />
+                                        <td>
+                                            <table align="center" cellpadding="8">
+                                                <tr>
+                                                    <th style="font-weight: 500; text-align: left; font-size: 23px;">ACCOUNT LOGIN</th>
+
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: left; font-weight: 200; font-size: 15px;">
+                                                        <div style="padding-bottom: 10px">USERNAME</div>
+                                                        <asp:TextBox ID="UserName" placeholder="Please enter your username" runat="server" CssClass="txtcss"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: left; font-weight: 200; font-size: 15px">
+                                                        <div style="padding-bottom: 10px">PASSWORD</div>
+                                                        <asp:TextBox ID="Password" placeholder="Please enter your password" runat="server" CssClass="txtcss" TextMode="Password"></asp:TextBox>
+                                                        <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="text-align: center; font-weight: 200; font-size: 15px; color: red; width: 200px">
+                                                        <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center">
+                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" CssClass="lgbtncss" Text="Log In" ValidationGroup="Login1" />
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
                                 </table>
-                            </td>
-                        </tr>
-                    </table>
-                </LayoutTemplate>
-                <LoginButtonStyle CssClass="lgbtncss" />
-                <TextBoxStyle CssClass="txtcss" />
-            </asp:Login>
+                            </LayoutTemplate>
+                            <LoginButtonStyle CssClass="lgbtncss" />
+                            <TextBoxStyle CssClass="txtcss" />
+                        </asp:Login>
+                    </td>
+                </tr>
+            </table>
         </div>
     </form>
 </body>

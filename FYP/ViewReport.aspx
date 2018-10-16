@@ -152,11 +152,9 @@
                 <asp:Label ID="Label2" runat="server"></asp:Label>
                 <asp:Label ID="Label3" runat="server"></asp:Label>
             </asp:Panel>
-            <br />
-            <br />
-            <br />
+
             <%-- Report Content (Table) --%>
-            <div id="reportContent">
+            <div id="reportContent" style="padding-top:175px;padding-left:40px">
                 <asp:GridView ID="reportGridView" runat="server" CssClass="rpttable" CellPadding="10" HeaderStyle-CssClass="tableheader">
                 </asp:GridView>
             </div>
