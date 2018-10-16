@@ -22,42 +22,6 @@ namespace FYP {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// hiddenPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel hiddenPanel;
-        
-        /// <summary>
-        /// hiddenRptTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenRptTitle;
-        
-        /// <summary>
-        /// hiddenRptDesc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenRptDesc;
-        
-        /// <summary>
-        /// hiddenRptDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenRptDate;
-        
-        /// <summary>
         /// reportHeader control.
         /// </summary>
         /// <remarks>
@@ -67,31 +31,31 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.Panel reportHeader;
         
         /// <summary>
-        /// lblRptTitle control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRptTitle;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// lblRptDesc control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRptDesc;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// lblDate control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDate;
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
         /// reportGridView control.

@@ -23,7 +23,7 @@
         }
         
     </style>
-    <script type="text/javascript">
+<%--    <script type="text/javascript">
         $("#btnLogout").ready(function () {
             if (document.referrer != 'http://localhost:8181/') {
                 history.pushState(null, null, 'login');
@@ -32,7 +32,7 @@
                 });
             }
         });
-    </script>
+    </script>--%>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>

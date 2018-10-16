@@ -19,12 +19,12 @@
         <h3>Select report for viewing purposes</h3>
     </div>
     <div style="width:100%;padding:20px;">
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT DISTINCT Report.reportID, Report.name, Report.dateGenerated, Report.description FROM Report INNER JOIN report_right ON Report.reportID = report_right.reportId WHERE (Report.status = 1) AND (Report.staffId = @staffId) OR (Report.status = 1) AND (report_right.rights LIKE '%R%') AND (report_right.staffId = @staffId)">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT DISTINCT r.reportID, r.name, r.dateGenerated, r.description FROM Report r, report_right re WHERE (r.staffId = 4 AND r.status = 1) OR (re.rights LIKE '%R%' AND re.staffId = 4 AND r.status = 1)">
             <SelectParameters>
                 <asp:SessionParameter Name="staffId" SessionField="userId" />
             </SelectParameters>
         </asp:SqlDataSource>
-        <asp:GridView ID="GridView1" HeaderStyle-CssClass="GridHeader" Width="100%" runat="server" CssClass="grid" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1">
+        <asp:GridView ID="GridView1" HeaderStyle-CssClass="GridHeader" AllowPaging="true" Width="100%" runat="server" CssClass="grid" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1">
             <Columns>
                 <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
