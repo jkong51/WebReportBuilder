@@ -52,7 +52,7 @@ namespace FYP
                 else if (key != 0) {
                     newLabel.CssClass = "reportHeader2";
                 }
-                newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; right:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                 reportHeader.Controls.Add(newLabel);
             }
                 DataTable formTable = getFormData(Session["reportId"].ToString());

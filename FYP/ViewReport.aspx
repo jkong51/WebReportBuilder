@@ -87,7 +87,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <%--<div id="sidebar">
+        <div id="sidebar">
                         <table class="border">
                             <tr class="border">
                                 <td style="font-size: 30px;" colspan="2">
@@ -131,8 +131,8 @@
                                         </tr>
                                     </table>
                                 </td>
-                            </tr>--%>
-                            <%--<tr>
+                            </tr>
+<tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
                                     <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" OnClientClick="return confirm('Are you sure you want to submit?')" OnClick="BtnSave_Click"/></td>
                             </tr>
@@ -141,10 +141,10 @@
                                     <asp:Button runat="server" ID="BtnCancel" class="button" Text="Cancel" OnClick="BtnCancel_Click" /></td>
                             </tr>--%>
 
-<%--                        </table>
+                        </table>
 
-                    </div>--%>
-        <div style="padding: 50px;" id="containment-wrapper">
+                    </div>
+        <div style="padding: 50px;padding-left: 350px" id="containment-wrapper">
 
             <page size="A4">
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
