@@ -308,12 +308,11 @@
                                         <hr />
                                     </div>
                                     <table class="table1">
-                                        
                                         <tr>
                                             <th colspan="2" style="padding-bottom: 20px" class="th1">BODY
                                             </th>
                                         </tr>                               
-<%--                                        <tr>
+                                        <tr>
                                             <td class="td1">
                                                 <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the form to be used&lt;/strong&gt;"></asp:Label>
                                             </td>
@@ -344,9 +343,8 @@
                                             <td>
                                                 <asp:Button ID="addFilterBtn" runat="server" Text="Add Filter" OnClick="AddFilterBtn_Click"/>
                                             </td>
-                                        </tr>--%>
+                                        </tr>
                                     </table>
-                                    
                                     <div>
                                         
                                         <hr />
