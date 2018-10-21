@@ -54,10 +54,13 @@ namespace FYP
                 }
                 newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                 reportHeader.Controls.Add(newLabel);
-            }
+                }
                 DataTable formTable = getFormData(Session["reportId"].ToString());
+                
                 reportGridView.DataSource = formTable;
+                
                 reportGridView.DataBind();
+                
             }
         }
 

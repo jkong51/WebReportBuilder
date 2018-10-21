@@ -4,6 +4,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <script type="text/javascript">
+        $(function () {
+            $(".draggable").draggable(
+                { containment: "page", scroll: true },
+                {
+                    drag: function () {
+                        var offset = $(this).offset();
+                        var xPos = offset.left;
+                        var yPos = offset.top;
+                        $('#posX').text(xPos);
+                        $('#posY').text(yPos);
+                    }
+                });
+
+        });
+    </script>
     <style type="text/css">
         body {
             height: 100%;
@@ -127,9 +143,9 @@
 
             <page size="A4">
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
-                <asp:Label ID="Label1" runat="server"></asp:Label>
-                <asp:Label ID="Label2" runat="server"></asp:Label>
-                <asp:Label ID="Label3" runat="server"></asp:Label>
+                                <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server">123123123123</asp:Label><br />
+            <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server">12323123</asp:Label><br />
+            <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server">213123123</asp:Label>
             </asp:Panel>
 
             <%-- Report Content (Table) --%>

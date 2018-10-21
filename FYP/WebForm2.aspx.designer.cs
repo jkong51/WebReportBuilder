@@ -40,31 +40,31 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.Panel reportHeader;
         
         /// <summary>
-        /// Label1 control.
+        /// lblRptTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblRptTitle;
         
         /// <summary>
-        /// Label2 control.
+        /// lblRptDesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblRptDesc;
         
         /// <summary>
-        /// Label3 control.
+        /// lblDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label lblDate;
         
         /// <summary>
         /// reportGridView control.

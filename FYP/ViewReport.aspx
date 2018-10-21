@@ -52,13 +52,6 @@
             width:100%;
             /*padding:40px;*/
         }
-        .rpttable{ 
-            width: 90%; 
-            background-color: #fff;       
-        }
-        .tableheader{
-            background-color:aqua;
-        }
         
         #sidebar {
             height: 100%;
@@ -100,6 +93,27 @@
             color: rgb(80, 142, 245);
             cursor: pointer;
         }
+        .rpttable{ 
+            width: 90%; 
+            background-color: #fff;     
+        }
+        .tableheader{
+            background-color:rgb(230,230,230);
+            padding-top:20px;
+            text-transform:uppercase;
+
+        }
+        .rpttable td{ 
+            border-left:none;
+            border-right:none;
+            border-color:rgb(230,230,230);
+        }
+        .rpttable th{ 
+            vertical-align:bottom;
+            padding-bottom:0px;
+            padding-top:20px;
+            border:none;
+        }
 
     </style>
     <title>View Report</title>
@@ -133,7 +147,7 @@
 
             <%-- Report Content (Table) --%>
             <div id="reportContent" style="padding-top:175px;padding-left:40px">
-                <asp:GridView ID="reportGridView" runat="server" CssClass="rpttable" CellPadding="10" HeaderStyle-CssClass="tableheader">
+                <asp:GridView ID="reportGridView"  Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" CssClass="rpttable">
                 </asp:GridView>
             </div>
             <asp:Panel ID="reportFooter" runat="server">

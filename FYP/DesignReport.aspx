@@ -9,7 +9,6 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="css.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
     <script>
@@ -297,7 +296,7 @@
             <br />
             <%-- Report Content (Table) --%>
             <div id="reportContent">
-                <asp:GridView ID="reportGridView" Border="0" CellSpacing="3" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound">
+                <asp:GridView ID="reportGridView" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound">
        
                     </asp:GridView>
             </div>
