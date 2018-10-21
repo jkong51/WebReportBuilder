@@ -123,7 +123,9 @@ namespace FYP
                 lblRptTitle.ApplyStyle(primaryStyle);
                 lblRptDesc.ApplyStyle(primaryStyle);
                 lblDate.ApplyStyle(primaryStyle);
-            
+            reportGridView.ApplyStyle(primaryStyle);
+
+
         }
 
         protected void BtnSave_Click(object sender, EventArgs e)

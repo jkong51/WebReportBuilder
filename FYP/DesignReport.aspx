@@ -185,10 +185,24 @@
         }
         .rpttable{ 
             width: 90%; 
-            background-color: #fff;       
+            background-color: #fff;     
         }
         .tableheader{
-            background-color:aqua;
+            background-color:rgb(230,230,230);
+            padding-top:20px;
+            text-transform:uppercase;
+
+        }
+        .rpttable td{ 
+            border-left:none;
+            border-right:none;
+            border-color:rgb(230,230,230);
+        }
+        .rpttable th{ 
+            vertical-align:bottom;
+            padding-bottom:0px;
+            padding-top:20px;
+            border:none;
         }
 
     </style>
@@ -283,7 +297,7 @@
             <br />
             <%-- Report Content (Table) --%>
             <div id="reportContent">
-                <asp:GridView ID="reportGridView" runat="server" CssClass="rpttable" CellPadding="10" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound">
+                <asp:GridView ID="reportGridView" Border="0" CellSpacing="3" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound">
        
                     </asp:GridView>
             </div>

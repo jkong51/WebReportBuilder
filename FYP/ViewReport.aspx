@@ -80,6 +80,26 @@
                 top: 0;
 
             }
+            .button {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: rgb(7,153,127);
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            width: 100%;
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            border: 2px solid rgb(80, 142, 245);
+        }
+
+        .button:hover {
+            background-color: white;
+            color: rgb(80, 142, 245);
+            cursor: pointer;
+        }
 
     </style>
     <title>View Report</title>
@@ -95,52 +115,10 @@
                                     i-Report Builder
                                 </td>
                             </tr>
-                            <%--<tr class="border" style="border-bottom: none">
-                                <td style="padding-top: 15px; vertical-align: central" colspan="2">
-                                    <strong style="font-size: larger">Header & Footer</strong>
-                                    <br />
-                                    <table style="padding: 5px; text-align: left">
-                                        <tr>
-                                            <td>Font Style
-                                            </td>
-                                            <td>
-                                                <asp:DropDownList ClientIDMode="Static"  ID="fontFamilyDrpDwnList" AutoPostBack="True" runat="server" Width="100%" OnSelectedIndexChanged="ChangeFont">
-                                                </asp:DropDownList>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Report Title
-                                            </td>
-                                            <td>
-                                                <asp:TextBox ID="txtRptTitle" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Report Description
-                                            </td>
-                                            <td>
-                                                <asp:TextBox ID="txtRptDesc" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;"></asp:TextBox>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Table Content
-                                            </td>
-                                            <td>
-                                                <asp:Button runat="server" ID="Button1" class="button2" Text="Edit" />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-<tr>
-                                <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" OnClientClick="return confirm('Are you sure you want to submit?')" OnClick="BtnSave_Click"/></td>
-                            </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnCancel" class="button" Text="Cancel" OnClick="BtnCancel_Click" /></td>
-                            </tr>--%>
-
+                                    <asp:Button runat="server" ID="BtnBack" class="button" Text="Back"/></td>
+                            </tr>
                         </table>
 
                     </div>
