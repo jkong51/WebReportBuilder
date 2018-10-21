@@ -79,6 +79,7 @@
     <Content Include="ChooseReportUpdate.aspx" />
     <Content Include="ChooseRetrieveUses.aspx" />
     <Content Include="ChooseTemplate1.aspx" />
+    <Content Include="css.css" />
     <Content Include="EditReport.aspx" />
     <Content Include="Homepage.aspx" />
     <Content Include="LoginPlaceholder.aspx" />

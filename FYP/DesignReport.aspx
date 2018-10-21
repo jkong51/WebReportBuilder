@@ -5,8 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
     <script>
         $(function () {
             $(".draggable").draggable(
@@ -101,6 +106,40 @@
             background-color: white;
             color: rgb(80, 142, 245);
             cursor: pointer;
+        }
+
+        .table1 {
+            font-size: 15px;
+            padding: 15px 15px;
+        }
+
+        .td1 {
+            width: 200px;
+            text-align: right;
+            padding-right: 30px;
+        }
+
+        .textbox {
+            border-radius: 10px 10px;
+            font-size: 15px;
+            width: 300px;
+            padding: 8px 8px;
+        }
+
+        .lstbox {
+            border-radius: 10px 10px;
+            font-size: 15px;
+            width: 300px;
+            padding: 8px 8px;
+        }
+
+        .th1 {
+            font-size: 22px;
+        }
+
+        .chkbox input {
+            width: 15px;
+            height: 15px;
         }
 
         page {
@@ -200,7 +239,7 @@
                                             <td>Table Content
                                             </td>
                                             <td>
-                                                <asp:Button runat="server" ID="Button1" class="button2" Text="Edit" />
+                                                <button type="button" class="button btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="border-radius: initial">Edit</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -253,7 +292,75 @@
 <%--        </asp:Panel>--%>
                 
         </page>
-        </div>                           
+        </div> 
+        <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <asp:Panel ID="pnlControl" runat="server">
+                        <asp:UpdatePanel ID="updatePanel" runat="server">
+                            <ContentTemplate>
+                                <div class="modal-header">
+                                    <div>
+                                        <p style="font-size: 20px">Select Report Content</p>
+                                        <hr />
+                                    </div>
+                                    <table class="table1">
+                                        
+                                        <tr>
+                                            <th colspan="2" style="padding-bottom: 20px" class="th1">BODY
+                                            </th>
+                                        </tr>                               
+<%--                                        <tr>
+                                            <td class="td1">
+                                                <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the form to be used&lt;/strong&gt;"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="true" AppendDataBoundItems="true">
+                                                    <asp:ListItem>Select Table</asp:ListItem>
+                                                </asp:DropDownList>
+                                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT formId, title FROM Form WHERE (staffId = @staffId)">
+                                                    <SelectParameters>
+                                                        <asp:SessionParameter Name="staffId" SessionField="userId" />
+                                                    </SelectParameters>
+                                                </asp:SqlDataSource>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="false"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:CheckBoxList ID="CheckBoxList1" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true">
+                                                </asp:CheckBoxList>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="Label8" runat="server" Text="&lt;strong&gt;Choose Filters&lt;/strong&gt;"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:Button ID="addFilterBtn" runat="server" Text="Add Filter" OnClick="AddFilterBtn_Click"/>
+                                            </td>
+                                        </tr>--%>
+                                    </table>
+                                    
+                                    <div>
+                                        
+                                        <hr />
+                                    </div>
+                                    <asp:Button ID="Button2" runat="server" Text="Done" CssClass="button" />
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </asp:Panel>
+                </div>
+            </div>
+
+        </div>
+        </div>
 
     </form>
 </body>
