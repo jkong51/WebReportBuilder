@@ -33,13 +33,15 @@ namespace FYP
             {
                 tDate = "no";
             }
-
-            
             // build sql query here.
             string query = QueryBuilder();
             // add error message if first option is selected.
             Session.Add("query",query);
             Session.Add("wantDate", tDate);
+            //check if show footer is checked.
+            if (CheckBox3.Checked == true) {
+                Session.Add("countTitle",selectCount.SelectedItem.Text);
+            }
             // in the future, if more elements are added remember to generate a hidden field for each element intialized.
             Response.Redirect("~/DesignReport.aspx");
         }
@@ -110,8 +112,11 @@ namespace FYP
         // add items to filter dropdownlist if any checkbox item is checked.
         protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Session.Remove("tableName");
             selectedItemDDL1.Items.Clear();
+            selectCount.Items.Clear();
             ListItem firstele = new ListItem("", "", true);
+            int j = 0;
             selectedItemDDL1.Items.Add(firstele);
             for (int i = 0; i < CheckBoxList1.Items.Count; i++)
             {
@@ -119,6 +124,21 @@ namespace FYP
                 {
                     ListItem cbItem = new ListItem(CheckBoxList1.Items[i].Text, CheckBoxList1.Items[i].Value);
                     selectedItemDDL1.Items.Add(cbItem);
+
+                    DataTable dt = getDBInfo(CheckBoxList1.Items[i].Value);
+                    string rowType = "";
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (j == 0) {
+                            Session.Add("tableName", row["tableName"].ToString());
+                            j++;
+                        }
+                        rowType = getColumnType(row["colName"].ToString(), row["tableName"].ToString());
+                    }
+                    if (rowType == "int" || rowType == "double" || rowType == "decimal") {
+                        selectCount.Items.Add(cbItem);
+                        selectCount.SelectedIndex = 0;
+                    }
                 }
             }
             if (CheckBoxList1.SelectedIndex == -1) {
@@ -154,6 +174,7 @@ namespace FYP
                 // return non filtered query here.
             
         }
+
 
         // add dbName to param when needed
         private string getColumnType(string colName , string tableName)
@@ -276,6 +297,17 @@ namespace FYP
         protected void AddFilterBtn_Click(object sender, EventArgs e)
         {
             filterTablePlaceHolder.Visible = true;
+            //addFilter.Enabled = false;
+        }
+
+        protected void CheckBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckBox3.Checked == true) {
+                selectCount.Visible = true;
+            }
+            else {
+                selectCount.Visible = false;
+            }
         }
     }
 

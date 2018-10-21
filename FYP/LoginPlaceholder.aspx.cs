@@ -41,8 +41,8 @@ namespace FYP
                         Session["userId"] = userId;
                         Session["posId"] = posId;
                         // change back to homepage.aspx after testing
-                        //Response.Redirect("Homepage.aspx");
-                        Response.Redirect("WebForm4.aspx");
+                        Response.Redirect("Homepage.aspx");
+                        //Response.Redirect("WebForm4.aspx");
                     }
                 }
                 }

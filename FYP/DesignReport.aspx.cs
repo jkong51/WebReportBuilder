@@ -14,6 +14,11 @@ using System.Text.RegularExpressions;
 
 namespace FYP
 {
+    /*
+     Make footer savable.
+     Add a selection to display no duplicate records, and select the distinct column.
+     Add sum()/count() function to the report builder
+         */
     public class ReportElement {
         public int ReportID { get; set; }
         public string Value { get; set; }
@@ -76,6 +81,9 @@ namespace FYP
                 //add check db here if needed
                 DataTable formTable = getFormData(query);
                 reportGridView.DataSource = formTable;
+                if (Session["countTitle"] != null) {
+                    reportGridView.ShowFooter = true;
+                }
                 reportGridView.DataBind();
                 //implement a way to dynamically add/assign position for hidden fields based on position
 
@@ -296,6 +304,59 @@ namespace FYP
                 }
             }
             return rows;
+        }
+        
+        protected string sumCol(string rowName, string tableName) { // add db name if needed
+            string connectionString = ConfigurationManager.ConnectionStrings["FormDBConnection"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString)) {
+                string query = "SELECT SUM(" + rowName + ") FROM " + tableName; // manually add table name
+                con.Open();
+                SqlCommand cmd = new SqlCommand(query,con);
+                using (SqlDataReader reader = cmd.ExecuteReader()) {
+                    if (reader.Read())
+                    {
+                        return reader.GetValue(0).ToString();
+                    }
+                }
+            }
+            return null;
+        }
+
+        protected void reportGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Footer)
+            {
+                DataTable formTable = getFormData(Session["query"].ToString());
+                //get index of column
+                int count = 0;
+                foreach (DataColumn col in formTable.Columns)
+                {
+                    if (col.ColumnName == Session["countTitle"].ToString())
+                    {
+                        break;
+                    }
+                    else
+                        count++;
+                }
+                e.Row.Cells[count-1].Controls.Add(new Literal() { Text = "Total :" });
+                e.Row.Cells[count - 1].HorizontalAlign = HorizontalAlign.Right;
+                if (formTable.Columns[count].DataType.Name.ToString() == "Double")
+                {
+                    double total = formTable.AsEnumerable().Sum(row => row.Field<double>(Session["countTitle"].ToString()));
+                    e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
+                }
+                else if (formTable.Columns[count].DataType.Name.ToString() == "Int32" || formTable.Columns[count].DataType.Name.ToString() == "Int64" || formTable.Columns[count].DataType.Name.ToString() == "Int16")
+                {
+                    int total = formTable.AsEnumerable().Sum(row => row.Field<int>(Session["countTitle"].ToString()));
+                    e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
+                }
+                else if (formTable.Columns[count].DataType.Name.ToString() == "Decimal")
+                {
+                    Decimal total = formTable.AsEnumerable().Sum(row => row.Field<Decimal>(Session["countTitle"].ToString()));
+                    e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
+                }
+
+            }
         }
     }
 }

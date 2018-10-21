@@ -283,8 +283,9 @@
             <br />
             <%-- Report Content (Table) --%>
             <div id="reportContent">
-                <asp:GridView ID="reportGridView" runat="server" CssClass="rpttable" CellPadding="10" HeaderStyle-CssClass="tableheader">
-                </asp:GridView>
+                <asp:GridView ID="reportGridView" runat="server" CssClass="rpttable" CellPadding="10" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound">
+       
+                    </asp:GridView>
             </div>
             <asp:Panel ID="reportFooter" runat="server">
 
@@ -298,7 +299,7 @@
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
-                <div class="modal-content">
+                <%--<div class="modal-content">
                     <asp:Panel ID="pnlControl" runat="server">
                         <asp:UpdatePanel ID="updatePanel" runat="server">
                             <ContentTemplate>
@@ -354,7 +355,7 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </asp:Panel>
-                </div>
+                </div>--%>
             </div>
 
         </div>
