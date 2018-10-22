@@ -142,6 +142,7 @@
                 <div class="modal-content">
                     <asp:ScriptManager ID="ScriptManger1" runat="Server">
                     </asp:ScriptManager>
+
                     <asp:Panel ID="pnlControl" runat="server">
                         <asp:UpdatePanel ID="updatePanel" runat="server">
                             <ContentTemplate>
