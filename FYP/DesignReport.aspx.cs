@@ -535,38 +535,34 @@ namespace FYP
             {
                 // think about getting and passing formId if needed
                 string query = "SELECT mappingId, nameOfColumn, nameOfTable FROM Mapping WHERE formId = @formId";
-                List<string> checkboxSelection = new List<string>();
-                Boolean itemSelected = false;
-                foreach (ListItem listItem in CheckBoxList1.Items)
-                {
-                    if (listItem.Selected)
-                    {
-                        checkboxSelection.Add(listItem.Text);
-                        itemSelected = true;
-                    }
-                }
-                if (itemSelected == true)
-                {
-                    query += " AND nameOfTable = (SELECT DISTINCT nameOfTable FROM Mapping WHERE formId = @formId2) AND ";
-                    for (int i = 0; i < checkboxSelection.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            query += "nameOfColumn = '" + checkboxSelection[i].ToString() + "'";
-                        }
-                        else
-                        {
-                            query += " OR nameOfColumn = '" + checkboxSelection[i].ToString() + "'";
-                        }
-                    }
-                }
+                //List<string> checkboxSelection = new List<string>();
+                //Boolean itemSelected = false;
+                //foreach (ListItem listItem in CheckBoxList1.Items)
+                //{
+                //    if (listItem.Selected)
+                //    {
+                //        checkboxSelection.Add(listItem.Text);
+                //        itemSelected = true;
+                //    }
+                //}
+                //if (itemSelected == true) {
+                //    query += " AND nameOfTable = (SELECT DISTINCT nameOfTable FROM Mapping WHERE formId = @formId2) AND ";
+                //    for (int i = 0; i < checkboxSelection.Count; i++)
+                //    {
+                //        if (i == 0) {
+                //            query += "nameOfColumn = '" + checkboxSelection[i].ToString() + "'";
+                //        }
+                //        else {
+                //            query += " OR nameOfColumn = '" + checkboxSelection[i].ToString() + "'";
+                //        }
+                //    }
+                //}
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@formId", formId);
-                if (itemSelected == true)
-                {
-                    cmd.Parameters.AddWithValue("@formId2", formId);
-                }
+                //if (itemSelected == true) {
+                //    cmd.Parameters.AddWithValue("@formId2", formId);
+                //}
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
@@ -611,13 +607,28 @@ namespace FYP
             string tableNames = "";
             string columns = "";
             // add in filters here
+            List<string> checkboxSelection = new List<string>();
+            foreach (ListItem listItem in CheckBoxList1.Items)
+            {
+                if (listItem.Selected)
+                {
+                    checkboxSelection.Add(listItem.Text);
+                }
+            }
             for (int i = 0; i < colNameDT.Rows.Count; i++)
             {
                 //syntax dt.Rows[rowindex][columnName/columnIndex]
                 if (i == 0)
                 {
                     tableNames = colNameDT.Rows[i]["nameOfTable"].ToString();
-                    columns = colNameDT.Rows[i]["nameOfColumn"].ToString();
+                    foreach (string listItem in checkboxSelection)
+                    {
+                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
+                        {
+                            columns = colNameDT.Rows[i]["nameOfColumn"].ToString();
+                        }
+                    }
+
                 }
                 else if (i == colNameDT.Rows.Count - 1)
                 {
@@ -625,7 +636,15 @@ namespace FYP
                     {
                         tableNames += ", " + colNameDT.Rows[i]["nameOfTable"].ToString() + " ";
                     }
-                    columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString() + " ";
+
+                    foreach (string listItem in checkboxSelection)
+                    {
+                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
+                        {
+                            columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString() + " ";
+                        }
+                    }
+
                 }
                 else
                 {
@@ -633,7 +652,14 @@ namespace FYP
                     {
                         tableNames += ", " + colNameDT.Rows[i]["nameOfTable"].ToString();
                     }
-                    columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString();
+
+                    foreach (string listItem in checkboxSelection)
+                    {
+                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
+                        {
+                            columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString();
+                        }
+                    }
                 }
             }
             // insert query string here
@@ -662,7 +688,8 @@ namespace FYP
         // edit this save button to resubmit data on same page.
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Session["query"] = QueryBuilder();
+            string query = QueryBuilder();
+            Session["query"] = query;
             Session["rptTitle"] = lblRptTitle.Text;
             Session["rptDesc"] = lblRptDesc.Text;
             string wantDate = "";
