@@ -18,16 +18,12 @@
 
     </div>
     <div style="width:100%;padding:20px;">
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT DISTINCT Report.reportID, Report.name, Report.dateGenerated, Report.description
-FROM                   Report INNER JOIN
-                               report_right ON Report.reportID = report_right.reportId
-WHERE                  (Report.status = 1) AND (Report.staffId = @staffId) OR
-                               (Report.status = 1) AND (report_right.rights LIKE '%E%') AND (report_right.staffId = @staffId)">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT Report.reportID, Report.name, Report.dateGenerated, Report.description FROM Report INNER JOIN report_right ON Report.reportID = report_right.reportId WHERE (Report.status = 1) AND (report_right.staffId = @staffId) AND (report_right.rights LIKE '%E%')">
             <SelectParameters>
                 <asp:SessionParameter Name="staffId" SessionField="userId" />
             </SelectParameters>
         </asp:SqlDataSource>
-        <asp:GridView CssClass="grid" ID="GridView1" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1">
+        <asp:GridView CssClass="grid" ID="GridView1" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
             <Columns>
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="name" SortExpression="name" />

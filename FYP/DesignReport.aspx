@@ -2,19 +2,7 @@
 
 <!DOCTYPE html>
 <!-- 
-    
-    Ambiguous column name 'dateSubmitted'.
-Ambiguous column name 'dateSubmitted'.
-Ambiguous column name 'formId'.
-Ambiguous column name 'dateSubmitted'.
-Description: An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code. 
-
-Exception Details: System.Data.SqlClient.SqlException: Ambiguous column name 'dateSubmitted'.
-Ambiguous column name 'dateSubmitted'.
-Ambiguous column name 'formId'.
-Ambiguous column name 'dateSubmitted'.
-
-    fix edit
+    edit page use setStyle for positioning labels.
     -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 

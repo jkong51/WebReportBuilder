@@ -294,6 +294,7 @@ namespace FYP
                             cmd.ExecuteNonQuery();
                             cmd.Parameters.Clear();
                         }
+                        
                     }
                 }
                 if (isReportEle == false)
@@ -696,39 +697,3 @@ namespace FYP
         }
     }
 }
-
-
-//private HtmlInputHidden createHiddenField(Label label, int hiddenFieldID) {
-//    HtmlInputHidden hf = new HtmlInputHidden();
-//    hf.ID = hiddenFieldID.ToString();
-//    hf.Attributes["class"] = "hiddenFieldClass";
-//    return hf;
-//}
-
-//private int InitHiddenFields() {
-//    int objCount = 0;
-//    foreach (Control c in reportHeader.Controls) {
-//        //add additional types as they get added.
-//        if (c.GetType() == typeof(Label)) {
-//            Label tempLabel = (Label)c;
-//            HtmlInputHidden hf = createHiddenField(tempLabel,objCount);
-//            hiddenPanel.Controls.Add(hf);
-//            objCount++;
-//        }
-//    }
-//    return objCount;
-//}
-
-//private int countElements()
-//{
-//    int objCount = 0;
-//    foreach (Control c in reportHeader.Controls)
-//    {
-//        //add additional types as they get added.
-//        if (c.GetType() == typeof(Label))
-//        {
-//            objCount++;
-//        }
-//    }
-//    return objCount;
-//}
