@@ -112,6 +112,7 @@ namespace FYP
             }
             return dt;
         }
+
         protected void ChangeFont(object sender, EventArgs e)
         {
                 primaryStyle.Font.Name =
@@ -320,13 +321,7 @@ namespace FYP
             }
             return null;
         }
-
-        private void BindGridViewServer(GridView gv1)
-        {
-            DataTable formTable = getFormData(query);
-            gv1.DataSource = formTable;  //re-attach the datasource
-            gv1.DataBind();                 //get a page of data AllowPaging must be true
-        }
+       
 
         protected void reportGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {

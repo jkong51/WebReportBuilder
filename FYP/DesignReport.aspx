@@ -44,12 +44,8 @@
             <%=PostBackString %>
         });
         // update data everytime an object is moved.
-
-
-
-        
-        
     </script>
+
     <style type="text/css">
         body {
             height: 100%;

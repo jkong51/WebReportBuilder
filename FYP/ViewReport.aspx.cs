@@ -49,9 +49,7 @@ namespace FYP
                 reportHeader.Controls.Add(newLabel);
                 }
                 DataTable formTable = getFormData(Session["reportId"].ToString());
-                
                 reportGridView.DataSource = formTable;
-                
                 reportGridView.DataBind();
                 
             }
