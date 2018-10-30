@@ -46,7 +46,7 @@ namespace FYP
     {
         private Style primaryStyle = new Style();
         protected string PostBackString;
-        
+        protected string query;
             protected void Page_Load(object sender, EventArgs e)
         {   
             if (!Page.IsPostBack)
@@ -72,9 +72,10 @@ namespace FYP
                 txtRptDesc.Text = txtDesc;
 
                 //take variables to report
-                string query = Session["query"].ToString();
+                query = Session["query"].ToString();
                 //add check db here if needed
                 DataTable formTable = getFormData(query);
+                ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
                 if (Session["countTitle"] != null) {
                     reportGridView.ShowFooter = true;
@@ -319,6 +320,13 @@ namespace FYP
             return null;
         }
 
+        private void BindGridViewServer(GridView gv1)
+        {
+            DataTable formTable = getFormData(query);
+            gv1.DataSource = formTable;  //re-attach the datasource
+            gv1.DataBind();                 //get a page of data AllowPaging must be true
+        }
+
         protected void reportGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (Session["countTitle"] != null) {
@@ -535,34 +543,10 @@ namespace FYP
             {
                 // think about getting and passing formId if needed
                 string query = "SELECT mappingId, nameOfColumn, nameOfTable FROM Mapping WHERE formId = @formId";
-                //List<string> checkboxSelection = new List<string>();
-                //Boolean itemSelected = false;
-                //foreach (ListItem listItem in CheckBoxList1.Items)
-                //{
-                //    if (listItem.Selected)
-                //    {
-                //        checkboxSelection.Add(listItem.Text);
-                //        itemSelected = true;
-                //    }
-                //}
-                //if (itemSelected == true) {
-                //    query += " AND nameOfTable = (SELECT DISTINCT nameOfTable FROM Mapping WHERE formId = @formId2) AND ";
-                //    for (int i = 0; i < checkboxSelection.Count; i++)
-                //    {
-                //        if (i == 0) {
-                //            query += "nameOfColumn = '" + checkboxSelection[i].ToString() + "'";
-                //        }
-                //        else {
-                //            query += " OR nameOfColumn = '" + checkboxSelection[i].ToString() + "'";
-                //        }
-                //    }
-                //}
+                
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@formId", formId);
-                //if (itemSelected == true) {
-                //    cmd.Parameters.AddWithValue("@formId2", formId);
-                //}
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
@@ -621,13 +605,8 @@ namespace FYP
                 if (i == 0)
                 {
                     tableNames = colNameDT.Rows[i]["nameOfTable"].ToString();
-                    foreach (string listItem in checkboxSelection)
-                    {
-                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
-                        {
-                            columns = colNameDT.Rows[i]["nameOfColumn"].ToString();
-                        }
-                    }
+                    columns = checkboxSelection[0];
+                    checkboxSelection.RemoveAt(0);
 
                 }
                 else if (i == colNameDT.Rows.Count - 1)
@@ -706,6 +685,14 @@ namespace FYP
             }
 
             Response.Redirect("~/DesignReport.aspx");
+        }
+
+        protected void reportGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView gv = (GridView)sender;
+            reportGridView.DataSource = ViewState["formTable_data"];
+            reportGridView.PageIndex = e.NewPageIndex;
+            reportGridView.DataBind();
         }
     }
 }

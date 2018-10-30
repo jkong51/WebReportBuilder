@@ -303,8 +303,13 @@ Ambiguous column name 'dateSubmitted'.
             <br />
             <%-- Report Content (Table) --%>
             <div id="reportContent">
-                <asp:GridView ID="reportGridView" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound">
+                <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                <asp:GridView ID="reportGridView" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging">
+                
                 </asp:GridView>
+                        </ContentTemplate>
+                </asp:UpdatePanel>
             </div>                   
 <%--        </asp:Panel>--%>
         </page>

@@ -212,28 +212,7 @@ namespace FYP
             {
                 // think about getting and passing formId if needed
                 string query = "SELECT mappingId, nameOfColumn, nameOfTable FROM Mapping WHERE formId = @formId";
-                //List<string> checkboxSelection = new List<string>();
-                //Boolean itemSelected = false;
-                //foreach (ListItem listItem in CheckBoxList1.Items)
-                //{
-                //    if (listItem.Selected)
-                //    {
-                //        checkboxSelection.Add(listItem.Text);
-                //        itemSelected = true;
-                //    }
-                //}
-                //if (itemSelected == true) {
-                //    query += " AND nameOfTable = (SELECT DISTINCT nameOfTable FROM Mapping WHERE formId = @formId2) AND ";
-                //    for (int i = 0; i < checkboxSelection.Count; i++)
-                //    {
-                //        if (i == 0) {
-                //            query += "nameOfColumn = '" + checkboxSelection[i].ToString() + "'";
-                //        }
-                //        else {
-                //            query += " OR nameOfColumn = '" + checkboxSelection[i].ToString() + "'";
-                //        }
-                //    }
-                //}
+               
                 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@formId", formId);
@@ -299,13 +278,15 @@ namespace FYP
                     if (i == 0)
                     {
                     tableNames = colNameDT.Rows[i]["nameOfTable"].ToString();
-                    foreach (string listItem in checkboxSelection)
-                    {
-                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
-                        {
-                            columns = colNameDT.Rows[i]["nameOfColumn"].ToString();
-                        }
-                    }
+                    columns = checkboxSelection[0];
+                    checkboxSelection.RemoveAt(0);
+                    //foreach (string listItem in checkboxSelection)
+                    //{
+                    //    if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
+                    //    {
+                            
+                    //    }
+                    //}
 
                     }
                     else if (i == colNameDT.Rows.Count - 1)
