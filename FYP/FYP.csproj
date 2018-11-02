@@ -75,6 +75,14 @@
     <Content Include="App_Data\ElementDataDatabase_log.ldf">
       <DependentUpon>ElementDataDatabase.mdf</DependentUpon>
     </Content>
+    <Content Include="assets\demo.css" />
+    <Content Include="assets\images\demo-arrow-up.png" />
+    <Content Include="assets\navigation-basic.css" />
+    <Content Include="assets\navigation-dark.css" />
+    <Content Include="assets\navigation-icons.css" />
+    <Content Include="assets\navigation-round.css" />
+    <Content Include="assets\slicknav\jquery.slicknav.min.js" />
+    <Content Include="assets\slicknav\slicknav.min.css" />
     <Content Include="BlankTemplateOption.aspx" />
     <Content Include="ChooseReportUpdate.aspx" />
     <Content Include="ChooseRetrieveUses.aspx" />
@@ -82,6 +90,9 @@
     <Content Include="css.css" />
     <Content Include="EditReport.aspx" />
     <Content Include="Homepage.aspx" />
+    <Content Include="JavaScript.js" />
+    <Content Include="jquery-1.12.4.js" />
+    <Content Include="jquery-ui.js" />
     <Content Include="LoginPlaceholder.aspx" />
     <Content Include="RetrieveReport.aspx" />
     <Content Include="ViewReport.aspx" />

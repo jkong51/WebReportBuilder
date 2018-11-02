@@ -5,10 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<%--    <script src="JavaScript.js"></script>--%>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="jquery-ui.js"></script>
     <link rel="stylesheet" href="css.css"/>
+
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
     <script>
@@ -44,9 +45,9 @@
         // update data everytime an object is moved.
 
 
-
-        
-        
+        function newA4() {
+            document.write("<page size='A4'></page>");
+        }
     </script>
     <style type="text/css">
         body {
@@ -203,6 +204,15 @@
             padding-top:20px;
             border:none;
         }
+        .position1{
+            left: -84px; top: 64px;
+        }
+        .position2{
+            left: -242px; top: 66px;
+        }
+        .position3{
+            left: 310px; top: 92px;
+        }
 
     </style>
     <title>i-Report Builder</title>
@@ -285,9 +295,9 @@
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
             <asp:UpdatePanel ID="updatePanel1" runat="server">
                 <ContentTemplate>
-                <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server"></asp:Label><br />
-            <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
-            <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
+                <asp:Label ID="lblRptTitle" CssClass="reportHeader1 position1 draggable Mouse ui-widget-content"  runat="server"></asp:Label><br />
+            <asp:Label ID="lblRptDesc" CssClass="reportHeader2 position2 draggable Mouse" runat="server"></asp:Label><br />
+            <asp:Label ID="lblDate" CssClass="reportHeader2 position3 draggable Mouse" runat="server"></asp:Label>
             </ContentTemplate>
             </asp:UpdatePanel>
                     </asp:Panel>
@@ -296,7 +306,8 @@
             <br />
             <%-- Report Content (Table) --%>
             <div id="reportContent">
-                <asp:GridView ID="reportGridView" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound">
+                
+                <asp:GridView ID="reportGridView1" runat="server" ClientIDMode="Static" CssClass="rpttable" Border="0" ShowFooter="true"  CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView1_RowDataBound">
        
                     </asp:GridView>
             </div>
@@ -305,7 +316,11 @@
             </asp:Panel>                    
 <%--        </asp:Panel>--%>
                 
-        </page>
+        </page>           
+            <script type="text/javascript">
+                if()
+                newA4();
+            </script>
         </div> 
         <div class="container">
         <!-- Modal -->

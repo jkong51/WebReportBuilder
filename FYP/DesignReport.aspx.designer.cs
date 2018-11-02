@@ -157,13 +157,13 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.Label lblDate;
         
         /// <summary>
-        /// reportGridView control.
+        /// reportGridView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView reportGridView;
+        protected global::System.Web.UI.WebControls.GridView reportGridView1;
         
         /// <summary>
         /// reportFooter control.

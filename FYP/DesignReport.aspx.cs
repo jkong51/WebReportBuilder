@@ -57,7 +57,7 @@ namespace FYP
             if (!Page.IsPostBack)
             {
                 PostBackString = Page.ClientScript.GetPostBackEventReference(this, "saveOnClick");
-                string tdate = DateTime.Now.ToString("yyyy-MM-dd");
+                string tdate = DateTime.Now.ToString("dd-MM-yyyy");
                 string txtTitle = Session["rptTitle"].ToString();
                 string txtDesc = Session["rptDesc"].ToString();
                 string wantDate = Session["wantDate"].ToString();
@@ -80,11 +80,11 @@ namespace FYP
                 string query = Session["query"].ToString();
                 //add check db here if needed
                 DataTable formTable = getFormData(query);
-                reportGridView.DataSource = formTable;
+                reportGridView1.DataSource = formTable;
                 if (Session["countTitle"] != null) {
-                    reportGridView.ShowFooter = true;
+                    reportGridView1.ShowFooter = true;
                 }
-                reportGridView.DataBind();
+                reportGridView1.DataBind();
                 //implement a way to dynamically add/assign position for hidden fields based on position
 
                 foreach (FontFamily font in FontFamily.Families)
@@ -123,7 +123,7 @@ namespace FYP
                 lblRptTitle.ApplyStyle(primaryStyle);
                 lblRptDesc.ApplyStyle(primaryStyle);
                 lblDate.ApplyStyle(primaryStyle);
-            reportGridView.ApplyStyle(primaryStyle);
+            reportGridView1.ApplyStyle(primaryStyle);
 
 
         }
@@ -324,7 +324,7 @@ namespace FYP
             return null;
         }
 
-        protected void reportGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void reportGridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.Footer)
             {
