@@ -15,10 +15,10 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div style="text-align:left;padding-left:20px;">
+    <div style="text-align: left; padding-left: 20px;">
         <h3>Select report for viewing purposes</h3>
     </div>
-    <div style="width:100%;padding:20px;">
+    <div style="width: 100%; padding: 20px;">
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT Report.reportID, Report.name, Report.dateGenerated, Report.description FROM Report INNER JOIN report_right ON Report.reportID = report_right.reportId WHERE (Report.status = 1) AND (report_right.staffId = @staffId) AND (report_right.rights LIKE '%R%')">
             <SelectParameters>
                 <asp:SessionParameter Name="staffId" SessionField="userId" />
@@ -26,15 +26,16 @@
         </asp:SqlDataSource>
         <asp:GridView ID="GridView1" HeaderStyle-CssClass="GridHeader" AllowPaging="true" Width="100%" runat="server" CssClass="grid" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1">
             <Columns>
+
+                <%--                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />--%>
+                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="Name" SortExpression="name" />
+                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated" ApplyFormatInEditMode="true" DataFormatString="{0:d}"/>
+                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="Description" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
                 <asp:TemplateField ShowHeader="False">
-                <ItemTemplate>
-                <asp:Button ID="viewReportBtn" runat="server" Text="View" CausesValidation="false" OnClick="viewReportBtn_Click"/>
-                </ItemTemplate>
+                    <ItemTemplate>
+                        <asp:Button ID="viewReportBtn" runat="server" Text="View" CausesValidation="false" OnClick="viewReportBtn_Click" />
+                    </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="name" SortExpression="name" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="dateGenerated" SortExpression="dateGenerated" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="description" SortExpression="description" />
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" CssClass="head" />

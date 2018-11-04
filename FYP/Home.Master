@@ -119,7 +119,7 @@
     </nav>
     <nav class="menu-navigation-icons2">
         <ul class="menu2">
-            <li class="menu3"><a href="RetrieveReport.aspx" style="font-size:20px">Retrieve</a></li>
+            <li class="menu3"><a href="ChooseRetrieveUses.aspx" style="font-size:20px">Retrieve</a></li>
             <li class="menu3"><a href="#" style="font-size:20px">Delete</a></li>
         </ul>
     </nav>

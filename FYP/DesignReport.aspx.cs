@@ -214,14 +214,11 @@ namespace FYP
             }
         }
         
-        protected void BtnClear_Click(object sender, EventArgs e)
-        {
 
-        }
 
         protected void BtnCancel_Click(object sender, EventArgs e)
         {
-            
+            Response.Redirect("ChooseTemplate1.aspx");
         }
 
         public static int getReportID(string parameter, string parameter2)
@@ -686,6 +683,7 @@ namespace FYP
         protected void reportGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridView gv = (GridView)sender;
+            
             reportGridView.DataSource = ViewState["formTable_data"];
             reportGridView.PageIndex = e.NewPageIndex;
             reportGridView.DataBind();
