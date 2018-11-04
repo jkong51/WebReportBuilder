@@ -53,7 +53,7 @@ namespace FYP
             CheckBoxList1.Visible = true;
             DataTable dt = getMappingData(DropDownList1.SelectedValue);
             CheckBoxList1.DataValueField = "mappingId";
-            CheckBoxList1.DataTextField = "colName";
+            CheckBoxList1.DataTextField = "nameOfColumn";
             CheckBoxList1.DataSource = dt;
             CheckBoxList1.DataBind();
         }
@@ -67,7 +67,7 @@ namespace FYP
             string rowType = "";
             // returns only a single record, so change DT to something else later.
             foreach (DataRow row in dt.Rows) {
-                rowType = getColumnType(row["colName"].ToString(),row["tableName"].ToString());
+                rowType = getColumnType(row["nameOfColumn"].ToString(),row["nameOfTable"].ToString());
             }
             conditionDDL.Items.Clear();
             switch (rowType) {
@@ -112,7 +112,6 @@ namespace FYP
         // add items to filter dropdownlist if any checkbox item is checked.
         protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Session.Remove("tableName");
             selectedItemDDL1.Items.Clear();
             selectCount.Items.Clear();
             ListItem firstele = new ListItem("", "", true);
@@ -129,11 +128,11 @@ namespace FYP
                     string rowType = "";
                     foreach (DataRow row in dt.Rows)
                     {
-                        if (j == 0) {
-                            Session.Add("tableName", row["tableName"].ToString());
-                            j++;
-                        }
-                        rowType = getColumnType(row["colName"].ToString(), row["tableName"].ToString());
+                    //    if (j == 0) {
+                    //        Session.Add("nameOfTable", row["nameOfTable"].ToString());
+                    //        j++;
+                    //    }
+                        rowType = getColumnType(row["nameOfColumn"].ToString(), row["nameOfTable"].ToString());
                     }
                     if (rowType == "int" || rowType == "double" || rowType == "decimal") {
                         selectCount.Items.Add(cbItem);
@@ -150,14 +149,7 @@ namespace FYP
         private string QueryBuilder() {
             //check if filter option is selected.
             //checks if dropdownlist item is selected
-            List<string> checkboxSelection = new List<string>();
-            foreach (ListItem listItem in CheckBoxList1.Items)
-            {
-                if (listItem.Selected)
-                {
-                    checkboxSelection.Add(listItem.Value);
-                }
-            }
+            
             DataTable dt = getMappingData(DropDownList1.SelectedValue);
             string query = getColAndTable(dt);
 
@@ -177,13 +169,13 @@ namespace FYP
 
 
         // add dbName to param when needed
-        private string getColumnType(string colName , string tableName)
+        private string getColumnType(string nameOfColumn , string nameOfTable)
         {
             //change this to use with any different form databases.
             string connStr = ConfigurationManager.ConnectionStrings["FormDBConnection"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connStr))
             {
-                string query = string.Format("SELECT {0} FROM {1}", "[" + colName + "]", "[" + tableName + "]" );
+                string query = string.Format("SELECT {0} FROM {1}", "[" + nameOfColumn + "]", "[" + nameOfTable + "]" );
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -219,8 +211,14 @@ namespace FYP
             using (SqlConnection con = new SqlConnection(connStr))
             {
                 // think about getting and passing formId if needed
-                SqlCommand cmd = new SqlCommand("SELECT mappingId, colName, tableName FROM Mapping WHERE formId = @formId", con);
+                string query = "SELECT mappingId, nameOfColumn, nameOfTable FROM Mapping WHERE formId = @formId";
+               
+                
+                SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@formId", formId);
+                //if (itemSelected == true) {
+                //    cmd.Parameters.AddWithValue("@formId2", formId);
+                //}
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
@@ -236,13 +234,15 @@ namespace FYP
             }
         }
 
+
+
         private DataTable getDBInfo(string mappingId)
         {
             string connStr = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connStr))
             {
                 // think about getting and passing formId if needed
-                SqlCommand cmd = new SqlCommand("SELECT dbName, colName, tableName FROM Mapping WHERE mappingId = @mappingId", con);
+                SqlCommand cmd = new SqlCommand("SELECT nameOfDatabase, nameOfColumn, nameOfTable FROM Mapping WHERE mappingId = @mappingId", con);
                 cmd.Parameters.AddWithValue("@mappingId", mappingId);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -263,41 +263,72 @@ namespace FYP
         {
                 string tableNames = "";
                 string columns = "";
-                // add in filters here
-                for (int i = 0; i < colNameDT.Rows.Count; i++)
+            // add in filters here
+            List<string> checkboxSelection = new List<string>();
+            foreach (ListItem listItem in CheckBoxList1.Items)
+            {
+                if (listItem.Selected)
+                {
+                    checkboxSelection.Add(listItem.Text);
+                }
+            }
+            for (int i = 0; i < colNameDT.Rows.Count; i++)
                 {
                     //syntax dt.Rows[rowindex][columnName/columnIndex]
                     if (i == 0)
                     {
-                        tableNames = colNameDT.Rows[i]["tableName"].ToString();
-                        columns = colNameDT.Rows[i]["colName"].ToString();
+                    tableNames = colNameDT.Rows[i]["nameOfTable"].ToString();
+                    columns = checkboxSelection[0];
+                    checkboxSelection.RemoveAt(0);
+                    //foreach (string listItem in checkboxSelection)
+                    //{
+                    //    if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
+                    //    {
+                            
+                    //    }
+                    //}
+
                     }
                     else if (i == colNameDT.Rows.Count - 1)
                     {
-                        if (!colNameDT.Rows[i]["tableName"].ToString().Equals(colNameDT.Rows[i - 1]["tableName"].ToString()))
+                        if (!colNameDT.Rows[i]["nameOfTable"].ToString().Equals(colNameDT.Rows[i - 1]["nameOfTable"].ToString()))
                         {
-                            tableNames += ", " + colNameDT.Rows[i]["tableName"].ToString() + " ";
+                            tableNames += ", " + colNameDT.Rows[i]["nameOfTable"].ToString() + " ";
                         }
-                        columns += ", " + colNameDT.Rows[i]["colName"].ToString() + " ";
+
+                    foreach (string listItem in checkboxSelection)
+                    {
+                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
+                        {
+                            columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString() + " ";
+                        }
+                    }
+                    
                     }
                     else
                     {
-                        if (!colNameDT.Rows[i]["tableName"].ToString().Equals(colNameDT.Rows[i - 1]["tableName"].ToString()))
+                        if (!colNameDT.Rows[i]["nameOfTable"].ToString().Equals(colNameDT.Rows[i - 1]["nameOfTable"].ToString()))
                         {
-                            tableNames += ", " + colNameDT.Rows[i]["tableName"].ToString();
+                            tableNames += ", " + colNameDT.Rows[i]["nameOfTable"].ToString();
                         }
-                        columns += ", " + colNameDT.Rows[i]["colName"].ToString();
+
+                    foreach (string listItem in checkboxSelection)
+                    {
+                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
+                        {
+                            columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString();
+                        }
+                    }
                     }
                 }
                 // insert query string here
-                string query = "SELECT " + columns + "FROM " + tableNames;
+                string query = "SELECT " + columns + " FROM " + tableNames;
                 return query;
         }
 
         protected void AddFilterBtn_Click(object sender, EventArgs e)
         {
             filterTablePlaceHolder.Visible = true;
-            //addFilter.Enabled = false;
         }
 
         protected void CheckBox3_CheckedChanged(object sender, EventArgs e)

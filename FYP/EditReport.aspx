@@ -5,8 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css.css"/>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
     <script>
         $(function () {
             $(".draggable").draggable(
@@ -24,10 +28,9 @@
             // get data from hiddenfield to be stored in db
             $('#<%=BtnSave.ClientID%>').click(function () {
                 alert("Entered");
-                var lblTitle = $("#lblRptTitle");
-                var lblDesc = $("#lblRptDesc");
-                var lblDate = $("#lblDate");
-                document.getElementById('posX').value = "Changed.";
+                var lblTitle = $("#lbl0");
+                var lblDesc = $("#lbl1");
+                var lblDate = $("#lbl2");
                 var positionTitle = lblTitle.position();
                 var positionDesc = lblDesc.position();
 
@@ -99,21 +102,46 @@
             transition-duration: 0.4s;
             border: 2px solid rgb(80, 142, 245);
         }
-        .button2{
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            background-color: rgb(80, 142, 245);
-            color: white;
-            padding: 5px 32px;
-            text-decoration: none;
-            display: inline-block;
-            border: 2px solid rgb(80, 142, 245);
+
+        .button:hover {
+            background-color: white;
+            color: rgb(80, 142, 245);
+            cursor: pointer;
         }
 
-            .button:hover {
-                background-color: white;
-                color: rgb(80, 142, 245);
-                cursor: pointer;
-            }
+        .table1 {
+            font-size: 15px;
+            padding: 15px 15px;
+        }
+
+        .td1 {
+            width: 200px;
+            text-align: right;
+            padding-right: 30px;
+        }
+
+        .textbox {
+            border-radius: 10px 10px;
+            font-size: 15px;
+            width: 300px;
+            padding: 8px 8px;
+        }
+
+        .lstbox {
+            border-radius: 10px 10px;
+            font-size: 15px;
+            width: 300px;
+            padding: 8px 8px;
+        }
+
+        .th1 {
+            font-size: 22px;
+        }
+
+        .chkbox input {
+            width: 15px;
+            height: 15px;
+        }
 
         page {
             background: white;
@@ -134,10 +162,12 @@
             font-variant: small-caps;
             text-transform: uppercase;
             font-weight: bold;
+            /*position:absolute;*/
         }
 
         .reportHeader2 {
             font-size: 20px;
+            /*position:absolute;*/
         }
 
         .Mouse {
@@ -156,16 +186,33 @@
         }
         .rpttable{ 
             width: 90%; 
-            background-color: #fff;       
+            background-color: #fff;     
         }
         .tableheader{
-            background-color:aqua;
+            background-color:rgb(230,230,230);
+            padding-top:20px;
+            text-transform:uppercase;
+
         }
+        .rpttable td{ 
+            border-left:none;
+            border-right:none;
+            border-color:rgb(230,230,230);
+        }
+        .rpttable th{ 
+            vertical-align:bottom;
+            padding-bottom:0px;
+            padding-top:20px;
+            border:none;
+        }
+
     </style>
     <title>Edit Report</title>
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server" EnablePartialRendering="true">
+        </asp:ScriptManager>
     <div id="sidebar">
         <table class="border">
                             <tr class="border">
@@ -205,7 +252,7 @@
                                             <td>Table Content
                                             </td>
                                             <td>
-                                                <asp:Button runat="server" ID="Button1" class="button2" Text="Edit" />
+                                                <button type="button" class="button btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="border-radius: initial">Edit</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -231,23 +278,118 @@
                 <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
+                <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
             <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server">Gebainfdasid</asp:Label><br />
             <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server">Hello</asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server">Bello</asp:Label>
-            </asp:Panel>
+            </ContentTemplate>
+            </asp:UpdatePanel>
+                </asp:Panel>
             <br />
             <br />
             <br />
             <%-- Report Content (Table) --%>
-            <div id="reportContent">
-                <asp:GridView ID="reportGridView" runat="server" CssClass="rpttable" CellPadding="10" HeaderStyle-CssClass="tableheader">
+            <div id="reportContent" style="padding-top:175px;padding-left:40px">
+                <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                <asp:GridView ID="reportGridView" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging">
+                
                 </asp:GridView>
+                        </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
-            <asp:Panel ID="reportFooter" runat="server">
-
-            </asp:Panel>
         </page>
     </div>
+<div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <asp:Panel ID="pnlControl" runat="server">
+                        <asp:UpdatePanel ID="updatePanel" runat="server">  
+                            <ContentTemplate>
+                                <div class="modal-header">
+                                    <div>
+                                        <p style="font-size: 20px">Edit Table Content</p>
+                                        <hr />
+                                    </div>
+                                    <table class="table1">
+                                        <tr>
+                                            <td class="td1">
+                                                <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the form to be used&lt;/strong&gt;"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AppendDataBoundItems="true" AutoPostBack="true">
+                                                    <asp:ListItem>Select Table</asp:ListItem>
+                                                </asp:DropDownList>
+                                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT formId, title FROM Form WHERE (staffId = @staffId)">
+                                                    <SelectParameters>
+                                                        <asp:SessionParameter Name="staffId" SessionField="userId" />
+                                                    </SelectParameters>
+                                                </asp:SqlDataSource>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="false"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:CheckBoxList ID="CheckBoxList1" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true">
+                                                </asp:CheckBoxList>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="td1">
+                                                <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged"/>
+                                            </td>
+                                        </tr>
+                                        <%--<asp:PlaceHolder runat="server" ID="totalCount">--%>
+                                            <tr>
+                                                <td>
+                                                    <asp:DropDownList ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
+                                                </td>
+                                            </tr>
+                                        <%--</asp:PlaceHolder>--%>
+                                    </table>
+                                    <div>
+                                        <hr />
+                                    </div>
+                                    <div>
+                                        <asp:PlaceHolder id="filterTablePlaceHolder" Visible="false" runat="server">
+                                        <table>
+                                            <tr>
+                                            <td>
+                                                <asp:Label ID="Label8" runat="server" Text="&lt;strong&gt;Choose Filters&lt;/strong&gt;"></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                    <td>
+                                                        <asp:DropDownList ID="selectedItemDDL1" runat="server" OnSelectedIndexChanged="SelectedItemDDL1_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                                        <asp:DropDownList ID="conditionDDL" runat="server"></asp:DropDownList>
+                                                        <asp:TextBox ID="filterBox1" runat="server"></asp:TextBox>
+                                                    </td>
+                                                <td>
+                                                    <asp:Button ID="addFilter" runat="server" Text="Add Filter"/>
+                                                </td>
+                                        </tr>
+                                       </table>
+                                        </asp:PlaceHolder>
+                                    </div>
+                                    <asp:Button ID="Button2" runat="server" Text="Create" OnClick="Button1_Click" CssClass="button" />
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </asp:Panel>
+                </div>
+            </div>
+
+        </div>
+        </div>
                 </form>
 </body>
 

@@ -16,6 +16,15 @@ namespace FYP
 
         protected void editReportBtn_Click(object sender, EventArgs e)
         {
+            Button btn = (Button)sender;
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            string reportId = gvr.Cells[0].Text;
+            Session["reportId"] = reportId;
+            Response.Redirect("EditReport.aspx");
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

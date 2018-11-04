@@ -39,13 +39,6 @@ namespace FYP
                 header_element headEle = (header_element)headerEleDictionary[key];
                 newLabel.Text = headEle.Value;
                 newLabel.ID = "lbl" + key;
-                //newLabel.Style[HtmlTextWriterStyle.Position] = "Absolute";
-                //newLabel.Style[HtmlTextWriterStyle.Top] = headEle.YPos + "px";
-                //newLabel.Style[HtmlTextWriterStyle.MarginRight] = headEle.XPos + "px";
-                //newLabel.Style[HtmlTextWriterStyle.FontFamily] = headEle.FontType;
-                // fix going out of a4 sheet.
-                //newLabel.Style[HtmlTextWriterStyle.R]
-                // assign appropriate css class to labels.
                 if (key == 0) {
                     newLabel.CssClass = "reportHeader1";
                 }
@@ -56,9 +49,7 @@ namespace FYP
                 reportHeader.Controls.Add(newLabel);
                 }
                 DataTable formTable = getFormData(Session["reportId"].ToString());
-                
                 reportGridView.DataSource = formTable;
-                
                 reportGridView.DataBind();
                 
             }
