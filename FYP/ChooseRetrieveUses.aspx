@@ -2,13 +2,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <style type="text/css">
         .head {
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            cursor: default
+            /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+            font-family: 'lato', sans-serif;
+            cursor: default;
+            font-weight:bold;
         }
 
         .content {
             font-size: larger;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-family: 'lato', sans-serif;
+            /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
             cursor: pointer;
         }
 
@@ -62,7 +65,7 @@
                     <table class="border2">
                         <tr>
                             <td>
-                                <p style="font-size: 30px" class="head">VIEW REPORT</p>
+                                <p style="font-size: 27px" class="head">VIEW REPORT</p>
                             </td>
                         </tr>
                         <tr>
@@ -80,7 +83,7 @@
                     <table class="border2">
                         <tr>
                             <td>
-                                <p style="font-size: 30px" class="head">EDIT REPORT</p>
+                                <p style="font-size: 27px" class="head">EDIT REPORT</p>
                             </td>
                         </tr>
                         <tr>

@@ -9,7 +9,8 @@
     <style type="text/css">
         body {
             height: 100%;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+            font-family: 'lato', sans-serif;
             text-align: center;
             background-image: url(91b674b96a3cc7b5c542e0bcd432d52e.jpg);
             background-repeat: no-repeat;
@@ -25,7 +26,8 @@
             
         }
         .loginCss{
-            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            /*font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+            font-family: 'lato', sans-serif;
             width:400px;
             height:250px;
             text-align:center;
@@ -46,7 +48,8 @@
         }
         
         .lgbtncss{
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+            font-family: 'lato', sans-serif;
             background-color: rgb(80, 142, 245);
             color: white;
             padding: 15px 32px;

@@ -2,13 +2,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .head{           
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            cursor:default
+            /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+            font-family: 'lato', sans-serif;
+            cursor:default;
+            font-weight:bold;
         }
         
         .content{
             font-size:larger;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+            font-family: 'lato', sans-serif;
             cursor:pointer;
         }
         .border1 {
@@ -27,7 +30,8 @@
             height: 300px;
         }
         .button {
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+            font-family: 'lato', sans-serif;
             background-color: rgb(80, 142, 245);
             color: white;
             padding: 15px 32px;
@@ -55,7 +59,7 @@
                 <table class="border2">
                     <tr>
                         <td>
-                            <p style="font-size:30px" class="head">CREATE REPORT</p>
+                            <p style="font-size:27px" class="head">CREATE REPORT</p>
                         </td>
                     </tr>
                     <tr>
@@ -74,7 +78,7 @@
                 <table class="border2">
                     <tr>
                         <td>
-                            <p style="font-size:30px" class="head">RETRIEVE REPORT</p>
+                            <p style="font-size:27px" class="head">RETRIEVE REPORT</p>
                         </td>
                     </tr>
                     <tr>
@@ -92,7 +96,7 @@
                 <table class="border2">
                     <tr>
                         <td>
-                            <p style="font-size:30px" class="head">DELETE REPORT</p>
+                            <p style="font-size:27px" class="head">DELETE REPORT</p>
                         </td>
                     </tr>
                     <tr>

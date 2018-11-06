@@ -75,14 +75,14 @@
             }
             .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            background-color: rgb(7,153,127);
+            background-color: rgb(80, 142, 245);
             color: white;
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 20px;
-            width: 100%;
+            width: 70%;
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
             border: 2px solid rgb(80, 142, 245);
@@ -131,7 +131,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnBack" class="button" Text="Back"/></td>
+                                <a href="ChooseRetrieveUses.aspx" class="button">Back</a></td>
                             </tr>
                         </table>
 

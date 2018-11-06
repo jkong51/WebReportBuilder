@@ -12,6 +12,12 @@
         .grid {
             font-size:20px;
         }
+        .hiddencol { display: none; }
+        .button{
+            padding: 0;
+border: none;
+background: none;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -26,14 +32,14 @@
         </asp:SqlDataSource>
         <asp:GridView ID="GridView1" HeaderStyle-CssClass="GridHeader" AllowPaging="true" Width="100%" runat="server" CssClass="grid" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1">
             <Columns>
-
-                <%--                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />--%>
+                <asp:BoundField HeaderStyle-CssClass="GridHeader hiddencol" ItemStyle-CssClass="hiddencol" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="Name" SortExpression="name" />
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated" ApplyFormatInEditMode="true" DataFormatString="{0:d}"/>
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="Description" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
                 <asp:TemplateField ShowHeader="False">
+                    <HeaderTemplate>Action</HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Button ID="viewReportBtn" runat="server" Text="View" CausesValidation="false" OnClick="viewReportBtn_Click" />
+                        <asp:Button ID="viewReportBtn" CssClass="button" runat="server" Text="View" CausesValidation="false" OnClick="viewReportBtn_Click" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
