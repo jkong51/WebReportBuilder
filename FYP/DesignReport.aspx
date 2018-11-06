@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <!-- 
     edit page use setStyle for positioning labels.
+    bugs
+    - count shows on every column, make it so that it counts only the total for each page.
+    - distinct select feature
+    - count does not go away after editing table
+    - Hide reportID, display only date. shift view button to the other side.
+    - Left justify description.
     -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 
