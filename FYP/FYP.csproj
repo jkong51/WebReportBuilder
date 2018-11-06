@@ -84,6 +84,7 @@
     <Content Include="assets\slicknav\jquery.slicknav.min.js" />
     <Content Include="assets\slicknav\slicknav.min.css" />
     <Content Include="BlankTemplateOption.aspx" />
+    <Content Include="ChooseReportToDisable.aspx" />
     <Content Include="ChooseReportUpdate.aspx" />
     <Content Include="ChooseRetrieveUses.aspx" />
     <Content Include="ChooseTemplate1.aspx" />
@@ -125,6 +126,13 @@
     </Compile>
     <Compile Include="BlankTemplateOption.aspx.designer.cs">
       <DependentUpon>BlankTemplateOption.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChooseReportToDisable.aspx.cs">
+      <DependentUpon>ChooseReportToDisable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChooseReportToDisable.aspx.designer.cs">
+      <DependentUpon>ChooseReportToDisable.aspx</DependentUpon>
     </Compile>
     <Compile Include="ChooseReportUpdate.aspx.cs">
       <DependentUpon>ChooseReportUpdate.aspx</DependentUpon>
