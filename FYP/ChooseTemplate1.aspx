@@ -223,14 +223,6 @@
                                         </tr>
                                         <tr>
                                             <td class="td1">
-                                                <asp:Label ID="Label5" runat="server" Text="Label"><strong>Show Page Number</strong></asp:Label>
-                                            </td>
-                                            <td>
-                                                <asp:CheckBox ID="CheckBox2" CssClass="chkbox" runat="server" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td1">
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                             </td>
                                             <td>
