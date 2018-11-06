@@ -25,10 +25,10 @@
         </asp:SqlDataSource>
         <asp:GridView CssClass="grid" ID="GridView1" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
             <Columns>
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="name" SortExpression="name" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="dateGenerated" SortExpression="dateGenerated" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="description" SortExpression="description" />
+<%--                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />--%>
+                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="Name" SortExpression="name" />
+                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated"  ApplyFormatInEditMode="true" DataFormatString="{0:d}"/>
+                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="Description" HeaderStyle-HorizontalAlign="Left" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
                 <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
                 <asp:Button ID="editReportBtn" runat="server" Text="Edit" CausesValidation="false" OnClick="editReportBtn_Click"/>

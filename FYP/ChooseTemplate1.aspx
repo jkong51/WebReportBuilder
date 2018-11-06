@@ -87,7 +87,12 @@
             height: 15px;
         }
     </style>
-
+    <script type="text/javascript">
+        function Count() {
+            var i = document.getElementById("txtRptTitle").value.length;
+            document.getElementById("remainingChr").innerHTML = 50 - i;
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
@@ -161,7 +166,7 @@
                                                 <asp:Label ID="Label1" runat="server" Text="Label"><strong>Report Title</strong></asp:Label>
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptTitle" CssClass="textbox" runat="server" ToolTip="Report title" placeholder="Report title"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptTitle" CssClass="textbox" runat="server" ToolTip="Report title" placeholder="Report title" MaxLength="50" onkeyup="Count()"></asp:TextBox><asp:Label ID="remainingChr" runat="server"></asp:Label>
                                                 <br />
                                             </td>
                                         </tr>
@@ -170,7 +175,7 @@
                                                 <asp:Label ID="Label2" runat="server" Text="Label"><strong>Report Description</strong></asp:Label>
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptDesc" CssClass="textbox" runat="server" ToolTip="Report description" placeholder="Report description"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptDesc" CssClass="textbox" runat="server" ToolTip="Report description" placeholder="Report description" MaxLength="50"></asp:TextBox>
                                                 <br />
                                             </td>
                                         </tr>

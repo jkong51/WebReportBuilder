@@ -164,11 +164,13 @@
             font-variant: small-caps;
             text-transform: uppercase;
             font-weight: bold;
+            text-wrap:normal;
             /*position:absolute;*/
         }
 
         .reportHeader2 {
             font-size: 20px;
+            text-wrap:normal;
             /*position:absolute;*/
         }
 
@@ -186,6 +188,7 @@
             width:100%;
             padding:40px;
         }
+        
         .rpttable{ 
             width: 90%; 
             background-color: #fff;     
@@ -207,6 +210,30 @@
             padding-top:20px;
             border:none;
         }
+        .GridPager a, .GridPager span
+    {
+        display: block;
+        height: 15px;
+        width: 15px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        padding:3px;
+    }
+    .GridPager a
+    {
+        padding:3px;
+        background-color: #f5f5f5;
+        color: #969696;
+        border: 1px solid #969696;
+    }
+    .GridPager span
+    {
+        padding:3px;
+        background-color: #A1DCF2;
+        color: #000;
+        border: 1px solid #3AC0F2;
+    }
 
     </style>
     <title>i-Report Builder</title>
@@ -240,14 +267,14 @@
                                             <td>Report Title
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptTitle" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptTitle" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Report Description
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptDesc" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptDesc" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;"></asp:TextBox>
                                             </td>
                                         </tr>
                                         <tr>
@@ -266,7 +293,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnCancel" class="button" Text="Cancel" OnClick="BtnCancel_Click" /></td>
+                                    <asp:Button ID="Button2" runat="server" Text="Button" CssClass="button" OnClick="BtnCancel_Click" /></td>
                             </tr>
 
                         </table>
@@ -283,7 +310,7 @@
             <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
             <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server"></asp:Label><br />
-            <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
+            <asp:Label ID="lblRptDesc"  CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
             </ContentTemplate>
             </asp:UpdatePanel>
@@ -295,8 +322,8 @@
             <div id="reportContent">
                 <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                <asp:GridView ID="reportGridView" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging">
-                
+                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging" PageSize="20">               
+                <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
                         </ContentTemplate>
                 </asp:UpdatePanel>
