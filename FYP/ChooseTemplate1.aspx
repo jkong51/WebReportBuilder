@@ -4,13 +4,16 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <style type="text/css">
         .head {
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            cursor: default
+            /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+            font-family: 'lato', sans-serif;
+            cursor: default;
+            font-weight:bold;
         }
 
         .content {
             font-size: larger;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
+            font-family: 'lato', sans-serif;
             cursor: pointer;
         }
 
@@ -102,7 +105,7 @@
                     <table class="border2">
                         <tr>
                             <td>
-                                <p style="font-size: 30px" class="head">BLANK TEMPLATE</p>
+                                <p style="font-size: 27px" class="head">BLANK TEMPLATE</p>
                             </td>
                         </tr>
                         <tr>
@@ -121,7 +124,7 @@
                     <table class="border2">
                         <tr>
                             <td>
-                                <p style="font-size: 30px" class="head">EXIST TEMPLATE</p>
+                                <p style="font-size: 27px" class="head">EXIST TEMPLATE</p>
                             </td>
                         </tr>
                         <tr>

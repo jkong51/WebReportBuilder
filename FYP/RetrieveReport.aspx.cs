@@ -18,7 +18,7 @@ namespace FYP
         {
             Button btn = (Button)sender;
             GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-            string reportId = gvr.Cells[1].Text;
+            string reportId = gvr.Cells[0].Text;
             Session["reportId"] = reportId;
             Response.Redirect("ViewReport.aspx");
         }

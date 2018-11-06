@@ -118,12 +118,17 @@ namespace FYP
             }
             return dt;
         }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ChooseRetrieveUses.aspx");
+        }
         /* 
-         * >> label.Attributes.Add("style", "top:10; right:10; position:absolute;"); <<
-         Things that need to be done
-         ** reportId is in session **
-         - Get position and values of labels, and initialize them into the form.
-         - Populate the data in the column.
-         */
+* >> label.Attributes.Add("style", "top:10; right:10; position:absolute;"); <<
+Things that need to be done
+** reportId is in session **
+- Get position and values of labels, and initialize them into the form.
+- Populate the data in the column.
+*/
     }
 }
