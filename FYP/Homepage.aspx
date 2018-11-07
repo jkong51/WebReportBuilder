@@ -103,7 +103,7 @@
                         <td style="padding:60px 30px" class="content">Delete the existing report that you think no need anymore</td>
                     </tr>
                     <tr>
-                        <td><asp:Button ID="btnDelete" runat="server" Text="Get Started" CssClass="button" /></td>
+                        <td><asp:Button ID="btnDelete" runat="server" Text="Get Started" CssClass="button" OnClick="btnDelete_Click" /></td>
                     </tr>
                 </table>
             </td>

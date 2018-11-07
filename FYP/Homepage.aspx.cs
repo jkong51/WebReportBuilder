@@ -23,5 +23,10 @@ namespace FYP
         {
             Response.Redirect("ChooseRetrieveUses.aspx");
         }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ChooseReportToDisable.aspx");
+        }
     }
 }
