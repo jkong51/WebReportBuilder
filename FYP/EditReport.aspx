@@ -18,19 +18,18 @@
                 {
                     drag: function () {
                         var offset = $(this).offset();
-					    var xPos = offset.left;
-                        var yPos = offset.top;
-					    $('#posX').text(xPos);
-                        $('#posY').text(yPos);
+					    //var xPos = offset.left;
+                       // var yPos = offset.top;
+					    //$('#posX').text(xPos);
+         //               $('#posY').text(yPos);
                     }
                 });
 
             // get data from hiddenfield to be stored in db
             $('#<%=BtnSave.ClientID%>').click(function () {
-                alert("Entered");
-                var lblTitle = $("#lbl0");
-                var lblDesc = $("#lbl1");
-                var lblDate = $("#lbl2");
+                var lblTitle = $("#lblRptTitle");
+                var lblDesc = $("#lblRptDesc");
+                var lblDate = $("#lblDate");
                 var positionTitle = lblTitle.position();
                 var positionDesc = lblDesc.position();
 
@@ -260,7 +259,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" /></td>
+                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" OnClick="BtnSave_Click" /></td>
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
@@ -280,9 +279,9 @@
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
                 <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-            <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server">Gebainfdasid</asp:Label><br />
-            <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server">Hello</asp:Label><br />
-            <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server">Bello</asp:Label>
+            <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server"></asp:Label><br />
+            <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
+            <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
             </ContentTemplate>
             </asp:UpdatePanel>
                 </asp:Panel>

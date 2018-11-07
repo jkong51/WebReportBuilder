@@ -140,9 +140,7 @@
 
             <page size="A4">
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
-                <asp:Label ID="Label1" runat="server"></asp:Label>
-                <asp:Label ID="Label2" runat="server"></asp:Label>
-                <asp:Label ID="Label3" runat="server"></asp:Label>
+                
             </asp:Panel>
 
             <%-- Report Content (Table) --%>

@@ -48,7 +48,7 @@ namespace FYP
         protected string PostBackString;
         protected string query;
             protected void Page_Load(object sender, EventArgs e)
-        {   
+            {   
             if (!Page.IsPostBack)
             {
                 PostBackString = Page.ClientScript.GetPostBackEventReference(this, "saveOnClick");

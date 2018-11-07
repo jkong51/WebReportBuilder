@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Caching;
 using System.Web.UI;
@@ -36,7 +37,7 @@ namespace FYP
         }
 
         private Style primaryStyle = new Style();
-        protected string query;
+        protected static string query;
         protected static string reportId;
         protected void Page_Load(object sender, EventArgs e)
         {   
@@ -45,30 +46,41 @@ namespace FYP
                 Dictionary<int, object> headerEleDictionary = getHeadEle(System.Convert.ToInt32(Session["reportId"].ToString()));
                 foreach (int key in headerEleDictionary.Keys)
                 {
-                    Label newLabel = new Label();
+                    //Label newLabel = new Label();
                     header_element headEle = (header_element)headerEleDictionary[key];
                     //set title
                     if (key == 0)
                     {
                         //label is title
                         lblRptTitle.Text = headEle.Value;
+                        txtRptTitle.Text = headEle.Value;
+                        hiddenRptTitle.Value = headEle.XPos+","+headEle.YPos;
                         lblRptTitle.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                     }
                     else if (key == 1)
                     {
                         //lbl1 is desc. lbl2 is date(if have)
                         lblRptDesc.Text = headEle.Value;
+                        txtRptDesc.Text = headEle.Value;
+                        hiddenRptDesc.Value = headEle.XPos + "," + headEle.YPos;
                         lblRptDesc.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                     }
                     else if (key == 2) {
                         lblDate.Text = headEle.Value;
+                        hiddenRptDate.Value = headEle.XPos + "," + headEle.YPos;
                         lblDate.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                     }
                     //newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                     //reportHeader.Controls.Add(newLabel);
                 }
                 reportId = Session["reportId"].ToString();
-                query = getQuery(Session["reportId"].ToString());
+                if (query == null)
+                {
+                    query = getQuery(Session["reportId"].ToString());
+                }
+                else {
+                    query = Session["query"].ToString();
+                }
                 DataTable formTable = getFormData(query);
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
@@ -540,29 +552,164 @@ namespace FYP
                 wantDate = "yes";
             }
             Session["wantDate"] = wantDate;
-            //foreach (Control c in updatePanel1.Controls)
-            //{
-            //    if (c.ClientID == "lbl0")
-            //    {
-            //        Session["rptTitle"] = ((Label)c).Text;
-            //    }
-            //    else if (c.ClientID == "lbl1")
-            //    {
-            //        Session["rptDesc"] = ((Label)c).Text;
-            //    }
-            //    else if (c.ClientID == "lbl2")
-            //    {
-            //        Session["wantDate"] = "yes";
-            //    }
-            //}
-
             if (CheckBox3.Checked == true)
             {
                 Session["countTitle"] = selectCount.SelectedItem.Text;
             }
-
-            Response.Redirect("~/DesignReport.aspx");
+            Response.Redirect("~/EditReport.aspx");
         }
 
+        protected void BtnSave_Click(object sender, EventArgs e)
+        {
+            /*
+             Variables to get
+             Report
+             - reportID, date, description, title
+             - Identify type of element, and create eleTypeId
+             - Header_element, store all elements in header + positions. (seperate the position (X,Y))
+             - Report_body, store query
+             - Element_type, add name, fonttype
+             */
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            //get data for report
+            parameters.Add("@name", txtRptTitle.Text);
+            parameters.Add("@description", txtRptDesc.Text);
+            parameters.Add("@reportId",reportId);
+            string sql = "UPDATE Report " + "SET name = @name, description = @description WHERE reportId = @reportId";
+            int rowsAffected = updateRecord(sql,parameters);
+            parameters.Clear();
+            parameters.Add("@query",query);
+            parameters.Add("@reportID",Convert.ToInt32(reportId));
+            sql = "UPDATE Report_body " + "SET query = @query WHERE reportID = @reportID";
+            rowsAffected = updateRecord(sql,parameters);
+
+            List<int> headerIdList = getHeaderEleID(reportId);
+            sql = "UPDATE Header_element " + "SET value = @value, xPosition = @xPos, yPosition = @yPos " + "WHERE headerID = @headerID";
+            rowsAffected = getHeaderEle(sql, headerIdList);
+            Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
+            query = null;
+            Response.Redirect("Homepage.aspx");
+        }
+
+        protected int updateRecord(string sql, Dictionary<string, object> parameters) {
+            int rows = 0;
+            string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.CommandType = CommandType.Text;
+                foreach (string key in parameters.Keys)
+                {
+                   cmd.Parameters.AddWithValue(key, parameters[key]);
+                }
+                    rows = cmd.ExecuteNonQuery();
+            }
+            return rows;
+        }
+
+        protected int updateHeaderEle(string sql, int headerId, ReportElement reportEle) {
+            string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                int rowsreturned = 0;
+                con.Open();
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.CommandType = CommandType.Text;
+                using (cmd)
+                {
+                    cmd.Parameters.AddWithValue("@value",reportEle.Value);
+                    cmd.Parameters.AddWithValue("@xPos",reportEle.PosX);
+                    cmd.Parameters.AddWithValue("@yPos",reportEle.PosY);
+                    cmd.Parameters.AddWithValue("@headerID",headerId);
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+                }
+                sql = "UPDATE Element_type SET fontType = @fontType WHERE eleTypeId = @eleTypeId";
+                cmd.CommandText = sql;
+                int eleTypeId = getEleTypeId(reportEle,headerId);
+                using (cmd) {
+                    cmd.Parameters.AddWithValue("@fontType",reportEle.FontType);
+                    cmd.Parameters.AddWithValue("@eleTypeId",eleTypeId);
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+                    rowsreturned++;
+                }
+                return rowsreturned;
+            }
+        }
+
+        protected int getEleTypeId(ReportElement reportEle,int headerId) {
+            string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string sql = "SELECT eleTypeId FROM Header_element WHERE headerID = @headerId";
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.CommandType = CommandType.Text;
+                using (cmd)
+                {
+                    cmd.Parameters.AddWithValue("@headerId",headerId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read()) {
+                        return Convert.ToInt32(reader.GetValue(0).ToString());
+                    }
+                }
+            }
+            return 0;
+        }
+
+        protected int getHeaderEle(string sql, List<int> headerIdList) {
+            int rows = 0;
+            
+            List<ReportElement> parameters = new List<ReportElement>();
+            string titlePosition = hiddenRptTitle.Value;
+            // title of report
+            string[] coords = Regex.Split(titlePosition, ",");
+            ReportElement reportEleTitle = new ReportElement(Convert.ToInt32(reportId), txtRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
+            parameters.Add(reportEleTitle);
+            coords = null;
+            //desc of report
+            string descPosition = hiddenRptDesc.Value;
+            coords = Regex.Split(descPosition, ",");
+            ReportElement reportEleDesc = new ReportElement(Convert.ToInt32(reportId), txtRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
+            parameters.Add(reportEleDesc);
+            //date of report
+            if (lblDate.Text != "")
+            {
+                coords = null;
+                string datePosition = hiddenRptDate.Value;
+                coords = Regex.Split(hiddenRptDate.Value, ",");
+                ReportElement reportEleDate = new ReportElement(Convert.ToInt32(reportId), lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name);
+                parameters.Add(reportEleDate);
+            }
+            int count = 0;
+            int test = 0;
+            foreach (int li in headerIdList) {
+                test = updateHeaderEle(sql, li, parameters[count]);
+                count++;
+            }
+
+            return rows;
+        }
+
+        protected List<int> getHeaderEleID(string rID) {
+            List<int> headerIdList = new List<int>();
+            string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string sql = "SELECT headerID FROM Header_element WHERE reportID = @reportID";
+                con.Open();
+                SqlCommand cmd = new SqlCommand(sql,con);
+                cmd.Parameters.AddWithValue("@reportID", rID);
+                using (cmd) {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read()) {
+                        headerIdList.Add((int)reader["headerID"]);
+                    }
+                }
+            }
+                return headerIdList;
+        }
     }
 }
