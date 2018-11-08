@@ -49,6 +49,7 @@ namespace FYP
                 reportHeader.Controls.Add(newLabel);
                 }
                 DataTable formTable = getFormData(Session["reportId"].ToString());
+                ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
                 reportGridView.DataBind();
                 
@@ -122,6 +123,15 @@ namespace FYP
         protected void btnBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("ChooseRetrieveUses.aspx");
+        }
+
+
+        protected void reportGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView gv = (GridView)sender;
+            reportGridView.DataSource = ViewState["formTable_data"];
+            reportGridView.PageIndex = e.NewPageIndex;
+            reportGridView.DataBind();
         }
         /* 
 * >> label.Attributes.Add("style", "top:10; right:10; position:absolute;"); <<

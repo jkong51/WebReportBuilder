@@ -114,7 +114,30 @@
             padding-top:20px;
             border:none;
         }
-
+        .GridPager a, .GridPager span
+    {
+        display: block;
+        height: 15px;
+        width: 15px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        padding:3px;
+    }
+    .GridPager a
+    {
+        padding:3px;
+        background-color: #f5f5f5;
+        color: #969696;
+        border: 1px solid #969696;
+    }
+    .GridPager span
+    {
+        padding:3px;
+        background-color: #A1DCF2;
+        color: #000;
+        border: 1px solid #3AC0F2;
+    }
     </style>
     <title>View Report</title>
 
@@ -150,7 +173,8 @@
 
             <%-- Report Content (Table) --%>
             <div id="reportContent" style="padding-top:175px;padding-left:40px">
-                <asp:GridView ID="reportGridView"  Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" CssClass="rpttable">
+                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
+                <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
             </div>
             <asp:Panel ID="reportFooter" runat="server">
