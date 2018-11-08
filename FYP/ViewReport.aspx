@@ -139,9 +139,14 @@
         <div style="padding: 50px;padding-left: 350px" id="containment-wrapper">
 
             <page size="A4">
-            <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
-                
+            <asp:Panel runat="server" ID="hiddenPanel">
+                <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
+                <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
+                <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
             </asp:Panel>
+            <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">              
+            
+                </asp:Panel>
 
             <%-- Report Content (Table) --%>
             <div id="reportContent" style="padding-top:175px;padding-left:40px">

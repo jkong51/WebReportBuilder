@@ -72,7 +72,13 @@ namespace FYP
                 txtRptDesc.Text = txtDesc;
 
                 //take variables to report
-                query = Session["query"].ToString();
+                if (String.IsNullOrEmpty(Convert.ToString(Request.QueryString["queryString"]))) {
+                    query = Session["query"].ToString();
+                }
+                else
+                {
+                    query = Convert.ToString(Request.QueryString["queryString"]);
+                }
                 //add check db here if needed
                 DataTable formTable = getFormData(query);
                 ViewState["formTable_data"] = formTable;
@@ -661,7 +667,6 @@ namespace FYP
         protected void Button1_Click(object sender, EventArgs e)
         {
             string query = QueryBuilder();
-            Session["query"] = query;
             Session["rptTitle"] = lblRptTitle.Text;
             Session["rptDesc"] = lblRptDesc.Text;
             string wantDate = "";
@@ -677,7 +682,7 @@ namespace FYP
                 Session["countTitle"] = selectCount.SelectedItem.Text;
             }
 
-            Response.Redirect("~/DesignReport.aspx");
+            Response.Redirect("~/DesignReport.aspx?queryString=" + query);
         }
 
         protected void reportGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)

@@ -263,7 +263,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnCancel" class="button" Text="Cancel" /></td>
+                                    <asp:Button runat="server" ID="BtnCancel" class="button" Text="Cancel" OnClick="BtnCancel_Click"/></td>
                             </tr>
 
                         </table>
@@ -279,17 +279,16 @@
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
                 <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
+            <asp:HiddenField ID="sqlQuery" runat="server" />
             <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse ui-widget-content"  runat="server"></asp:Label><br />
             <asp:Label ID="lblRptDesc" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
             </ContentTemplate>
             </asp:UpdatePanel>
                 </asp:Panel>
-            <br />
-            <br />
-            <br />
+
             <%-- Report Content (Table) --%>
-            <div id="reportContent" style="padding-top:175px;padding-left:40px">
+            <div id="reportContent" style="padding-top:139px;padding-left:40px">
                 <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                 <asp:GridView ID="reportGridView" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging">

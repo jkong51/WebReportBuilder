@@ -37,7 +37,7 @@ namespace FYP
         }
 
         private Style primaryStyle = new Style();
-        protected static string query;
+       // protected static string query;
         protected static string reportId;
         protected void Page_Load(object sender, EventArgs e)
         {   
@@ -74,13 +74,15 @@ namespace FYP
                     //reportHeader.Controls.Add(newLabel);
                 }
                 reportId = Session["reportId"].ToString();
-                if (query == null)
+                if (String.IsNullOrEmpty(Convert.ToString(Request.QueryString["queryString"])))
                 {
-                    query = getQuery(Session["reportId"].ToString());
+                    sqlQuery.Value = getQuery(Session["reportId"].ToString());
+
                 }
                 else {
-                    query = Session["query"].ToString();
+                    sqlQuery.Value = Convert.ToString(Request.QueryString["queryString"]);
                 }
+                string query = sqlQuery.Value;
                 DataTable formTable = getFormData(query);
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
@@ -180,6 +182,7 @@ namespace FYP
             {
                 if (e.Row.RowType == DataControlRowType.Footer)
                 {
+                    string query = sqlQuery.Value;
                     DataTable formTable = getFormData(query);
                     //get index of column
                     int count = 0;
@@ -539,7 +542,6 @@ namespace FYP
         protected void Button1_Click(object sender, EventArgs e)
         {
             string qry = QueryBuilder();
-            Session["query"] = qry;
             Session["rptTitle"] = lblRptTitle.Text;
             Session["rptDesc"] = lblRptDesc.Text;
             string wantDate = "";
@@ -556,7 +558,7 @@ namespace FYP
             {
                 Session["countTitle"] = selectCount.SelectedItem.Text;
             }
-            Response.Redirect("~/EditReport.aspx");
+            Response.Redirect("~/EditReport.aspx?queryString=" + qry);
         }
 
         protected void BtnSave_Click(object sender, EventArgs e)
@@ -578,6 +580,7 @@ namespace FYP
             string sql = "UPDATE Report " + "SET name = @name, description = @description WHERE reportId = @reportId";
             int rowsAffected = updateRecord(sql,parameters);
             parameters.Clear();
+            string query = sqlQuery.Value;
             parameters.Add("@query",query);
             parameters.Add("@reportID",Convert.ToInt32(reportId));
             sql = "UPDATE Report_body " + "SET query = @query WHERE reportID = @reportID";
@@ -587,7 +590,7 @@ namespace FYP
             sql = "UPDATE Header_element " + "SET value = @value, xPosition = @xPos, yPosition = @yPos " + "WHERE headerID = @headerID";
             rowsAffected = getHeaderEle(sql, headerIdList);
             Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
-            query = null;
+           
             Response.Redirect("Homepage.aspx");
         }
 
@@ -710,6 +713,11 @@ namespace FYP
                 }
             }
                 return headerIdList;
+        }
+
+        protected void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ChooseReportUpdate.aspx");
         }
     }
 }
