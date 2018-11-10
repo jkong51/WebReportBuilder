@@ -34,25 +34,42 @@ namespace FYP
         {
             if (!Page.IsPostBack) { 
             Dictionary<int, object> headerEleDictionary = getHeadEle(System.Convert.ToInt32(Session["reportId"].ToString()));
-            foreach (int key in headerEleDictionary.Keys) {
-                Label newLabel = new Label();
+                int i = 0;
+                foreach (int key in headerEleDictionary.Keys) {
+              //  Label newLabel = new Label();
                 header_element headEle = (header_element)headerEleDictionary[key];
-                newLabel.Text = headEle.Value;
-                newLabel.ID = "lbl" + key;
-                if (key == 0) {
-                    newLabel.CssClass = "reportHeader1";
+                    if (i == 0) {
+                        lblTitle.Text = headEle.Value;
+                        lblTitle.CssClass = "reportHeader1";
+                        lblTitle.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        i++;
+                    }
+                    else if (i == 1) {
+                        lblDesc.Text = headEle.Value;
+                        lblDesc.CssClass = "reportHeader1";
+                        lblDesc.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                    }
+                    else if (i == 2) {
+                        lblDate.Text = headEle.Value;
+                        lblDate.CssClass = "reportHeader1";
+                        lblDate.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                    }
+               // newLabel.Text = headEle.Value;
+               // newLabel.ID = "lbl" + key;
+               // if (key == 0) {
+                 //   newLabel.CssClass = "reportHeader1";
+                //}
+                //else if (key != 0) {
+                 //   newLabel.CssClass = "reportHeader2";
+                //}
+                //newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                    
                 }
-                else if (key != 0) {
-                    newLabel.CssClass = "reportHeader2";
-                }
-                newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
-                reportHeader.Controls.Add(newLabel);
-                }
+            // still bugged, dissapers
                 DataTable formTable = getFormData(Session["reportId"].ToString());
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
                 reportGridView.DataBind();
-                
             }
         }
 

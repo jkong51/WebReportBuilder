@@ -144,6 +144,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server" EnablePartialRendering="true">
+        </asp:ScriptManager>
         <div id="sidebar">
                         <table class="border">
                             <tr class="border">
@@ -167,15 +169,23 @@
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
             </asp:Panel>
-            <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">              
-            
-                </asp:Panel>
-
+             <asp:UpdatePanel ID="updatePanel1" runat="server">
+            <ContentTemplate>
+                <asp:Label ID="lblTitle" runat="server" Text=""></asp:Label>
+                <asp:Label ID="lblDesc" runat="server" Text=""></asp:Label>
+                <asp:Label ID="lblDate" runat="server" Text=""></asp:Label>
+           </ContentTemplate>
+          </asp:UpdatePanel>
             <%-- Report Content (Table) --%>
+                
             <div id="reportContent" style="padding-top:175px;padding-left:40px">
-                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
+                <asp:UpdatePanel ID="updatepanel2" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
             <asp:Panel ID="reportFooter" runat="server">
 
