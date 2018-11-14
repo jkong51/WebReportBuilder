@@ -39,10 +39,12 @@ namespace FYP
         {
             if (!Page.IsPostBack) { 
             Dictionary<int, object> headerEleDictionary = getHeadEle(System.Convert.ToInt32(Session["reportId"].ToString()));
-            foreach (int key in headerEleDictionary.Keys) {
-                Label newLabel = new Label();
+                int i = 0;
+                foreach (int key in headerEleDictionary.Keys) {
+              //  Label newLabel = new Label();
                 header_element headEle = (header_element)headerEleDictionary[key];
-                newLabel.Text = headEle.Value;
+
+                    newLabel.Text = headEle.Value;
                 newLabel.ID = "lbl" + key;
                 if (key == 0) {
                     newLabel.CssClass = "reportHeader1";
@@ -50,18 +52,14 @@ namespace FYP
                 else if (key != 0) {
                     newLabel.CssClass = "reportHeader2";
                 }
-                    int newY = int.Parse(headEle.YPos) - 50;
-                    string tempX = headEle.XPos.Substring(0, 3);
-                    int newX = int.Parse(tempX) - 148;
-
-                newLabel.Attributes.Add("style", " position:absolute;top:" + newY + "px; left:" + newX + "px;" + "font-family: '" + headEle.FontType + "';");
+                newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                 reportHeader.Controls.Add(newLabel);
                 }
+            // still bugged, dissapers
                 DataTable formTable = getFormData(Session["reportId"].ToString());
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
                 reportGridView.DataBind();
-                
             }
         }
         //public override void VerifyRenderingInServerForm(Control control)
