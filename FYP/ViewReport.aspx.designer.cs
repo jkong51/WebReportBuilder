@@ -22,8 +22,16 @@ namespace FYP {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// ScriptManger1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManger1;
         
-            /// hiddenPanel control.
+        /// <summary>
+        /// printPDF control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -32,43 +40,50 @@ namespace FYP {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl printPDF;
         
         /// <summary>
-        /// reportHeader control.
+        /// updatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel reportHeader;
-
-        /// <summary>
-        /// reportContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-
-        protected global::System.Web.UI.WebControls.HiddenField hiddenRptDesc;
+        protected global::System.Web.UI.UpdatePanel updatePanel1;
         
         /// <summary>
-        /// hiddenRptDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenRptDate;
-
-        /// <summary>
-        /// reportHeader control.
+        /// lblTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTitle;
+        
+        /// <summary>
+        /// lblDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDesc;
+        
+        /// <summary>
+        /// lblDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDate;
+        
+        /// <summary>
+        /// updatePanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updatePanel2;
+        
         /// <summary>
         /// reportGridView control.
         /// </summary>

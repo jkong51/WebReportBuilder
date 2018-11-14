@@ -77,24 +77,24 @@
             }
             .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            background-color: rgb(80, 142, 245);
-            color: white;
+            color: black;
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 20px;
-            width: 70%;
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
-            border: 2px solid rgb(80, 142, 245);
+            z-index: 3;float: left;font-weight: 100;
+            left:0;
+            width:auto;
+        }
+            .button2 {
+            z-index: 3;float: right;font-weight: 100;
+            right:0;
+            width:auto;
         }
 
-        .button:hover {
-            background-color: white;
-            color: rgb(80, 142, 245);
-            cursor: pointer;
-        }
         .rpttable{ 
             width: 90%; 
             background-color: #fff;     
@@ -147,16 +147,13 @@
 <body>
 
     <form id="form1" runat="server">
-<asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server" EnablePartialRendering="true">
+        <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server" EnablePartialRendering="true">
         </asp:ScriptManager>
-        
-
+        <a href="RetrieveReport.aspx" class="button">&lt; &nbsp;&nbsp;Back</a>
+        <a href="#" class="button button2" onclick="window.print()">Save &nbsp;&nbsp;&gt;</a>
         <div id="printPDF" runat="server">
             <div id="containment-wrapper">
-
-                <page size="A4" id="pdf">
-
-                
+                <page size="A4" id="pdf">                
             <asp:UpdatePanel ID="updatePanel1" runat="server">
             <ContentTemplate>
                 <asp:Label ID="lblTitle" runat="server" Text=""></asp:Label>
@@ -166,7 +163,10 @@
           </asp:UpdatePanel>
 
             <%-- Report Content (Table) --%>
+
             <div id="reportContent" style="padding-top:175px;padding-left:40px">
+                <asp:UpdatePanel ID="updatePanel2" runat="server">
+            <ContentTemplate>
                 <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>

@@ -89,6 +89,7 @@ namespace FYP
                 reportGridView.DataBind();
                 //implement a way to dynamically add/assign position for hidden fields based on position
 
+                fontFamilyDrpDwnList.Items.Insert(0, new ListItem("Times New Roman", "Times New Roman")); //updated code
                 foreach (FontFamily font in FontFamily.Families)
                 {
                     fontFamilyDrpDwnList.Items.Add(font.Name.ToString());

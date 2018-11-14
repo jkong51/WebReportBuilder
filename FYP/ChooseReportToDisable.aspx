@@ -44,7 +44,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div style="text-align:left;padding-left:20px;">
-        <h3>Select report for editing purposes</h3>    <asp:Button ID="Save" runat="server" Text="Save" CssClass="button" />
+        <h3>Select report for disable purposes</h3>    <asp:Button ID="Save" runat="server" Text="Save" CssClass="button" />
 
     </div>
     <div style="width:100%;padding:20px;">
