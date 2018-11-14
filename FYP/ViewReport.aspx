@@ -1,23 +1,25 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewReport.aspx.cs" Inherits="FYP.ViewReport" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewReport.aspx.cs" Inherits="FYP.ViewReport" EnableEventValidation="false" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    
     <style type="text/css">
         body {
             height: 100%;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             text-align: center;
-            background: rgb(204,204,204);
             height: 100%;
+            background: rgb(204,204,204);
         }
         page {
             background: white;
             display: block;
             margin: 0 auto;
             margin-bottom: 0.5cm;
-            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+            border:solid black 1px;
+            /*box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);*/
             font-family: 'Times New Roman';
         }
 
@@ -143,46 +145,36 @@
 
 </head>
 <body>
+
     <form id="form1" runat="server">
-        <div id="sidebar">
-                        <table class="border">
-                            <tr class="border">
-                                <td style="font-size: 30px;" colspan="2">
-                                    <img src="Tunku-Abdul-Rahman-University-College-TARC.png" width="180" height="70" /><br />
-                                    i-Report Builder
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                <a href="ChooseRetrieveUses.aspx" class="button">Back</a></td>
-                            </tr>
-                        </table>
 
-                    </div>
-        <div style="padding: 50px;padding-left: 350px" id="containment-wrapper">
+        <div id="printPDF" runat="server">
+            <div id="containment-wrapper">
 
-            <page size="A4">
-            <asp:Panel runat="server" ID="hiddenPanel">
-                <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
+                <page size="A4" id="pdf">
+<%--            <asp:Panel runat="server" ID="hiddenPanel">
+                <%--<asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
-                <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
-            </asp:Panel>
+                <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>--%>
+            <%--</asp:Panel>--%>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">              
             
                 </asp:Panel>
 
             <%-- Report Content (Table) --%>
-            <div id="reportContent" style="padding-top:175px;padding-left:40px">
-                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
+            <div id="reportContent" style="padding-top:175px;padding-left:40px" runat="server">
+                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="25" OnPageIndexChanging="reportGridView_PageIndexChanging">
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
             </div>
             <asp:Panel ID="reportFooter" runat="server">
-
             </asp:Panel>
         </page>
 
+
+            </div>
         </div>
+
     </form>
 </body>
 </html>

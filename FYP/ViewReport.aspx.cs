@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
+
 
 namespace FYP
 {
@@ -45,7 +50,11 @@ namespace FYP
                 else if (key != 0) {
                     newLabel.CssClass = "reportHeader2";
                 }
-                newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                    int newY = int.Parse(headEle.YPos) - 50;
+                    string tempX = headEle.XPos.Substring(0, 3);
+                    int newX = int.Parse(tempX) - 148;
+
+                newLabel.Attributes.Add("style", " position:absolute;top:" + newY + "px; left:" + newX + "px;" + "font-family: '" + headEle.FontType + "';");
                 reportHeader.Controls.Add(newLabel);
                 }
                 DataTable formTable = getFormData(Session["reportId"].ToString());
@@ -55,6 +64,10 @@ namespace FYP
                 
             }
         }
+        //public override void VerifyRenderingInServerForm(Control control)
+        //{
+        //    //base.VerifyRenderingInServerForm(control);
+        //}
 
         // in the future if more elements in header are added dynamically, write a function that counts the amount of elements that
         // need to be loaded first before calling getHeadEle
@@ -133,7 +146,79 @@ namespace FYP
             reportGridView.PageIndex = e.NewPageIndex;
             reportGridView.DataBind();
         }
+        protected void btnExport_Click(object sender, EventArgs e)
+        {
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=Panel.pdf");
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter stringWriter = new StringWriter();
+            HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
+            form1.RenderControl(htmlTextWriter);
+            StringReader stringReader = new StringReader(stringWriter.ToString());
+            Document Doc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+            HTMLWorker htmlparser = new HTMLWorker(Doc);
+            PdfWriter.GetInstance(Doc, Response.OutputStream);
+            Doc.Open();
+            htmlparser.Parse(stringReader);
+            Doc.Close();
+            Response.Write(Doc);
+            Response.End();
+        }
+        public override void VerifyRenderingInServerForm(Control control) { }
+        //protected void btnExportPDF_Click(object sender, EventArgs e)
+        //{
+        //    ////Response.ContentType = "application/pdf";
+        //    ////Response.AddHeader("content-disposition", "attachment;filename=GridViewExport.pdf");
+        //    ////Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //    ////StringWriter sw = new StringWriter();
+        //    ////HtmlTextWriter hw = new HtmlTextWriter(sw);
+        //    //////reportGridView.AllowPaging = false;
+        //    ////printPDF.DataBind();
+        //    ////printPDF.RenderControl(hw);
+        //    ////StringReader sr = new StringReader(sw.ToString());
+        //    ////Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+        //    ////HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+        //    ////PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+        //    ////pdfDoc.Open();
+        //    ////htmlparser.Parse(sr);
+        //    ////pdfDoc.Close();
+        //    ////Response.Write(pdfDoc);
+        //    ////Response.End();
+
+        //    //DGVPrinter printer = new DGVPrinter();
+        //    //printer.Title = "Inventory Report";
+        //    //printer.SubTitle = "subTitle" + String.Format(DateTime.Now.ToString("yyyy"));
+        //    //printer.TitleFormatFlags = StringFormatFlags.LineLimit | StringFormatFlags.NoClip;
+        //    //printer.PageNumbers = true;
+        //    //printer.PageNumberInHeader = false;
+        //    //printer.PorportionalColumns = true;
+        //    //printer.HeaderCellAlignment = StringAlignment.Near;
+        //    //printer.Footer = "footer";
+        //    //printer.FooterSpacing = 15;
+        //    //printer.PrintDataGridView(reportGridView);
+        //}
+
+        //protected void ExportPdf_Click(object sender, EventArgs e)
+        //{
+        //    Response.ContentType = "application/pdf";
+        //    Response.AddHeader("content-disposition", "attachment;filename=TestPage.pdf");
+        //    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //    StringWriter sw = new StringWriter();
+        //    HtmlTextWriter hw = new HtmlTextWriter(sw);
+        //    printPDF.Page.RenderControl(hw);
+        //    //containment-wrapper.Page.RenderControl(hw);
+        //    StringReader sr = new StringReader(sw.ToString());
+        //    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+        //    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+        //    PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+        //    pdfDoc.Open();
+        //    htmlparser.Parse(sr);
+        //    pdfDoc.Close();
+        //    Response.Write(pdfDoc);
+        //    Response.End();
+        //}
         /* 
+         * 
 * >> label.Attributes.Add("style", "top:10; right:10; position:absolute;"); <<
 Things that need to be done
 ** reportId is in session **
