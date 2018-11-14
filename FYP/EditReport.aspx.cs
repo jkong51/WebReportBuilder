@@ -416,6 +416,14 @@ namespace FYP
             GridView gv = (GridView)sender;
             reportGridView.DataSource = ViewState["formTable_data"];
             reportGridView.PageIndex = e.NewPageIndex;
+            if (reportGridView.PageCount - 1 == reportGridView.PageIndex)
+            {
+                reportGridView.ShowFooter = true;
+            }
+            else
+            {
+                reportGridView.ShowFooter = false;
+            }
             reportGridView.DataBind();
         }
 

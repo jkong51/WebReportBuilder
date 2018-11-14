@@ -19,7 +19,7 @@ namespace FYP
      Make footer savable.
      Add a selection to display no duplicate records, and select the distinct column.
      Add sum()/count() function to the report builder
-         */
+    */
     public class ReportElement {
         public int ReportID { get; set; }
         public string Value { get; set; }
@@ -691,6 +691,14 @@ namespace FYP
             
             reportGridView.DataSource = ViewState["formTable_data"];
             reportGridView.PageIndex = e.NewPageIndex;
+            if (reportGridView.PageCount - 1 == reportGridView.PageIndex)
+            {
+                reportGridView.ShowFooter = true;
+            }
+            else
+            {
+                reportGridView.ShowFooter = false;
+            }
             reportGridView.DataBind();
         }
     }

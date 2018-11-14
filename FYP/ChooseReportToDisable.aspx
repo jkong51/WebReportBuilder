@@ -44,26 +44,26 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div style="text-align:left;padding-left:20px;">
-        <h3>Select report for editing purposes</h3>    <asp:Button ID="Save" runat="server" Text="Save" CssClass="button" />
+        <h3>Select report to disable</h3>    <asp:Button ID="Save" runat="server" Text="Save" CssClass="button" OnClick="Save_Click"/>
 
     </div>
     <div style="width:100%;padding:20px;">
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT Report.reportID, Report.name, Report.dateGenerated, Report.description FROM Report INNER JOIN report_right ON Report.reportID = report_right.reportId WHERE (Report.status = 1) AND (report_right.staffId = @staffId) AND (report_right.rights LIKE '%E%')">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT reportID, name, status, dateGenerated, description FROM Report WHERE (staffId = @staffId)">
             <SelectParameters>
                 <asp:SessionParameter Name="staffId" SessionField="userId" />
             </SelectParameters>
         </asp:SqlDataSource>
-        <asp:GridView CssClass="grid" PagerSettings-Position="Top" PageSize="10" ID="GridView1" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+        <asp:GridView CssClass="grid" PagerSettings-Position="Top" PageSize="10" ID="GridView1" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowDataBound="GridView1_RowDataBound">
             <Columns>
                 <asp:BoundField HeaderStyle-CssClass="GridHeader hiddencol" ItemStyle-CssClass="hiddencol" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
+                <asp:BoundField HeaderStyle-CssClass="GridHeader hiddencol" ItemStyle-CssClass="hiddencol" DataField="status" HeaderText="status" InsertVisible="False" ReadOnly="True" SortExpression="status" />
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="Name" SortExpression="name" />
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated"  ApplyFormatInEditMode="true" DataFormatString="{0:d}"/>
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="Description" HeaderStyle-HorizontalAlign="Left" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
                 <asp:TemplateField ItemStyle-HorizontalAlign="Center">
-                    <HeaderTemplate>Action</HeaderTemplate>
-                    
+                    <HeaderTemplate>Status</HeaderTemplate>
                 <ItemTemplate>
-                    <asp:CheckBox ID="chkDisable" runat="server" />
+                    <asp:CheckBox ID="chkDisable" runat="server"/>
                 </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
