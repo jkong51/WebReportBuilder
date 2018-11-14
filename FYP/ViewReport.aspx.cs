@@ -41,21 +41,23 @@ namespace FYP
             Dictionary<int, object> headerEleDictionary = getHeadEle(System.Convert.ToInt32(Session["reportId"].ToString()));
                 int i = 0;
                 foreach (int key in headerEleDictionary.Keys) {
-              //  Label newLabel = new Label();
                 header_element headEle = (header_element)headerEleDictionary[key];
-
-                    newLabel.Text = headEle.Value;
-                newLabel.ID = "lbl" + key;
-                if (key == 0) {
-                    newLabel.CssClass = "reportHeader1";
+                    if (key == 0) {
+                        lblTitle.CssClass = "reportHeader1";
+                        lblTitle.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:-40px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblTitle.Text = headEle.Value;
+                    }
+                    else if (key == 1) {
+                        lblDesc.CssClass = "reportHeader2";
+                        lblDesc.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:-40px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDesc.Text = headEle.Value;
+                    }
+                    else if (key == 2) {
+                        lblDate.CssClass = "reportHeader2";
+                        lblDate.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:-40px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDate.Text = headEle.Value;
+                    }
                 }
-                else if (key != 0) {
-                    newLabel.CssClass = "reportHeader2";
-                }
-                newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
-                reportHeader.Controls.Add(newLabel);
-                }
-            // still bugged, dissapers
                 DataTable formTable = getFormData(Session["reportId"].ToString());
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;

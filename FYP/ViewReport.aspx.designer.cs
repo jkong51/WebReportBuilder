@@ -58,7 +58,7 @@ namespace FYP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hiddenRptDate;
-        
+
         /// <summary>
         /// reportHeader control.
         /// </summary>
@@ -66,8 +66,9 @@ namespace FYP {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel reportHeader;
-        
+        protected global::System.Web.UI.WebControls.Label lblTitle;
+        protected global::System.Web.UI.WebControls.Label lblDesc;
+        protected global::System.Web.UI.WebControls.Label lblDate;
         /// <summary>
         /// reportGridView control.
         /// </summary>
