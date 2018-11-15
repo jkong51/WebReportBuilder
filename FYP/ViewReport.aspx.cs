@@ -8,9 +8,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using iTextSharp.text;
-using iTextSharp.text.html.simpleparser;
-using iTextSharp.text.pdf;
+//using iTextSharp.text;
+//using iTextSharp.text.html.simpleparser;
+//using iTextSharp.text.pdf;
 
 
 namespace FYP
@@ -155,25 +155,25 @@ namespace FYP
             }
             reportGridView.DataBind();
         }
-        protected void btnExport_Click(object sender, EventArgs e)
-        {
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("content-disposition", "attachment;filename=Panel.pdf");
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            StringWriter stringWriter = new StringWriter();
-            HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
-            form1.RenderControl(htmlTextWriter);
-            StringReader stringReader = new StringReader(stringWriter.ToString());
-            Document Doc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
-            HTMLWorker htmlparser = new HTMLWorker(Doc);
-            PdfWriter.GetInstance(Doc, Response.OutputStream);
-            Doc.Open();
-            htmlparser.Parse(stringReader);
-            Doc.Close();
-            Response.Write(Doc);
-            Response.End();
-        }
-        public override void VerifyRenderingInServerForm(Control control) { }
+        //protected void btnExport_Click(object sender, EventArgs e)
+        //{
+        //    Response.ContentType = "application/pdf";
+        //    Response.AddHeader("content-disposition", "attachment;filename=Panel.pdf");
+        //    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //    StringWriter stringWriter = new StringWriter();
+        //    HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
+        //    form1.RenderControl(htmlTextWriter);
+        //    StringReader stringReader = new StringReader(stringWriter.ToString());
+        //    Document Doc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+        //    HTMLWorker htmlparser = new HTMLWorker(Doc);
+        //    PdfWriter.GetInstance(Doc, Response.OutputStream);
+        //    Doc.Open();
+        //    htmlparser.Parse(stringReader);
+        //    Doc.Close();
+        //    Response.Write(Doc);
+        //    Response.End();
+        //}
+        //public override void VerifyRenderingInServerForm(Control control) { }
 
 
         //protected void btnExportPDF_Click(object sender, EventArgs e)
