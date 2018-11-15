@@ -31,40 +31,13 @@ namespace FYP {
         protected global::System.Web.UI.ScriptManager ScriptManger1;
         
         /// <summary>
-        /// hiddenPanel control.
+        /// printPDF control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel hiddenPanel;
-        
-        /// <summary>
-        /// hiddenRptTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenRptTitle;
-        
-        /// <summary>
-        /// hiddenRptDesc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenRptDesc;
-        
-        /// <summary>
-        /// hiddenRptDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenRptDate;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl printPDF;
         
         /// <summary>
         /// updatePanel1 control.
@@ -103,13 +76,13 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.Label lblDate;
         
         /// <summary>
-        /// updatepanel2 control.
+        /// updatePanel2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updatepanel2;
+        protected global::System.Web.UI.UpdatePanel updatePanel2;
         
         /// <summary>
         /// reportGridView control.

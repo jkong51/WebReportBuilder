@@ -1,22 +1,31 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="RetrieveReport.aspx.cs" Inherits="FYP.Retrieve_report" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<%--    <script type="text/javascript">
+
+</script>--%>
     <style type="text/css">
         .head {
             text-align: center;
         }
-    .GridHeader
-{
-    text-align:center !important; 
-    padding:5px;
-}
-        .grid {
-            font-size:20px;
+
+        .GridHeader {
+            text-align: center !important;
+            padding: 5px;
         }
-        .hiddencol { display: none; }
-        .button{
+
+        .grid {
+            font-size: 20px;
+        }
+
+        .hiddencol {
+            display: none;
+        }
+
+        .button {
             padding: 0;
-border: none;
-background: none;
+            border: none;
+            background: none;
         }
     </style>
 </asp:Content>
@@ -34,7 +43,7 @@ background: none;
             <Columns>
                 <asp:BoundField HeaderStyle-CssClass="GridHeader hiddencol" ItemStyle-CssClass="hiddencol" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="Name" SortExpression="name" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated" ApplyFormatInEditMode="true" DataFormatString="{0:d}"/>
+                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated" ApplyFormatInEditMode="true" DataFormatString="{0:d}" />
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="Description" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
                 <asp:TemplateField ShowHeader="False">
                     <HeaderTemplate>Action</HeaderTemplate>

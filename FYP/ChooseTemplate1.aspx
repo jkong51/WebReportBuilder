@@ -29,11 +29,18 @@
             .border1:hover {
                 transform: scale(1.1);
             }
+            .b1:hover{
+                transform: none;
+            }
+            .ctent{
+                cursor:default;
+            }
 
         .border2 {
             width: 300px;
             height: 300px;
         }
+        
 
         .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -54,6 +61,15 @@
                 background-color: white;
                 color: rgb(80, 142, 245);
                 cursor: pointer;
+            }
+            .btnDisabled{
+                opacity:0.65;
+            }
+            .btnDisabled:hover {
+                background-color: rgb(80, 142, 245);
+                color: white;
+                cursor: default;
+                cursor:not-allowed;
             }
 
         .table1 {
@@ -120,7 +136,7 @@
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
-                <td class="border1">
+                <td class="border1 b1">
                     <table class="border2">
                         <tr>
                             <td>
@@ -128,11 +144,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding: 60px 30px" class="content">Use pre-defined template to create report</td>
+                            <td style="padding: 60px 30px" class="content ctent">Use pre-defined template to create report</td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Button ID="btnExist" runat="server" Text="Get Started" CssClass="button" /></td>
+                                <asp:Button ID="btnExist" runat="server" Text="Get Started" CssClass="button btnDisabled" Enabled="false"/></td>
                         </tr>
                     </table>
                 </td>
@@ -142,6 +158,12 @@
     </div>
 
     <div class="container">
+        <style type="text/css">
+            .testing{
+                z-index: 1;
+                color:black;
+            }
+        </style>
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
@@ -169,7 +191,7 @@
                                                 <asp:Label ID="Label1" runat="server" Text="Label"><strong>Report Title</strong></asp:Label>
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptTitle" CssClass="textbox" runat="server" ToolTip="Report title" placeholder="Report title" MaxLength="50" onkeyup="Count()"></asp:TextBox><asp:Label ID="remainingChr" runat="server"></asp:Label>
+                                                <asp:TextBox ID="txtRptTitle" CssClass="textbox" runat="server" ToolTip="Report title" placeholder="Report title" MaxLength="50" onkeyup="Count()" ></asp:TextBox><asp:Label ID="remainingChr" CssClass="testing" runat="server"></asp:Label>
                                                 <br />
                                             </td>
                                         </tr>

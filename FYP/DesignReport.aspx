@@ -293,7 +293,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button ID="Button2" runat="server" Text="Button" CssClass="button" OnClick="BtnCancel_Click" /></td>
+                                    <asp:Button ID="Button2" runat="server" Text="Cancel" CssClass="button" OnClick="BtnCancel_Click" /></td>
                             </tr>
 
                         </table>

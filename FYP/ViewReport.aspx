@@ -1,23 +1,25 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewReport.aspx.cs" Inherits="FYP.ViewReport" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ViewReport.aspx.cs" Inherits="FYP.ViewReport" EnableEventValidation="false" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    
     <style type="text/css">
         body {
             height: 100%;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             text-align: center;
-            background: rgb(204,204,204);
             height: 100%;
+            background: rgb(204,204,204);
         }
         page {
             background: white;
             display: block;
             margin: 0 auto;
             margin-bottom: 0.5cm;
-            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+            border:solid black 1px;
+            /*box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);*/
             font-family: 'Times New Roman';
         }
 
@@ -75,24 +77,24 @@
             }
             .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            background-color: rgb(80, 142, 245);
-            color: white;
+            color: black;
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 20px;
-            width: 70%;
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
-            border: 2px solid rgb(80, 142, 245);
+            z-index: 3;float: left;font-weight: 100;
+            left:0;
+            width:auto;
+        }
+            .button2 {
+            z-index: 3;float: right;font-weight: 100;
+            right:0;
+            width:auto;
         }
 
-        .button:hover {
-            background-color: white;
-            color: rgb(80, 142, 245);
-            cursor: pointer;
-        }
         .rpttable{ 
             width: 90%; 
             background-color: #fff;     
@@ -143,56 +145,42 @@
 
 </head>
 <body>
+
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server" EnablePartialRendering="true">
         </asp:ScriptManager>
-        <div id="sidebar">
-                        <table class="border">
-                            <tr class="border">
-                                <td style="font-size: 30px;" colspan="2">
-                                    <img src="Tunku-Abdul-Rahman-University-College-TARC.png" width="180" height="70" /><br />
-                                    i-Report Builder
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                <a href="ChooseRetrieveUses.aspx" class="button">Back</a></td>
-                            </tr>
-                        </table>
-
-                    </div>
-        <div style="padding: 50px;padding-left: 350px" id="containment-wrapper">
-
-            <page size="A4">
-            <asp:Panel runat="server" ID="hiddenPanel">
-                <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
-                <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
-                <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
-            </asp:Panel>
-             <asp:UpdatePanel ID="updatePanel1" runat="server">
+        <a href="RetrieveReport.aspx" class="button">&lt; &nbsp;&nbsp;Back</a>
+        <a href="#" class="button button2" onclick="window.print()">Save &nbsp;&nbsp;&gt;</a>
+        <div id="printPDF" runat="server">
+            <div id="containment-wrapper">
+                <page size="A4" id="pdf">                
+            <asp:UpdatePanel ID="updatePanel1" runat="server">
             <ContentTemplate>
                 <asp:Label ID="lblTitle" runat="server" Text=""></asp:Label>
                 <asp:Label ID="lblDesc" runat="server" Text=""></asp:Label>
                 <asp:Label ID="lblDate" runat="server" Text=""></asp:Label>
            </ContentTemplate>
           </asp:UpdatePanel>
+
             <%-- Report Content (Table) --%>
-                
+
             <div id="reportContent" style="padding-top:175px;padding-left:40px">
-                <asp:UpdatePanel ID="updatepanel2" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
-                        <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
+                <asp:UpdatePanel ID="updatePanel2" runat="server">
+            <ContentTemplate>
+                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
             <asp:Panel ID="reportFooter" runat="server">
-
             </asp:Panel>
         </page>
 
+
+            </div>
         </div>
+
     </form>
 </body>
 </html>
