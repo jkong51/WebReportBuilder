@@ -14,6 +14,7 @@
             background: rgb(204,204,204);
         }
         page {
+            
             background: white;
             display: block;
             margin: 0 auto;
@@ -21,6 +22,7 @@
             border:solid black 1px;
             /*box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);*/
             font-family: 'Times New Roman';
+            
         }
 
             page[size="A4"] {
@@ -33,11 +35,13 @@
             font-variant: small-caps;
             text-transform: uppercase;
             font-weight: bold;
+            display: inline-block;
             
         }
 
         .reportHeader2 {
             font-size: 20px;
+            display: inline-block;
         }
 
         .Mouse {
@@ -49,32 +53,7 @@
             border-radius: 10px 10px;
             font-size: 15px;
 
-        }
-        #reportContent{
-            width:100%;
-            /*padding:40px;*/
-        }
-        
-        #sidebar {
-            height: 100%;
-            width: 23%;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: white;
-            overflow-x: hidden;
-            padding-top: 0px;
-            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-        }
-
-            #sidebar table {
-                width: 100%;
-                height: 100%;
-                z-index: 1;
-                top: 0;
-
-            }
+        } 
             .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             color: black;
@@ -140,6 +119,9 @@
         color: #000;
         border: 1px solid #3AC0F2;
     }
+    #lblTitle{
+        position:center;
+    }
     </style>
     <title>View Report</title>
 
@@ -151,16 +133,16 @@
         </asp:ScriptManager>
         <a href="RetrieveReport.aspx" class="button">&lt; &nbsp;&nbsp;Back</a>
         <a href="#" class="button button2" onclick="window.print()">Save &nbsp;&nbsp;&gt;</a>
-        <div id="printPDF" runat="server">
+        <div id="printPDF" runat="server" style="padding-top:50px">
             <div id="containment-wrapper">
                 <page size="A4" id="pdf">                
-            <asp:UpdatePanel ID="updatePanel1" runat="server">
-            <ContentTemplate>
-                <asp:Label ID="lblTitle" runat="server" Text=""></asp:Label>
-                <asp:Label ID="lblDesc" runat="server" Text=""></asp:Label>
-                <asp:Label ID="lblDate" runat="server" Text=""></asp:Label>
-           </ContentTemplate>
-          </asp:UpdatePanel>
+<%--            <asp:UpdatePanel ID="updatePanel1" runat="server">
+            <ContentTemplate>--%>
+                <asp:Label ID="lblTitle" runat="server" Text=""></asp:Label><br />
+                <asp:Label ID="lblDesc" runat="server" Text=""></asp:Label><br />
+                <asp:Label ID="lblDate" runat="server" Text=""></asp:Label><br />
+<%--           </ContentTemplate>
+          </asp:UpdatePanel>--%>
 
             <%-- Report Content (Table) --%>
 
