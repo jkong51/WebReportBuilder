@@ -260,7 +260,7 @@
                                             <td>Report Title
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptTitle" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptTitle"  CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
                                             </td>
                                         </tr>
                                         <tr>

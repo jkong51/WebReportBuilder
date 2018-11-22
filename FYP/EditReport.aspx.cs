@@ -37,7 +37,6 @@ namespace FYP
         }
 
         private Style primaryStyle = new Style();
-       // protected static string query;
         protected static string reportId;
         protected void Page_Load(object sender, EventArgs e)
         {   
@@ -54,7 +53,7 @@ namespace FYP
                         //label is title
                         lblRptTitle.Text = headEle.Value;
                         txtRptTitle.Text = headEle.Value;
-                        hiddenRptTitle.Value = headEle.XPos+","+headEle.YPos;
+                        hiddenRptTitle.Value = headEle.XPos + "," + headEle.YPos;
                         lblRptTitle.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                     }
                     else if (key == 1)
@@ -86,6 +85,32 @@ namespace FYP
                 DataTable formTable = getFormData(query);
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
+                //check if footer exists for this
+                if (Session["countTitle"] == null)
+                {
+                    try
+                    {
+                        string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+                        using (SqlConnection con = new SqlConnection(connectionString))
+                        {
+                            con.Open();
+                            //SELECT fe.[value], fe.[eleTypeId] FROM Footer_element fe
+                            string sql = "SELECT value FROM Footer_element where reportID = @reportID";
+                            SqlCommand cmd = new SqlCommand(sql, con);
+                            using (cmd) {
+                                cmd.Parameters.AddWithValue("@reportID", reportId);
+                                SqlDataReader reader = cmd.ExecuteReader();
+                                if (reader.Read())
+                                {
+                                    Session["countTitle"] = reader["value"].ToString();
+                                }
+                            }
+                        }
+                    }
+                    catch (SqlException ex) {
+
+                    }
+                }
                 reportGridView.DataBind();
 
                 foreach (FontFamily font in FontFamily.Families)
@@ -178,6 +203,7 @@ namespace FYP
 
         protected void reportGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            //check if session footerEnabled == true
             if (Session["countTitle"] != null)
             {
                 if (e.Row.RowType == DataControlRowType.Footer)
@@ -727,5 +753,6 @@ namespace FYP
         {
             Response.Redirect("ChooseReportUpdate.aspx");
         }
+        
     }
 }

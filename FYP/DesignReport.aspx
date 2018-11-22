@@ -4,11 +4,8 @@
 <!-- 
     edit page use setStyle for positioning labels.
     bugs
-    - count shows on every column, make it so that it counts only the total for each page.
     - distinct select feature
     - count does not go away after editing table
-    - save edited report
-    - enable user to readd date generated
     -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -42,7 +39,7 @@
                 var positionDesc = lblDesc.position();
                 document.getElementById('<%=hiddenRptTitle.ClientID%>').value = positionTitle.left + "," + positionTitle.top;
                 document.getElementById('<%=hiddenRptDesc.ClientID%>').value = positionDesc.left + "," + positionDesc.top;
-                if (document.getElementById('<%=hiddenRptDate.ClientID%>').value == "") {
+                if (document.getElementById('<%=lblDate.ClientID%>').value == "") {
                     var positionDate = lblDate.position();
                     document.getElementById('<%=hiddenRptDate.ClientID%>').value = positionDate.left + "," + positionDate.top;
                 }
