@@ -15,8 +15,6 @@ using System.Text.RegularExpressions;
 namespace FYP
 {
     /*
-     Fix footer
-     Make footer savable.
      Add a selection to display no duplicate records, and select the distinct column.
      Add sum()/count() function to the report builder
     */
@@ -85,6 +83,9 @@ namespace FYP
                 reportGridView.DataSource = formTable;
                 if (Session["countTitle"] != null) {
                     reportGridView.ShowFooter = true;
+                    // save footer row here
+                    Session["footerName"] = Session["countTitle"].ToString();
+                    Session["footerEnabled"] =  "true";
                 }
                 reportGridView.DataBind();
                 //implement a way to dynamically add/assign position for hidden fields based on position
@@ -134,6 +135,7 @@ namespace FYP
 
         protected void BtnSave_Click(object sender, EventArgs e)
         {
+            
             /*
              Variables to get
              Report
@@ -144,37 +146,37 @@ namespace FYP
              - Report_body, store query
              - Element_type, add name, fonttype
              */
-
-                try
+            try {
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
+                //test footer
+                
+                //insert data for report
+                parameters.Add("@name", lblRptTitle.Text);
+                parameters.Add("@staffId", Session["userId"].ToString());
+                parameters.Add("@status", 1);
+                if (hiddenRptDate.Value == "")
                 {
-                    Dictionary<string, object> parameters = new Dictionary<string, object>();
-                    //insert data for report
-                    parameters.Add("@name", lblRptTitle.Text);
-                    parameters.Add("@staffId", Session["userId"].ToString());
-                    parameters.Add("@status", 1);
-                    if (hiddenRptDate.Value == "")
-                    {
-                        parameters.Add("@dateGenerated", lblDate.Text);
-                    }
-                    else
-                    {
-                        parameters.Add("@dateGenerated", DateTime.Now.ToString("yyyy-MM-dd"));
-                    }
-                    parameters.Add("@description", lblRptDesc.Text);
-                    string sql = "INSERT INTO Report" + "(name, staffId, status, dateGenerated, description)" +
-                        " VALUES(@name, @staffId, @status, @dateGenerated, @description)";
+                    parameters.Add("@dateGenerated", lblDate.Text);
+                }
+                else
+                {
+                    parameters.Add("@dateGenerated", DateTime.Now.ToString("yyyy-MM-dd"));
+                }
+                parameters.Add("@description", lblRptDesc.Text);
+                string sql = "INSERT INTO Report" + "(name, staffId, status, dateGenerated, description)" +
+                    " VALUES(@name, @staffId, @status, @dateGenerated, @description)";
 
                     int rowsAffected = InsertUpdate(sql, parameters);
 
-                    int reportId = getReportID(parameters["@staffId"].ToString(), parameters["@name"].ToString());
-                    // init reportElement for title
-                    parameters.Clear();
-                    string titlePosition = hiddenRptTitle.Value;
-                    // solve the problem here, unable to split string.
-                    string[] coords = Regex.Split(titlePosition, ",");
-                    ReportElement reportEleTitle = new ReportElement(reportId, lblRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
-                    parameters.Add("@title", reportEleTitle);
-                    coords = null;
+                int reportId = getReportID();
+                // init reportElement for title
+                parameters.Clear();
+                string titlePosition = hiddenRptTitle.Value;
+                // solve the problem here, unable to split string.
+                string[] coords = Regex.Split(titlePosition, ",");
+                ReportElement reportEleTitle = new ReportElement(reportId, lblRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
+                parameters.Add("@title", reportEleTitle);
+                coords = null;
 
                     // init reportElement for desc
                     string descPosition = hiddenRptDesc.Value;
@@ -193,9 +195,17 @@ namespace FYP
                         coords = null;
                     }
 
-                    //add element_type
-                    sql = "INSERT INTO Element_type" + " (name, fontType) " + "VALUES " + "(@name, @fontType)";
-                    rowsAffected = InsertUpdate(sql, parameters);
+                //add footer
+                if ((string)Session["footerEnabled"] == "true")
+                {
+                    string footerName = Session["footerName"].ToString();
+                    ReportElement footerElement = new ReportElement(reportId, footerName, "", "", "footer", "");
+                    parameters.Add("@footer", footerElement);
+                }
+
+                //add element_type
+                sql = "INSERT INTO Element_type" + " (name, fontType) " + "VALUES " + "(@name, @fontType)";
+                rowsAffected = InsertUpdate(sql, parameters);
 
 
                     parameters.Clear();
@@ -206,13 +216,15 @@ namespace FYP
                     parameters.Add("@query", query);
                     rowsAffected = InsertUpdate(sql, parameters);
 
-                    //Add permissions
-                    parameters.Clear();
-                    sql = "INSERT INTO report_right " + "(reportId, staffId, rights)" + "VALUES " + "(@reportId, @staffId, @rights)";
-                    parameters.Add("@reportId", reportId);
-                    parameters.Add("@staffId", Session["userId"].ToString());
-                    parameters.Add("@rights", "R,E");
-                    rowsAffected = InsertUpdate(sql, parameters);
+                
+
+                //Add permissions
+                parameters.Clear();
+                sql = "INSERT INTO report_right " + "(reportId, staffId, rights)" + "VALUES " + "(@reportId, @staffId, @rights)";
+                parameters.Add("@reportId",reportId);
+                parameters.Add("@staffId", Session["userId"].ToString());
+                parameters.Add("@rights", "R,E");
+                rowsAffected = InsertUpdate(sql,parameters);
 
                     //add footer code if needed.
                     Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
@@ -233,16 +245,14 @@ namespace FYP
             Response.Redirect("ChooseTemplate1.aspx");
         }
 
-        public static int getReportID(string parameter, string parameter2)
+        public static int getReportID()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                string sql = "SELECT reportID FROM Report WHERE staffId = @staffId AND name = @name";
+                string sql = "SELECT MAX(reportID) FROM Report";
                 SqlCommand cmd = new SqlCommand(sql, con);
-                cmd.Parameters.AddWithValue("@staffId",parameter);
-                cmd.Parameters.AddWithValue("@name", parameter2);
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read()) {
                     return reader.GetInt32(0);
@@ -294,6 +304,20 @@ namespace FYP
                                 //error handling here
                             }
                         }
+                        if (key == "@footer") {
+                            using (cmd)
+                            {
+                                cmd.CommandText = "INSERT INTO Footer_element" + "(reportID, value, eleTypeId, xPosition, yPosition)" + " VALUES " + "(@reportID, @value, @eleTypeId, @xPosition, @yPosition)";
+                                cmd.Parameters.AddWithValue("@reportID", reportEle.ReportID);
+                                cmd.Parameters.AddWithValue("@value", reportEle.Value);
+                                cmd.Parameters.AddWithValue("@eleTypeId", eleTypeId);
+                                cmd.Parameters.AddWithValue("@xPosition", reportEle.PosX);
+                                cmd.Parameters.AddWithValue("@yPosition", reportEle.PosY);
+                                cmd.ExecuteNonQuery();
+                                cmd.Parameters.Clear();
+                            }
+                        }
+                        else
                         using (cmd) { 
                             cmd.CommandText = "INSERT INTO Header_element" + "(reportID, value, eleTypeId, xPosition, yPosition)" + " VALUES " + "(@reportID, @value, @eleTypeId, @xPosition, @yPosition)";
                             cmd.Parameters.AddWithValue("@reportID", reportEle.ReportID);
@@ -349,6 +373,7 @@ namespace FYP
                         else
                             count++;
                     }
+                    e.Row.ID = "footerRowId";
                     e.Row.Cells[count-1].Controls.Add(new Literal() { Text = "Total :" });
                     e.Row.Cells[count-1].HorizontalAlign = HorizontalAlign.Right;
                     if (formTable.Columns[count].DataType.Name.ToString() == "Double")

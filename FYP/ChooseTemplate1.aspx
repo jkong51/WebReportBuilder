@@ -281,6 +281,11 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>
+                                               <%-- <asp:Button ID="AddFilterBtn" runat="server" Text="Add Filter" OnClick="AddFilterBtn_Click"/>--%>
+                                            </td>
+                                            </tr>
+                                        <tr>
                                             <th colspan="2" style="padding-bottom: 20px">FOOTER
                                             </th>
                                         </tr>
@@ -292,13 +297,19 @@
                                                 <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged" />
                                             </td>
                                         </tr>
-                                        <%--<asp:PlaceHolder runat="server" ID="totalCount">--%>
-                                        <tr>
-                                            <td>
-                                                <asp:DropDownList ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
-                                            </td>
-                                        </tr>
-                                        <%--</asp:PlaceHolder>--%>
+                                            <tr>
+                                                <td>
+                                                    <asp:DropDownList ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
+                                                </td>
+                                            </tr>
+                                            <%--<tr>
+                                                <td>
+                                                    <asp:Label ID="Label5" runat="server" Text="Label"><strong>Filter Records</strong></asp:Label>
+                                                </td>
+                                                <td>
+                                                    <asp:CheckBox ID="selectFilter" runat="server" OnCheckedChanged="selectFilter_CheckedChanged"/>
+                                                </td>
+                                            </tr>--%>
                                     </table>
                                     <div>
                                         <hr />

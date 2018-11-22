@@ -149,7 +149,7 @@
             <div id="reportContent" style="padding-top:175px;padding-left:40px">
                 <asp:UpdatePanel ID="updatePanel2" runat="server">
             <ContentTemplate>
-                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
+                <asp:GridView ID="reportGridView" OnRowDataBound="reportGridView_RowDataBound" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
                     </ContentTemplate>

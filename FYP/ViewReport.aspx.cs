@@ -61,6 +61,30 @@ namespace FYP
                 DataTable formTable = getFormData(Session["reportId"].ToString());
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
+                try
+                {
+                    string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+                    using (SqlConnection con = new SqlConnection(connectionString))
+                    {
+                        con.Open();
+                        //SELECT fe.[value], fe.[eleTypeId] FROM Footer_element fe
+                        string sql = "SELECT value FROM Footer_element where reportID = @reportID";
+                        SqlCommand cmd = new SqlCommand(sql, con);
+                        using (cmd)
+                        {
+                            cmd.Parameters.AddWithValue("@reportID", Session["reportId"].ToString());
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                Session["countTitle"] = reader["value"].ToString();
+                            }
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+
+                }
                 reportGridView.DataBind();
             }
         }
@@ -113,6 +137,7 @@ namespace FYP
                     using (SqlDataReader reader = cmd.ExecuteReader()){ 
                         if (reader.Read()) {
                             query = reader["query"].ToString();
+                            Session["query"] = query;
                         }
                     }
                 }
@@ -155,6 +180,7 @@ namespace FYP
             }
             reportGridView.DataBind();
         }
+
         //protected void btnExport_Click(object sender, EventArgs e)
         //{
         //    Response.ContentType = "application/pdf";
