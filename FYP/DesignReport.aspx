@@ -292,7 +292,7 @@
                                             <td>Report Description
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptDesc" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount');"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptDesc" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount2');"></asp:TextBox>
                                                 <br />
                                                 <label id="lblcount2" style="font-weight:normal;font-size:smaller;color:gray"></label>
                                             </td>

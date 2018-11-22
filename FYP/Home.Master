@@ -134,7 +134,7 @@
     <nav class="menu-navigation-icons2">
         <ul class="menu2">
             <li class="menu3"><a href="ChooseRetrieveUses.aspx" style="font-size:20px">Retrieve</a></li>
-            <li class="menu3"><a href="ChooseReportToDisable.aspx" style="font-size:20px">Delete</a></li>
+            <li class="menu3"><a href="ChooseReportToDisable.aspx" style="font-size:20px">Disable</a></li>
         </ul>
     </nav>
 
