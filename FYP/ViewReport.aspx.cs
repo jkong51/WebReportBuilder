@@ -181,66 +181,25 @@ namespace FYP
             reportGridView.DataBind();
         }
 
-        protected void reportGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void btnExport_Click(object sender, EventArgs e)
         {
-            if (Session["countTitle"] != null)
-            {
-                if (e.Row.RowType == DataControlRowType.Footer)
-                {
-                    string query = Session["query"].ToString();
-                    DataTable formTable = getFormData(Session["reportID"].ToString());
-                    //get index of column
-                    int count = 0;
-                    foreach (DataColumn col in formTable.Columns)
-                    {
-                        if (col.ColumnName == Session["countTitle"].ToString())
-                        {
-                            break;
-                        }
-                        else
-                            count++;
-                    }
-                    e.Row.Cells[count - 1].Controls.Add(new Literal() { Text = "Total :" });
-                    e.Row.Cells[count - 1].HorizontalAlign = HorizontalAlign.Right;
-                    if (formTable.Columns[count].DataType.Name.ToString() == "Double")
-                    {
-                        double total = formTable.AsEnumerable().Sum(row => row.Field<double>(Session["countTitle"].ToString()));
-                        e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
-                    }
-                    else if (formTable.Columns[count].DataType.Name.ToString() == "Int32" || formTable.Columns[count].DataType.Name.ToString() == "Int64" || formTable.Columns[count].DataType.Name.ToString() == "Int16")
-                    {
-                        int total = formTable.AsEnumerable().Sum(row => row.Field<int>(Session["countTitle"].ToString()));
-                        e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
-                    }
-                    else if (formTable.Columns[count].DataType.Name.ToString() == "Decimal")
-                    {
-                        Decimal total = formTable.AsEnumerable().Sum(row => row.Field<Decimal>(Session["countTitle"].ToString()));
-                        e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
-                    }
-
-                }
-
-            }
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=Panel.pdf");
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter stringWriter = new StringWriter();
+            HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
+            form1.RenderControl(htmlTextWriter);
+            StringReader stringReader = new StringReader(stringWriter.ToString());
+            Document Doc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+            HTMLWorker htmlparser = new HTMLWorker(Doc);
+            PdfWriter.GetInstance(Doc, Response.OutputStream);
+            Doc.Open();
+            htmlparser.Parse(stringReader);
+            Doc.Close();
+            Response.Write(Doc);
+            Response.End();
         }
-        //protected void btnExport_Click(object sender, EventArgs e)
-        //{
-        //    Response.ContentType = "application/pdf";
-        //    Response.AddHeader("content-disposition", "attachment;filename=Panel.pdf");
-        //    Response.Cache.SetCacheability(HttpCacheability.NoCache);
-        //    StringWriter stringWriter = new StringWriter();
-        //    HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
-        //    form1.RenderControl(htmlTextWriter);
-        //    StringReader stringReader = new StringReader(stringWriter.ToString());
-        //    Document Doc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
-        //    HTMLWorker htmlparser = new HTMLWorker(Doc);
-        //    PdfWriter.GetInstance(Doc, Response.OutputStream);
-        //    Doc.Open();
-        //    htmlparser.Parse(stringReader);
-        //    Doc.Close();
-        //    Response.Write(Doc);
-        //    Response.End();
-        //}
-        //public override void VerifyRenderingInServerForm(Control control) { }
+        public override void VerifyRenderingInServerForm(Control control) { }
 
 
         //protected void btnExportPDF_Click(object sender, EventArgs e)
