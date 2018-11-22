@@ -65,7 +65,7 @@ namespace FYP
 
                 lblRptTitle.Text = txtTitle;
                 lblRptDesc.Text = txtDesc;
-
+                
                 txtRptTitle.Text = txtTitle;
                 txtRptDesc.Text = txtDesc;
 
@@ -90,7 +90,7 @@ namespace FYP
                 reportGridView.DataBind();
                 //implement a way to dynamically add/assign position for hidden fields based on position
 
-                fontFamilyDrpDwnList.Items.Insert(0, new ListItem("Times New Roman", "Times New Roman")); //updated code
+                
                 foreach (FontFamily font in FontFamily.Families)
                 {
                     fontFamilyDrpDwnList.Items.Add(font.Name.ToString());
@@ -166,7 +166,7 @@ namespace FYP
                 string sql = "INSERT INTO Report" + "(name, staffId, status, dateGenerated, description)" +
                     " VALUES(@name, @staffId, @status, @dateGenerated, @description)";
 
-                int rowsAffected = InsertUpdate(sql, parameters);
+                    int rowsAffected = InsertUpdate(sql, parameters);
 
                 int reportId = getReportID();
                 // init reportElement for title
@@ -178,22 +178,22 @@ namespace FYP
                 parameters.Add("@title", reportEleTitle);
                 coords = null;
 
-                // init reportElement for desc
-                string descPosition = hiddenRptDesc.Value;
-                coords = Regex.Split(descPosition, ",");
-                ReportElement reportEleDesc = new ReportElement(reportId, lblRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
-                parameters.Add("@desc", reportEleDesc);
-                coords = null;
-
-                // init reportElement for date
-                if (lblDate.Text != "")
-                {
-                    string datePosition = hiddenRptDate.Value;
-                    coords = Regex.Split(hiddenRptDate.Value, ",");
-                    ReportElement reportEleDate = new ReportElement(reportId, lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name);
-                    parameters.Add("@date", reportEleDate);
+                    // init reportElement for desc
+                    string descPosition = hiddenRptDesc.Value;
+                    coords = Regex.Split(descPosition, ",");
+                    ReportElement reportEleDesc = new ReportElement(reportId, lblRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
+                    parameters.Add("@desc", reportEleDesc);
                     coords = null;
-                }
+
+                    // init reportElement for date
+                    if (lblDate.Text != "")
+                    {
+                        string datePosition = hiddenRptDate.Value;
+                        coords = Regex.Split(hiddenRptDate.Value, ",");
+                        ReportElement reportEleDate = new ReportElement(reportId, lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name);
+                        parameters.Add("@date", reportEleDate);
+                        coords = null;
+                    }
 
                 //add footer
                 if ((string)Session["footerEnabled"] == "true")
@@ -208,13 +208,13 @@ namespace FYP
                 rowsAffected = InsertUpdate(sql, parameters);
 
 
-                parameters.Clear();
-                sql = "INSERT INTO Report_body " + "(reportID, query)" + " VALUES " + "(@reportID, @query)";
-                string query = Session["query"].ToString();
-                Session.Remove("query");
-                parameters.Add("@reportID", reportId);
-                parameters.Add("@query", query);
-                rowsAffected = InsertUpdate(sql, parameters);
+                    parameters.Clear();
+                    sql = "INSERT INTO Report_body " + "(reportID, query)" + " VALUES " + "(@reportID, @query)";
+                    string query = Session["query"].ToString();
+                    Session.Remove("query");
+                    parameters.Add("@reportID", reportId);
+                    parameters.Add("@query", query);
+                    rowsAffected = InsertUpdate(sql, parameters);
 
                 
 
@@ -226,13 +226,16 @@ namespace FYP
                 parameters.Add("@rights", "R,E");
                 rowsAffected = InsertUpdate(sql,parameters);
 
-                //add footer code if needed.
-                Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
-                Response.Redirect("Homepage.aspx");
-            }
-            catch (SqlException ex) {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error saving report.')", true);
-            }
+                    //add footer code if needed.
+                    Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
+                    Response.Redirect("Homepage.aspx");
+                }
+                catch (SqlException ex)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error saving report.')", true);
+                }
+            
+            
         }
         
 

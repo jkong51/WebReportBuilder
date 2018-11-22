@@ -2,6 +2,17 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+
+        function textCounter(field, countfield, maxlimit) {
+
+            if (field.value.length > maxlimit)
+                field.value = field.value.substring(0, maxlimit);
+            else
+                countfield.value = maxlimit - field.value.length;
+        }
+
+    </script>
     <style type="text/css">
         .head {
             /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
@@ -105,15 +116,20 @@
             width: 15px;
             height: 15px;
         }
+        .charleft{
+            border:none;
+        }
     </style>
     <script type="text/javascript">
         function Count() {
             var i = document.getElementById("txtRptTitle").value.length;
             document.getElementById("remainingChr").innerHTML = 50 - i;
         }
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    
     <div>
         <table align="center" style="margin-top: 80px">
             <tr>
@@ -190,8 +206,26 @@
                                             <td class="td1">
                                                 <asp:Label ID="Label1" runat="server" Text="Label"><strong>Report Title</strong></asp:Label>
                                             </td>
+                                            <script type="text/javascript">
+                                                function LimtCharacters(txtMsg, CharLength, indicator) {
+                                                    chars = txtMsg.value.length;
+                                                    
+                                                    document.getElementById(indicator).innerHTML = CharLength - chars + " lefts";
+                                                    if (chars > CharLength) {
+                                                        txtMsg.value = txtMsg.value.substring(0, CharLength);
+                                                    }
+                                                    if (chars == 0) {
+                                                        document.getElementById(indicator).innerHTML = " ";
+                                                    }
+                                                }
+                                            </script>
                                             <td>
-                                                <asp:TextBox ID="txtRptTitle" CssClass="textbox" runat="server" ToolTip="Report title" placeholder="Report title" MaxLength="50" onkeyup="Count()" ></asp:TextBox><asp:Label ID="remainingChr" CssClass="testing" runat="server"></asp:Label>
+                                                <asp:TextBox ID="txtRptTitle" CssClass="textbox" runat="server" ToolTip="Report title" placeholder="Report title" MaxLength="50" onkeyup="LimtCharacters(this,50,'lblcount');"></asp:TextBox>
+                                                
+                                            </td>
+                                            <td>
+                                                &nbsp;&nbsp;&nbsp;<label id="lblcount" style="font-weight:normal;font-size:smaller;color:gray"></label>
+                                                
                                                 <br />
                                             </td>
                                         </tr>
@@ -200,7 +234,11 @@
                                                 <asp:Label ID="Label2" runat="server" Text="Label"><strong>Report Description</strong></asp:Label>
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptDesc" CssClass="textbox" runat="server" ToolTip="Report description" placeholder="Report description" MaxLength="50"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptDesc" CssClass="textbox" runat="server" ToolTip="Report description" placeholder="Report description" MaxLength="50" onkeyup="LimtCharacters(this,50,'lblcount2');"></asp:TextBox>
+                                                
+                                            </td>
+                                            <td>
+                                                &nbsp;&nbsp;&nbsp;<label id="lblcount2" style="font-weight:normal;font-size:smaller;color:gray"></label>
                                                 <br />
                                             </td>
                                         </tr>
@@ -256,7 +294,7 @@
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                             </td>
                                             <td>
-                                                <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged"/>
+                                                <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged" />
                                             </td>
                                         </tr>
                                             <tr>
@@ -277,25 +315,25 @@
                                         <hr />
                                     </div>
                                     <div>
-                                        <asp:PlaceHolder id="filterTablePlaceHolder" Visible="false" runat="server">
-                                        <table>
-                                            <tr>
-                                            <td>
-                                                <asp:Label ID="Label8" runat="server" Text="&lt;strong&gt;Choose Filters&lt;/strong&gt;"></asp:Label>
-                                            </td>
-                                        </tr>
-                                        <tr>
+                                        <asp:PlaceHolder ID="filterTablePlaceHolder" Visible="false" runat="server">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="Label8" runat="server" Text="&lt;strong&gt;Choose Filters&lt;/strong&gt;"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <td>
                                                         <asp:DropDownList ID="selectedItemDDL1" runat="server" OnSelectedIndexChanged="SelectedItemDDL1_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                                                         <asp:DropDownList ID="conditionDDL" runat="server"></asp:DropDownList>
                                                         <asp:TextBox ID="filterBox1" runat="server"></asp:TextBox>
                                                     </td>
-                                                <td>
-                                                    <asp:Button ID="addFilter" runat="server" Text="Add Filter"/>
-                                                </td>
-                                        
-                                        </tr>
-                                       </table>
+                                                    <td>
+                                                        <asp:Button ID="addFilter" runat="server" Text="Add Filter" />
+                                                    </td>
+
+                                                </tr>
+                                            </table>
                                         </asp:PlaceHolder>
                                     </div>
                                     <asp:Button ID="Button1" runat="server" Text="Create" OnClick="Button1_Click" CssClass="button" />

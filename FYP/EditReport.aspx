@@ -35,7 +35,7 @@
 
                 document.getElementById('<%=hiddenRptTitle.ClientID%>').value = positionTitle.left + "," + positionTitle.top;
                 document.getElementById('<%=hiddenRptDesc.ClientID%>').value = positionDesc.left + "," + positionDesc.top;
-                if (document.getElementById('<%=hiddenRptDate.ClientID%>').value == "") {
+                if (document.getElementById('<%=hiddenRptDate.ClientID%>').value != "") {
                     var positionDate = lblDate.position();
                     document.getElementById('<%=hiddenRptDate.ClientID%>').value = positionDate.left + "," + positionDate.top;
                 }

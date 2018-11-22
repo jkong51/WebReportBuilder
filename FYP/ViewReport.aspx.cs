@@ -44,17 +44,17 @@ namespace FYP
                 header_element headEle = (header_element)headerEleDictionary[key];
                     if (key == 0) {
                         lblTitle.CssClass = "reportHeader1";
-                        lblTitle.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:-40px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblTitle.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                         lblTitle.Text = headEle.Value;
                     }
                     else if (key == 1) {
                         lblDesc.CssClass = "reportHeader2";
-                        lblDesc.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:-40px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDesc.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                         lblDesc.Text = headEle.Value;
                     }
                     else if (key == 2) {
                         lblDate.CssClass = "reportHeader2";
-                        lblDate.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:-40px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDate.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                         lblDate.Text = headEle.Value;
                     }
                 }

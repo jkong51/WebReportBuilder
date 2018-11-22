@@ -39,7 +39,7 @@
                 var positionDesc = lblDesc.position();
                 document.getElementById('<%=hiddenRptTitle.ClientID%>').value = positionTitle.left + "," + positionTitle.top;
                 document.getElementById('<%=hiddenRptDesc.ClientID%>').value = positionDesc.left + "," + positionDesc.top;
-                if (document.getElementById('<%=lblDate.ClientID%>').value == "") {
+                if (document.getElementById('<%=lblDate.ClientID%>').value != "") {
                     var positionDate = lblDate.position();
                     document.getElementById('<%=hiddenRptDate.ClientID%>').value = positionDate.left + "," + positionDate.top;
                 }
@@ -260,19 +260,43 @@
                                                 </asp:DropDownList>
                                             </td>
                                         </tr>
+                                        <script type="text/javascript">
+                                                function LimtCharacters(txtMsg, CharLength, indicator) {
+                                                    chars = txtMsg.value.length;
+                                                    
+                                                    document.getElementById(indicator).innerHTML = CharLength - chars + " lefts";
+                                                    if (chars > CharLength) {
+                                                        txtMsg.value = txtMsg.value.substring(0, CharLength);
+                                                    }
+                                                    if (chars == 0) {
+                                                        document.getElementById(indicator).innerHTML = " ";
+                                                    }
+                                                }
+                                            </script>
                                         <tr>
                                             <td>Report Title
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptTitle" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptTitle" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;LimtCharacters(this,50,'lblcount');"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                                                    ControlToValidate="txtRptTitle"
+                                                    ErrorMessage="Title is a required field."
+                                                    ForeColor="Red" ValidationGroup="form1">
+                                                </asp:RequiredFieldValidator>
+                                                <br />
+                                                <label id="lblcount" style="font-weight: normal; font-size: smaller; color: gray"></label>
                                             </td>
+
                                         </tr>
                                         <tr>
                                             <td>Report Description
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptDesc" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptDesc" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount');"></asp:TextBox>
+                                                <br />
+                                                <label id="lblcount2" style="font-weight:normal;font-size:smaller;color:gray"></label>
                                             </td>
+
                                         </tr>
                                         <tr>
                                             <td>Table Content
@@ -286,7 +310,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" OnClientClick="return confirm('Are you sure you want to submit?')" OnClick="BtnSave_Click"/></td>
+                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" OnClientClick="return confirm('Are you sure you want to submit?')" OnClick="BtnSave_Click"  ValidationGroup="form1"/></td>
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
