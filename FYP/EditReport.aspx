@@ -256,18 +256,33 @@
                                                 </asp:DropDownList>
                                             </td>
                                         </tr>
+                                        <script type="text/javascript">
+                                                function LimtCharacters(txtMsg, CharLength, indicator) {
+                                                    chars = txtMsg.value.length;
+                                                    
+                                                    document.getElementById(indicator).innerHTML = CharLength - chars + " lefts";
+                                                    if (chars > CharLength) {
+                                                        txtMsg.value = txtMsg.value.substring(0, CharLength);
+                                                    }
+                                                    if (chars == 0) {
+                                                        document.getElementById(indicator).innerHTML = " ";
+                                                    }
+                                                }
+                                            </script>
                                         <tr>
                                             <td>Report Title
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptTitle"  CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptTitle"  CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;LimtCharacters(this,50,'lblcount');"></asp:TextBox>
+                                            <label id="lblcount" style="font-weight: normal; font-size: smaller; color: gray"></label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Report Description
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtRptDesc" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;"></asp:TextBox>
+                                                <asp:TextBox ID="txtRptDesc" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount2');"></asp:TextBox>
+                                            <label id="lblcount2" style="font-weight: normal; font-size: smaller; color: gray"></label>
                                             </td>
                                         </tr>
                                         <tr>

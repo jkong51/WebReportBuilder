@@ -96,11 +96,11 @@
                 <table class="border2">
                     <tr>
                         <td>
-                            <p style="font-size:27px" class="head">DELETE REPORT</p>
+                            <p style="font-size:27px" class="head">DISABLE REPORT</p>
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding:60px 30px" class="content">Delete the existing report that you think no need anymore</td>
+                        <td style="padding:60px 30px" class="content">Disable the existing report that you think temporarily don't need</td>
                     </tr>
                     <tr>
                         <td><asp:Button ID="btnDelete" runat="server" Text="Get Started" CssClass="button" OnClick="btnDelete_Click" /></td>
