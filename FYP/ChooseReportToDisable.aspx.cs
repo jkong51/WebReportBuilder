@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -21,10 +22,14 @@ namespace FYP
 
         }
 
+        private void DataBind() {
+            if (ViewState["gv"] == null) {
+               
+            }
+        }
+
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
                 if (e.Row.RowType == DataControlRowType.DataRow)
                 {
                     if (e.Row.Cells[1].Text == "1")
@@ -33,7 +38,6 @@ namespace FYP
                         chkbox.Checked = true;
                     }
                 }
-            }
         }
 
         protected void Save_Click(object sender, EventArgs e)
@@ -65,6 +69,42 @@ namespace FYP
                 cmd.Parameters.AddWithValue("@reportId", reportId);
                 cmd.ExecuteNonQuery();
             }
+        }
+        
+
+        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            var selectedRows = (Session["checkedIDs"] != null) ? Session["checkedIDs"] as List<int> : new List<int>();
+            //current page. set the checked ids to a list
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                //get the checkbox in the row
+                CheckBox checkedBox = row.FindControl("chkDisable") as CheckBox;
+
+                var rowID = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Value);
+                bool isRowPresent = selectedRows.Contains(rowID);
+                if (checkedBox.Checked && !isRowPresent)
+                {
+                    selectedRows.Add(rowID);
+                }
+                if (!checkedBox.Checked && isRowPresent)
+                {
+                    selectedRows.Remove(rowID);
+                }
+            }
+            GridView1.PageIndex = e.NewPageIndex;
+            GridView1.DataBind();
+            //get the select ids and make the gridview checkbox checked accordingly
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                CheckBox checkBox = row.FindControl("chkDisable") as CheckBox;
+                var rowID = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Value);
+                if (selectedRows.Contains(rowID))
+                {
+                    checkBox.Checked = true;
+                }
+            }
+            Session["checkedIDs"] = (selectedRows.Count > 0) ? selectedRows : null;
         }
     }
 }

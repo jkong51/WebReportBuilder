@@ -76,7 +76,7 @@
                 <asp:SessionParameter Name="staffId" SessionField="userId" />
             </SelectParameters>
         </asp:SqlDataSource>
-        <asp:GridView CssClass="grid" AllowPaging="true" PagerSettings-Position="Top" PageSize="10" ID="GridView1" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowDataBound="GridView1_RowDataBound">
+        <asp:GridView CssClass="grid" OnPageIndexChanging="GridView1_PageIndexChanging" EnableViewState="true" AllowPaging="true" PagerSettings-Position="Top" PageSize="10" ID="GridView1" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowDataBound="GridView1_RowDataBound">
             <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
             <Columns>
                 <asp:BoundField HeaderStyle-CssClass="GridHeader hiddencol" ItemStyle-CssClass="hiddencol" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
