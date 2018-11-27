@@ -20,6 +20,9 @@ namespace FYP
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            Session.Timeout = 60;
+            String formName = DropDownList1.SelectedItem.Text;
+            Session.Add("formName", formName);
             String rptTitle = txtRptTitle.Text;
             String rptDesc = txtRptDesc.Text;            
             Session.Add("rptTitle", rptTitle);
@@ -335,9 +338,11 @@ namespace FYP
         {
             if (CheckBox3.Checked == true) {
                 selectCount.Visible = true;
+                Label5.Visible = true;
             }
             else {
                 selectCount.Visible = false;
+                Label5.Visible = false;
             }
         }
 

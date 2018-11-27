@@ -54,6 +54,7 @@ namespace FYP
                 string txtTitle = Session["rptTitle"].ToString();
                 string txtDesc = Session["rptDesc"].ToString();
                 string wantDate = Session["wantDate"].ToString();
+                string formName = Session["formName"].ToString();
                 if (wantDate == "yes")
                 {
                     lblDate.Text = tdate;
@@ -62,6 +63,7 @@ namespace FYP
                 {
                     lblDate.Text = "";
                 }
+                lblFormName.Text = formName;
 
                 lblRptTitle.Text = txtTitle;
                 lblRptDesc.Text = txtDesc;
@@ -398,16 +400,16 @@ namespace FYP
         }
 
         // display check box list items when choose form ddl is selected
-        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Label7.Visible = true;
-            CheckBoxList1.Visible = true;
-            DataTable dt = getMappingData(DropDownList1.SelectedValue);
-            CheckBoxList1.DataValueField = "mappingId";
-            CheckBoxList1.DataTextField = "nameOfColumn";
-            CheckBoxList1.DataSource = dt;
-            CheckBoxList1.DataBind();
-        }
+        //protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    Label7.Visible = true;
+        //    CheckBoxList1.Visible = true;
+        //    DataTable dt = getMappingData(DropDownList1.SelectedValue);
+        //    CheckBoxList1.DataValueField = "mappingId";
+        //    CheckBoxList1.DataTextField = "nameOfColumn";
+        //    CheckBoxList1.DataSource = dt;
+        //    CheckBoxList1.DataBind();
+        //}
 
         // display filter conditions upon selection of the column name in filter function
         protected void SelectedItemDDL1_SelectedIndexChanged(object sender, EventArgs e)
@@ -503,27 +505,27 @@ namespace FYP
         }
 
         //query builder
-        private string QueryBuilder()
-        {
-            //check if filter option is selected.
-            //checks if dropdownlist item is selected
+        //private string QueryBuilder()
+        //{
+        //    //check if filter option is selected.
+        //    //checks if dropdownlist item is selected
 
-            DataTable dt = getMappingData(DropDownList1.SelectedValue);
-            string query = getColAndTable(dt);
+        //    DataTable dt = getMappingData(DropDownList1.SelectedValue);
+        //    string query = getColAndTable(dt);
 
 
-            if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
-            {
-                string filteredColName = selectedItemDDL1.SelectedItem.Text;
-                string condition = conditionDDL.SelectedValue;
-                query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
-                return query;
-            }
-            else
-                return query;
-            // return non filtered query here.
+        //    if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
+        //    {
+        //        string filteredColName = selectedItemDDL1.SelectedItem.Text;
+        //        string condition = conditionDDL.SelectedValue;
+        //        query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
+        //        return query;
+        //    }
+        //    else
+        //        return query;
+        //    // return non filtered query here.
 
-        }
+        //}
 
 
         // add dbName to param when needed
@@ -697,7 +699,7 @@ namespace FYP
         // edit this save button to resubmit data on same page.
         protected void Button1_Click(object sender, EventArgs e)
         {
-            string query = QueryBuilder();
+            //string query = QueryBuilder();
             Session["rptTitle"] = lblRptTitle.Text;
             Session["rptDesc"] = lblRptDesc.Text;
             string wantDate = "";

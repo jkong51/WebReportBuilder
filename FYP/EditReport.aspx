@@ -228,6 +228,14 @@
         color: #000;
         border: 1px solid #3AC0F2;
     }
+    #CheckBoxList1 label{
+        margin-left:10px;
+            vertical-align:middle;
+            padding:1px;
+            width:120px;
+            font-weight:normal;
+            text-transform:capitalize;
+    }
     </style>
     <title>Edit Report</title>
 </head>
@@ -353,10 +361,10 @@
                                     </div>
                                     <table class="table1">
                                         <tr>
-                                            <td class="td1">
-                                                <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the form to be used&lt;/strong&gt;"></asp:Label>
-                                            </td>
-                                            <td>
+                                            <%--<td class="td1">--%>
+                                                <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the column to be used&lt;/strong&gt;"></asp:Label>
+                                            <%--</td>--%>
+                                            <%--<td>
                                                 <asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AppendDataBoundItems="true" AutoPostBack="true">
                                                     <asp:ListItem>Select Table</asp:ListItem>
                                                 </asp:DropDownList>
@@ -365,12 +373,12 @@
                                                         <asp:SessionParameter Name="staffId" SessionField="userId" />
                                                     </SelectParameters>
                                                 </asp:SqlDataSource>
-                                            </td>
+                                            </td>--%>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <%--<td>
                                                 <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="false"></asp:Label>
-                                            </td>
+                                            </td>--%>
                                             <td>
                                                 <asp:CheckBoxList ID="CheckBoxList1" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true">
                                                 </asp:CheckBoxList>

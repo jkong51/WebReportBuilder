@@ -231,7 +231,14 @@
         color: #000;
         border: 1px solid #3AC0F2;
     }
-
+    #CheckBoxList1 label{
+        margin-left:10px;
+            vertical-align:middle;
+            padding:1px;
+            width:120px;
+            font-weight:normal;
+            text-transform:capitalize;
+    }
     </style>
     <title>i-Report Builder</title>
 </head>
@@ -363,34 +370,37 @@
                             <ContentTemplate>
                                 <div class="modal-header">
                                     <div>
-                                        <p style="font-size: 20px">Edit Table Content</p>
+                                        <p style="font-size: 20px">
+                                            <asp:Label ID="lblFormName" runat="server" Text="Label"></asp:Label></p>
                                         <hr />
                                     </div>
                                     <table class="table1">
                                         <tr>
-                                            <td class="td1">
-                                                <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the form to be used&lt;/strong&gt;"></asp:Label>
-                                            </td>
+                                            <asp:Label ID="Label2" runat="server" Text="&lt;strong&gt;Select the column to be used&lt;/strong&gt;"></asp:Label>
+                                        </tr>
+                                        <tr>
+                                            <%--<td class="td1">
+                                                <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the column to be used&lt;/strong&gt;"></asp:Label>
+                                            </td>--%>
                                             <td>
-                                                <asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AppendDataBoundItems="true" AutoPostBack="true">
+                                                <%--<asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AppendDataBoundItems="true" AutoPostBack="true">
                                                     <asp:ListItem>Select Table</asp:ListItem>
                                                 </asp:DropDownList>
                                                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT formId, title FROM Form WHERE (staffId = @staffId)">
                                                     <SelectParameters>
                                                         <asp:SessionParameter Name="staffId" SessionField="userId" />
                                                     </SelectParameters>
-                                                </asp:SqlDataSource>
+                                                </asp:SqlDataSource>--%>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <%--<td>
                                                 <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="false"></asp:Label>
-                                            </td>
+                                            </td>--%>
                                             <td>
-                                                <asp:CheckBoxList ID="CheckBoxList1" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true">
+                                                <asp:CheckBoxList ID="CheckBoxList1" Width="100%" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
                                                 </asp:CheckBoxList>
                                             </td>
-                                        </tr>
                                         <tr>
                                             <td class="td1">
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
@@ -431,7 +441,7 @@
                                        </table>
                                         </asp:PlaceHolder>
                                     </div>
-                                    <asp:Button ID="Button1" runat="server" Text="Create" OnClick="Button1_Click" CssClass="button" />
+                                    <asp:Button ID="Button1" runat="server" Text="Change" OnClick="Button1_Click" CssClass="button" />
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>

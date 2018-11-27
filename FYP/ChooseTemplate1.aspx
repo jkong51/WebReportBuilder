@@ -87,6 +87,9 @@
             font-size: 15px;
             padding: 15px 15px;
         }
+        .table1 tr{
+            border:2px solid transparent;
+        }
 
         .td1 {
             width: 200px;
@@ -95,13 +98,17 @@
         }
 
         .textbox {
-            border-radius: 10px 10px;
+            border:0.5px solid lightgray;
+	        border-radius:10px;
             font-size: 15px;
             width: 300px;
             padding: 8px 8px;
+            
         }
 
+
         .lstbox {
+            border:0.5px solid lightgray;
             border-radius: 10px 10px;
             font-size: 15px;
             width: 300px;
@@ -120,10 +127,14 @@
             border:none;
         }
         .chkspacing label{
-            margin-left:20px;
+            margin-left:10px;
             vertical-align:middle;
             padding:1px;
+            width:120px;
+            font-weight:normal;
+            text-transform:capitalize;
         }
+        
     </style>
     <script type="text/javascript">
         function Count() {
@@ -207,6 +218,7 @@
                                             <th colspan="2" style="padding-bottom: 20px">HEADER
                                             </th>
                                         </tr>
+
                                         <tr>
                                             <td class="td1">
                                                 <asp:Label ID="Label1" runat="server" Text="Label"><strong>Report Title</strong></asp:Label>
@@ -234,6 +246,7 @@
                                                 <br />
                                             </td>
                                         </tr>
+
                                         <tr>
                                             <td class="td1">
                                                 <asp:Label ID="Label2" runat="server" Text="Label"><strong>Report Description</strong></asp:Label>
@@ -280,8 +293,8 @@
                                             <td class="td1">
                                                 <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="false"></asp:Label>
                                             </td>
-                                            <td align="left">
-                                                <asp:CheckBoxList ID="CheckBoxList1" CssClass="chkspacing" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true">
+                                            <td align="justify">
+                                                <asp:CheckBoxList ID="CheckBoxList1" Width="100%" CssClass="chkspacing" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
                                                 </asp:CheckBoxList>
                                             </td>
                                         </tr>
@@ -303,8 +316,11 @@
                                             </td>
                                         </tr>
                                             <tr>
-                                                <td>
-                                                    <asp:DropDownList ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
+                                                <td class="td1">
+                                                <asp:Label ID="Label5" runat="server" Text="Label" Visible="false"><strong>Select data to be sumed</strong></asp:Label>
+                                            </td>
+                                                <td align="left" >
+                                                    <asp:DropDownList CssClass="lstbox" ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
                                                 </td>
                                             </tr>
                                             <%--<tr>
