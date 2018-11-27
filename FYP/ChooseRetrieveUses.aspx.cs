@@ -11,7 +11,7 @@ namespace FYP
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Session.Timeout = 60;
         }
 
         protected void btnEdit_Click(object sender, EventArgs e)

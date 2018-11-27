@@ -39,7 +39,8 @@ namespace FYP
         private Style primaryStyle = new Style();
         protected static string reportId;
         protected void Page_Load(object sender, EventArgs e)
-        {   
+        {
+            Session.Timeout = 60;
             if (!Page.IsPostBack)
             {
                 Dictionary<int, object> headerEleDictionary = getHeadEle(System.Convert.ToInt32(Session["reportId"].ToString()));

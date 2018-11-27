@@ -14,7 +14,7 @@ namespace FYP
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Session.Timeout = 60;
         }
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)

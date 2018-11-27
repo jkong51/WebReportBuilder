@@ -49,6 +49,7 @@ namespace FYP
             {   
             if (!Page.IsPostBack)
             {
+                Session.Timeout = 60;
                 PostBackString = Page.ClientScript.GetPostBackEventReference(this, "saveOnClick");
                 string tdate = DateTime.Now.ToString("yyyy-MM-dd");
                 string txtTitle = Session["rptTitle"].ToString();
