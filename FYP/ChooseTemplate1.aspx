@@ -119,6 +119,11 @@
         .charleft{
             border:none;
         }
+        .chkspacing label{
+            margin-left:20px;
+            vertical-align:middle;
+            padding:1px;
+        }
     </style>
     <script type="text/javascript">
         function Count() {
@@ -247,7 +252,7 @@
                                             <td class="td1">
                                                 <asp:Label ID="Label3" runat="server" Text="Label"><strong>Show Date</strong></asp:Label>
                                             </td>
-                                            <td>
+                                            <td align="left">
                                                 <asp:CheckBox ID="chkDate" CssClass="chkbox" runat="server" />
                                             </td>
                                         </tr>
@@ -257,7 +262,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="td1">
+                                            <td class="td1 td2">
                                                 <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the form to be used&lt;/strong&gt;"></asp:Label>
                                             </td>
                                             <td>
@@ -272,11 +277,11 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td class="td1">
                                                 <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="false"></asp:Label>
                                             </td>
-                                            <td>
-                                                <asp:CheckBoxList ID="CheckBoxList1" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true">
+                                            <td align="left">
+                                                <asp:CheckBoxList ID="CheckBoxList1" CssClass="chkspacing" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true">
                                                 </asp:CheckBoxList>
                                             </td>
                                         </tr>
@@ -293,7 +298,7 @@
                                             <td class="td1">
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                             </td>
-                                            <td>
+                                            <td align="left">
                                                 <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged" />
                                             </td>
                                         </tr>

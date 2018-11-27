@@ -30,6 +30,7 @@ namespace FYP
 
                 if (reader.HasRows) {
                     while (reader.Read()) {
+                        Session.Timeout = 60;
                         string userId = reader["staffId"].ToString();
                         string posId = reader["positionId"].ToString();
                         string staffName = reader["name"].ToString();

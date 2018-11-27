@@ -56,8 +56,8 @@ background: none;
             <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
             <Columns>
                 <asp:BoundField HeaderStyle-CssClass="GridHeader hiddencol" ItemStyle-CssClass="hiddencol" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="Name" SortExpression="name" />
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated"  ApplyFormatInEditMode="true" DataFormatString="{0:d}"/>
+                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="Name" SortExpression="name" />               
                 <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="Description" HeaderStyle-HorizontalAlign="Left" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
                 <asp:TemplateField ItemStyle-HorizontalAlign="Center">
                     <HeaderTemplate>Action</HeaderTemplate>
