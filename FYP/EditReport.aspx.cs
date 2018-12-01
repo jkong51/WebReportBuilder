@@ -476,10 +476,10 @@ namespace FYP
             }
         }
 
-        //private string QueryBuilder()
-        //{
-        //    //check if filter option is selected.
-        //    //checks if dropdownlist item is selected
+        private string QueryBuilder()
+        {
+            //check if filter option is selected.
+            //checks if dropdownlist item is selected
 
              DataTable dt = getMappingData(hiddenFormID.Value);
              string query = getColAndTable(dt);
@@ -494,7 +494,7 @@ namespace FYP
             else
                 return query;
 
-        //}
+        }
 
         private string getColAndTable(DataTable colNameDT)
         {
