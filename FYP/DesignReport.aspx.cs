@@ -64,11 +64,10 @@ namespace FYP
                 {
                     lblDate.Text = "";
                 }
-                lblFormName.Text = formName;
 
+                lblFormName.Text = formName;
                 lblRptTitle.Text = txtTitle;
                 lblRptDesc.Text = txtDesc;
-                
                 txtRptTitle.Text = txtTitle;
                 txtRptDesc.Text = txtDesc;
 
@@ -93,7 +92,6 @@ namespace FYP
                 hiddenFormID.Value = Session["formID"].ToString();
                 reportGridView.DataBind();
                 //implement a way to dynamically add/assign position for hidden fields based on position
-
                 
                 foreach (FontFamily font in FontFamily.Families)
                 {
@@ -114,7 +112,6 @@ namespace FYP
         private DataTable getFormData(string query)
         {
             string connStrReportDB = ConfigurationManager.ConnectionStrings["FormDBConnection"].ConnectionString;
-
             DataTable dt = new DataTable();
             using (SqlConnection con = new SqlConnection(connStrReportDB))
             {
@@ -172,8 +169,9 @@ namespace FYP
                     parameters.Add("@dateGenerated", DateTime.Now.ToString("yyyy-MM-dd"));
                 }
                 parameters.Add("@description", lblRptDesc.Text);
-                string sql = "INSERT INTO Report" + "(name, staffId, status, dateGenerated, description)" +
-                    " VALUES(@name, @staffId, @status, @dateGenerated, @description)";
+                parameters.Add("@formId", hiddenFormID.Value);
+                string sql = "INSERT INTO Report" + "(name, staffId, status, dateGenerated, description, formId)" +
+                    " VALUES(@name, @staffId, @status, @dateGenerated, @description, @formId)";
 
                     int rowsAffected = InsertUpdate(sql, parameters);
 

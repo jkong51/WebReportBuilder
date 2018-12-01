@@ -112,6 +112,15 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.HiddenField hiddenRptDate;
         
         /// <summary>
+        /// hiddenFormID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenFormID;
+        
+        /// <summary>
         /// reportHeader control.
         /// </summary>
         /// <remarks>
