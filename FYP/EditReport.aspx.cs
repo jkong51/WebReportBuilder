@@ -402,12 +402,12 @@ namespace FYP
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Label7.Visible = true;
+            //Label7.Visible = true;
             CheckBoxList1.Visible = true;
-            DataTable dt = getMappingData(DropDownList1.SelectedValue);
+           // DataTable dt = getMappingData(DropDownList1.SelectedValue);
             CheckBoxList1.DataValueField = "mappingId";
             CheckBoxList1.DataTextField = "nameOfColumn";
-            CheckBoxList1.DataSource = dt;
+           // CheckBoxList1.DataSource = dt;
             CheckBoxList1.DataBind();
         }
 
@@ -490,9 +490,9 @@ namespace FYP
             //check if filter option is selected.
             //checks if dropdownlist item is selected
 
-            DataTable dt = getMappingData(DropDownList1.SelectedValue);
-            string query = getColAndTable(dt);
-
+            // DataTable dt = getMappingData(DropDownList1.SelectedValue);
+            // string query = getColAndTable(dt);
+            string query = "";
 
             if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
             {

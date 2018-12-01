@@ -333,6 +333,7 @@
                 <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
+                <asp:HiddenField ID="hiddenFormID" runat="server"></asp:HiddenField>
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
             <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
@@ -379,26 +380,8 @@
                                             <asp:Label ID="Label2" runat="server" Text="&lt;strong&gt;Select the column to be used&lt;/strong&gt;"></asp:Label>
                                         </tr>
                                         <tr>
-                                            <%--<td class="td1">
-                                                <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the column to be used&lt;/strong&gt;"></asp:Label>
-                                            </td>--%>
                                             <td>
-                                                <%--<asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AppendDataBoundItems="true" AutoPostBack="true">
-                                                    <asp:ListItem>Select Table</asp:ListItem>
-                                                </asp:DropDownList>
-                                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT formId, title FROM Form WHERE (staffId = @staffId)">
-                                                    <SelectParameters>
-                                                        <asp:SessionParameter Name="staffId" SessionField="userId" />
-                                                    </SelectParameters>
-                                                </asp:SqlDataSource>--%>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <%--<td>
-                                                <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="false"></asp:Label>
-                                            </td>--%>
-                                            <td>
-                                                <asp:CheckBoxList ID="CheckBoxList1" Width="100%" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
+                                                <asp:CheckBoxList ID="CheckBoxList1" Width="100%" runat="server" Visible="true" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
                                                 </asp:CheckBoxList>
                                             </td>
                                         <tr>

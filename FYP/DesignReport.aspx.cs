@@ -90,6 +90,7 @@ namespace FYP
                     Session["footerName"] = Session["countTitle"].ToString();
                     Session["footerEnabled"] =  "true";
                 }
+                hiddenFormID.Value = Session["formID"].ToString();
                 reportGridView.DataBind();
                 //implement a way to dynamically add/assign position for hidden fields based on position
 
@@ -98,7 +99,12 @@ namespace FYP
                 {
                     fontFamilyDrpDwnList.Items.Add(font.Name.ToString());
                 }
-                
+                ListItemCollection cbList = Session["cbListItems"] as ListItemCollection;
+                if (Session["cbListItems"] != null) {
+                    foreach(ListItem li in cbList){
+                        CheckBoxList1.Items.Add(li);
+                    }
+                }
                 Session.Remove("rptTitle");
                 Session.Remove("rptDesc");
                 Session.Remove("wantDate");
@@ -504,30 +510,7 @@ namespace FYP
                 filterTablePlaceHolder.Visible = false;
             }
         }
-
-        //query builder
-        //private string QueryBuilder()
-        //{
-        //    //check if filter option is selected.
-        //    //checks if dropdownlist item is selected
-
-        //    DataTable dt = getMappingData(DropDownList1.SelectedValue);
-        //    string query = getColAndTable(dt);
-
-
-        //    if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
-        //    {
-        //        string filteredColName = selectedItemDDL1.SelectedItem.Text;
-        //        string condition = conditionDDL.SelectedValue;
-        //        query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
-        //        return query;
-        //    }
-        //    else
-        //        return query;
-        //    // return non filtered query here.
-
-        //}
-
+        
 
         // add dbName to param when needed
         private string getColumnType(string nameOfColumn, string nameOfTable)
@@ -697,12 +680,35 @@ namespace FYP
             }
         }
 
+        private string QueryBuilder()
+        {
+            //check if filter option is selected.
+            //checks if dropdownlist item is selected
+
+            DataTable dt = getMappingData(hiddenFormID.Value);
+            string query = getColAndTable(dt);
+
+
+            if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
+            {
+                string filteredColName = selectedItemDDL1.SelectedItem.Text;
+                string condition = conditionDDL.SelectedValue;
+                query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
+                return query;
+            }
+            else
+                return query;
+            // return non filtered query here.
+
+        }
+
         // edit this save button to resubmit data on same page.
         protected void Button1_Click(object sender, EventArgs e)
         {
-            //string query = QueryBuilder();
+            string query = QueryBuilder();
             Session["rptTitle"] = lblRptTitle.Text;
             Session["rptDesc"] = lblRptDesc.Text;
+            Session["formID"] = hiddenFormID.Value;
             string wantDate = "";
             if (lblDate.Text == "") {
                 wantDate = "no";
@@ -715,7 +721,7 @@ namespace FYP
             {
                 Session["countTitle"] = selectCount.SelectedItem.Text;
             }
-
+            Session["cbListItems"] = CheckBoxList1.Items;
             Response.Redirect("~/DesignReport.aspx?queryString=" + query);
         }
 
