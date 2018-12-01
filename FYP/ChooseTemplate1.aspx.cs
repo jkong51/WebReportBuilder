@@ -41,6 +41,9 @@ namespace FYP
             // add error message if first option is selected.
             Session.Add("query",query);
             Session.Add("wantDate", tDate);
+            // add cblist to session
+            Session.Add("cbListItems", CheckBoxList1.Items);
+            Session.Add("formID", DropDownList1.SelectedValue);
             //check if show footer is checked.
             if (CheckBox3.Checked == true) {
                 Session.Add("countTitle",selectCount.SelectedItem.Text);

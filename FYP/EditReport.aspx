@@ -321,6 +321,7 @@
                 <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
+                <asp:HiddenField ID="hiddenFormID" runat="server"></asp:HiddenField>
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
                 <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
@@ -363,24 +364,11 @@
                                         <tr>
                                             <%--<td class="td1">--%>
                                                 <asp:Label ID="Label4" runat="server" Text="&lt;strong&gt;Select the column to be used&lt;/strong&gt;"></asp:Label>
-                                            <%--</td>--%>
-                                            <%--<td>
-                                                <asp:DropDownList ID="DropDownList1" runat="server" CssClass="lstbox" DataSourceID="SqlDataSource1" DataTextField="title" DataValueField="formId" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AppendDataBoundItems="true" AutoPostBack="true">
-                                                    <asp:ListItem>Select Table</asp:ListItem>
-                                                </asp:DropDownList>
-                                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT formId, title FROM Form WHERE (staffId = @staffId)">
-                                                    <SelectParameters>
-                                                        <asp:SessionParameter Name="staffId" SessionField="userId" />
-                                                    </SelectParameters>
-                                                </asp:SqlDataSource>
-                                            </td>--%>
+                                           
                                         </tr>
                                         <tr>
-                                            <%--<td>
-                                                <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="false"></asp:Label>
-                                            </td>--%>
                                             <td>
-                                                <asp:CheckBoxList ID="CheckBoxList1" runat="server" Visible="false" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true">
+                                                <asp:CheckBoxList ID="CheckBoxList1" runat="server" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true">
                                                 </asp:CheckBoxList>
                                             </td>
                                         </tr>
@@ -392,7 +380,6 @@
                                                 <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged"/>
                                             </td>
                                         </tr>
-                                        <%--<asp:PlaceHolder runat="server" ID="totalCount">--%>
                                             <tr>
                                                 <td>
                                                     <asp:DropDownList ID="selectCount" runat="server" Visible="false"></asp:DropDownList>

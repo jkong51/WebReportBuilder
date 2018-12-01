@@ -74,6 +74,8 @@ namespace FYP
                     //reportHeader.Controls.Add(newLabel);
                 }
                 reportId = Session["reportId"].ToString();
+                hiddenFormID.Value = getFormID(Convert.ToInt32(reportId));
+                initCheckBoxList(hiddenFormID.Value,reportId);
                 if (String.IsNullOrEmpty(Convert.ToString(Request.QueryString["queryString"])))
                 {
                     sqlQuery.Value = getQuery(Session["reportId"].ToString());
@@ -400,17 +402,6 @@ namespace FYP
             }
         }
 
-        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Label7.Visible = true;
-            CheckBoxList1.Visible = true;
-            //DataTable dt = getMappingData(DropDownList1.SelectedValue);
-            CheckBoxList1.DataValueField = "mappingId";
-            CheckBoxList1.DataTextField = "nameOfColumn";
-            //CheckBoxList1.DataSource = dt;
-            CheckBoxList1.DataBind();
-        }
-
         // optimize this if got time, change to like hs one
         private DataTable getMappingData(string formId)
         {
@@ -490,20 +481,18 @@ namespace FYP
         //    //check if filter option is selected.
         //    //checks if dropdownlist item is selected
 
-        //    //DataTable dt = getMappingData(DropDownList1.SelectedValue);
-        //    //string query = getColAndTable(dt);
+             DataTable dt = getMappingData(hiddenFormID.Value);
+             string query = getColAndTable(dt);
 
-
-        //    //if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
-        //    //{
-        //    //    string filteredColName = selectedItemDDL1.SelectedItem.Text;
-        //    //    string condition = conditionDDL.SelectedValue;
-        //    //    query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
-        //    //    return query;
-        //    //}
-        //    //else
-        //    //    return query;
-        //    // return non filtered query here.
+            if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
+            {
+                string filteredColName = selectedItemDDL1.SelectedItem.Text;
+                string condition = conditionDDL.SelectedValue;
+                query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
+                return query;
+            }
+            else
+                return query;
 
         //}
 
@@ -754,6 +743,55 @@ namespace FYP
         {
             Response.Redirect("ChooseReportUpdate.aspx");
         }
-        
+
+        protected string getFormID(int reportId) {
+            string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string sql = "SELECT formId FROM Report WHERE reportID = @reportID";
+                con.Open();
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@reportID", reportId);
+                using (cmd)
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read()) {
+                        return reader["formId"].ToString();
+                    }
+                }
+            }
+            return null;
+        }
+
+        protected void initCheckBoxList(string formId, string reportId) {
+            DataTable dt = getMappingData(formId);
+            CheckBoxList1.DataValueField = "mappingId";
+            CheckBoxList1.DataTextField = "nameOfColumn";
+            CheckBoxList1.DataSource = dt;
+            CheckBoxList1.DataBind();
+            string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string sql = "SELECT query FROM Report_body WHERE reportID = @reportID";
+                con.Open();
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@reportID", reportId);
+                using (cmd)
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        string qry = reader["query"].ToString();
+                        //SELECT dateSubmitted, itemName, quantity  FROM Computer_Parts_Survey
+                        for (int i = 0; i < CheckBoxList1.Items.Count;i++) {
+                            if (Regex.IsMatch(qry, CheckBoxList1.Items[i].Text))
+                            {
+                                CheckBoxList1.Items[i].Selected = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
