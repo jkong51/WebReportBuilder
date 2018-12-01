@@ -14,6 +14,9 @@
 
     </script>
     <style type="text/css">
+
+    </style>
+    <style type="text/css">
         .head {
             /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
             font-family: 'lato', sans-serif;
@@ -102,10 +105,8 @@
 	        border-radius:10px;
             font-size: 15px;
             width: 300px;
-            padding: 8px 8px;
-            
+            padding: 8px 8px;            
         }
-
 
         .lstbox {
             border:0.5px solid lightgray;
@@ -122,9 +123,24 @@
         .chkbox input {
             width: 15px;
             height: 15px;
+           
         }
+        input[type=checkbox]{
+            cursor:pointer;
+        }
+        
         .charleft{
             border:none;
+        }
+        .chkspacing input{
+            width: 15px;
+            height: 15px;
+            cursor:pointer;
+            
+        }
+        
+        .chkspacing input + label{
+            cursor:pointer;
         }
         .chkspacing label{
             margin-left:10px;
@@ -132,7 +148,7 @@
             padding:1px;
             width:120px;
             font-weight:normal;
-            text-transform:capitalize;
+            text-transform:capitalize;          
         }
         
     </style>

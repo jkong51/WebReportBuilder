@@ -15,6 +15,7 @@
             padding: 0;
 border: none;
 background: none;
+margin-left:-60px;
         }
         .GridPager a, .GridPager span
     {

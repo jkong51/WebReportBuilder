@@ -26,6 +26,7 @@
             padding: 0;
             border: none;
             background: none;
+            margin-left:-60px;
         }
         .GridPager a, .GridPager span
     {
@@ -72,7 +73,7 @@
                 <asp:TemplateField ShowHeader="False">
                     <HeaderTemplate>Action</HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Button ID="viewReportBtn" CssClass="button" runat="server" Text="View" CausesValidation="false" OnClick="viewReportBtn_Click" />
+                        <asp:Button ID="viewReportBtn" CssClass="button" runat="server" Text="View" CausesValidation="false" OnClick="viewReportBtn_Click"  />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

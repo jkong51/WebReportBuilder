@@ -63,6 +63,14 @@
         color: #000;
         border: 1px solid #3AC0F2;
     }
+    .chkDisableCss{
+        margin-left:-40px;
+    }
+    .chkDisableCss input{
+        width:15px;
+        height:15px;
+
+    }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -87,7 +95,7 @@
                 <asp:TemplateField ItemStyle-HorizontalAlign="Center">
                     <HeaderTemplate>Status</HeaderTemplate>
                 <ItemTemplate>
-                    <asp:CheckBox ID="chkDisable" runat="server"/>
+                    <asp:CheckBox ID="chkDisable" CssClass="chkDisableCss" runat="server"/>
                 </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

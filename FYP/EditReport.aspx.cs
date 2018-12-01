@@ -402,12 +402,12 @@ namespace FYP
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Label7.Visible = true;
+            //Label7.Visible = true;
             CheckBoxList1.Visible = true;
-            DataTable dt = getMappingData(DropDownList1.SelectedValue);
+            //DataTable dt = getMappingData(DropDownList1.SelectedValue);
             CheckBoxList1.DataValueField = "mappingId";
             CheckBoxList1.DataTextField = "nameOfColumn";
-            CheckBoxList1.DataSource = dt;
+            //CheckBoxList1.DataSource = dt;
             CheckBoxList1.DataBind();
         }
 
@@ -485,27 +485,27 @@ namespace FYP
             }
         }
 
-        private string QueryBuilder()
-        {
-            //check if filter option is selected.
-            //checks if dropdownlist item is selected
+        //private string QueryBuilder()
+        //{
+        //    //check if filter option is selected.
+        //    //checks if dropdownlist item is selected
 
-            DataTable dt = getMappingData(DropDownList1.SelectedValue);
-            string query = getColAndTable(dt);
+        //    //DataTable dt = getMappingData(DropDownList1.SelectedValue);
+        //    //string query = getColAndTable(dt);
 
 
-            if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
-            {
-                string filteredColName = selectedItemDDL1.SelectedItem.Text;
-                string condition = conditionDDL.SelectedValue;
-                query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
-                return query;
-            }
-            else
-                return query;
-            // return non filtered query here.
+        //    //if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
+        //    //{
+        //    //    string filteredColName = selectedItemDDL1.SelectedItem.Text;
+        //    //    string condition = conditionDDL.SelectedValue;
+        //    //    query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
+        //    //    return query;
+        //    //}
+        //    //else
+        //    //    return query;
+        //    // return non filtered query here.
 
-        }
+        //}
 
         private string getColAndTable(DataTable colNameDT)
         {
@@ -576,7 +576,7 @@ namespace FYP
         // edit this save button to resubmit data on same page.
         protected void Button1_Click(object sender, EventArgs e)
         {
-            string qry = QueryBuilder();
+            //string qry = QueryBuilder();
             Session["rptTitle"] = lblRptTitle.Text;
             Session["rptDesc"] = lblRptDesc.Text;
             string wantDate = "";
@@ -593,7 +593,7 @@ namespace FYP
             {
                 Session["countTitle"] = selectCount.SelectedItem.Text;
             }
-            Response.Redirect("~/EditReport.aspx?queryString=" + qry);
+            //Response.Redirect("~/EditReport.aspx?queryString=" + qry);
         }
 
         protected void BtnSave_Click(object sender, EventArgs e)

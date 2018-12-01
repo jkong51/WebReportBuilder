@@ -6,14 +6,14 @@
 <head runat="server">
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-    <META Http-Equiv="Cache-Control" Content="no-cache"/>
-<META Http-Equiv="Pragma" Content="no-cache"/>
-<META Http-Equiv="Expires" Content="0"/>
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Online Report Builder</title>
     <style type="text/css">
         body {
@@ -29,16 +29,17 @@
         }
 
         .menu1 {
-            position:absolute;
-            top:30px;
-            left:230px;
-            list-style-type:none;
+            position: absolute;
+            top: 30px;
+            left: 230px;
+            list-style-type: none;
         }
+
         .menu2 {
-            position:absolute;
-            top:30px;
-            right:230px;
-            list-style-type:none;
+            position: absolute;
+            top: 30px;
+            right: 230px;
+            list-style-type: none;
         }
 
         .menu3 {
@@ -51,15 +52,16 @@
                 text-align: center;
                 padding: 14px 36px;
                 text-decoration: none;
-                transition:ease-in 1s;
+                transition: ease-in 1s;
             }
-            .menu3 a:hover {
-                font-size:larger;
-            }
+
+                .menu3 a:hover {
+                    font-size: larger;
+                }
     </style>
-    
-    
-<%--    <script type="text/javascript">
+
+
+    <%--    <script type="text/javascript">
         $("#btnLogout").ready(function () {
             if (document.referrer != 'http://localhost:8181/') {
                 history.pushState(null, null, 'login');
@@ -70,22 +72,21 @@
         });
     </script>--%>
     <script type="text/javascript">
-        function DisableBackButton() 
-        {
+        function DisableBackButton() {
             window.history.forward()
         }
         DisableBackButton();
         window.onload = DisableBackButton;
         window.onpageshow = function (evt) { if (evt.persisted) DisableBackButton() }
         window.onunload = function () { void (0) }
- </script>
+    </script>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body onload="disableBackButton()">
-    
+
     <header>
         <div>
             <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -127,14 +128,14 @@
     </header>
     <nav class="menu-navigation-icons">
         <ul class="menu1">
-            <li class="menu3"><a href="Homepage.aspx" style="font-size:20px">Home</a></li>
-            <li class="menu3"><a href="ChooseTemplate1.aspx" style="font-size:20px">Create</a></li>
+            <li class="menu3"><a href="Homepage.aspx" style="font-size: 20px">Home</a></li>
+            <li class="menu3"><a href="ChooseTemplate1.aspx" style="font-size: 20px">Create</a></li>
         </ul>
     </nav>
     <nav class="menu-navigation-icons2">
         <ul class="menu2">
-            <li class="menu3"><a href="ChooseRetrieveUses.aspx" style="font-size:20px">Retrieve</a></li>
-            <li class="menu3"><a href="ChooseReportToDisable.aspx" style="font-size:20px">Disable</a></li>
+            <li class="menu3"><a href="ChooseRetrieveUses.aspx" style="font-size: 20px">Retrieve</a></li>
+            <li class="menu3"><a href="ChooseReportToDisable.aspx" style="font-size: 20px">Disable</a></li>
         </ul>
     </nav>
 
