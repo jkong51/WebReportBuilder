@@ -26,8 +26,8 @@
         }
 
             page[size="A4"] {
-                width: 21cm;
-                height: 29.7cm;
+                width: 25cm;
+                height: 34.7cm;
             }
 
         .reportHeader1 {

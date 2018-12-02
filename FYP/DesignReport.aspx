@@ -152,8 +152,8 @@
         }
 
             page[size="A4"] {
-                width: 21cm;
-                height: 29.7cm;
+                width: 26cm;
+                height: 34.7cm;
             }
 
         .reportHeader1 {
@@ -231,14 +231,25 @@
         color: #000;
         border: 1px solid #3AC0F2;
     }
-    #CheckBoxList1 label{
-        margin-left:10px;
+    .chkspacing input{
+            width: 15px;
+            height: 15px;
+            cursor:pointer;
+            
+        }
+        
+        .chkspacing input + label{
+            cursor:pointer;
+        }
+        .chkspacing label{
+            margin-left:10px;
             vertical-align:middle;
             padding:1px;
             width:120px;
             font-weight:normal;
-            text-transform:capitalize;
-    }
+            text-transform:capitalize;          
+        }
+
     </style>
     <title>i-Report Builder</title>
 </head>
@@ -375,15 +386,19 @@
                                             <asp:Label ID="lblFormName" runat="server" Text="Label"></asp:Label></p>
                                         <hr />
                                     </div>
-                                    <table class="table1">
+                                    <table class="table1" align="center" style="width:100%">
                                         <tr>
                                             <asp:Label ID="Label2" runat="server" Text="&lt;strong&gt;Select the column to be used&lt;/strong&gt;"></asp:Label>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <asp:CheckBoxList ID="CheckBoxList1" Width="100%" runat="server" Visible="true" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
+                                                <td class="td1">
+                                                <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="true"></asp:Label>
+                                            </td>
+                                            <td align="justify">
+                                                <asp:CheckBoxList ID="CheckBoxList1" Width="100%" CssClass="chkspacing" runat="server" Visible="true" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
                                                 </asp:CheckBoxList>
                                             </td>
+                                            </tr>
                                         <tr>
                                             <td class="td1">
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
