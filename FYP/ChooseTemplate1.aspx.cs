@@ -134,10 +134,6 @@ namespace FYP
                     string rowType = "";
                     foreach (DataRow row in dt.Rows)
                     {
-                    //    if (j == 0) {
-                    //        Session.Add("nameOfTable", row["nameOfTable"].ToString());
-                    //        j++;
-                    //    }
                         rowType = getColumnType(row["nameOfColumn"].ToString(), row["nameOfTable"].ToString());
                     }
                     if (rowType == "int" || rowType == "double" || rowType == "decimal") {
@@ -340,8 +336,10 @@ namespace FYP
         protected void CheckBox3_CheckedChanged(object sender, EventArgs e)
         {
             if (CheckBox3.Checked == true) {
+                if (selectCount.Items.Count != 0) { 
                 selectCount.Visible = true;
                 Label5.Visible = true;
+                }
             }
             else {
                 selectCount.Visible = false;

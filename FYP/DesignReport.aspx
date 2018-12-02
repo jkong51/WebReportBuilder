@@ -362,7 +362,7 @@
             <div id="reportContent">
                 <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging" PageSize="20">               
+                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" EnableViewState="true" PagerStyle-CssClass="pagerStyle" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging" PageSize="20">               
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
                         </ContentTemplate>
@@ -409,6 +409,9 @@
                                         </tr>
                                         <%--<asp:PlaceHolder runat="server" ID="totalCount">--%>
                                             <tr>
+                                                <td class="td1">
+                                                <asp:Label ID="Label5" runat="server" Text="Label" Visible="false"><strong>Select data to be summed</strong></asp:Label>
+                                                </td>
                                                 <td>
                                                     <asp:DropDownList ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
                                                 </td>

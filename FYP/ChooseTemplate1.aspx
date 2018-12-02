@@ -333,7 +333,7 @@
                                         </tr>
                                             <tr>
                                                 <td class="td1">
-                                                <asp:Label ID="Label5" runat="server" Text="Label" Visible="false"><strong>Select data to be sumed</strong></asp:Label>
+                                                <asp:Label ID="Label5" runat="server" Text="Label" Visible="false"><strong>Select data to be summed</strong></asp:Label>
                                             </td>
                                                 <td align="left" >
                                                     <asp:DropDownList CssClass="lstbox" ID="selectCount" runat="server" Visible="false"></asp:DropDownList>

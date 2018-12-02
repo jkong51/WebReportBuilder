@@ -46,11 +46,24 @@ namespace FYP
         protected string PostBackString;
         protected string query;
             protected void Page_Load(object sender, EventArgs e)
-            {   
+            {
+            if (Page.IsPostBack) {
+                //rebind gridview
+                DataTable formTable = ViewState["formTable_data"] as DataTable;
+                reportGridView.DataSource = formTable;
+                if (Session["countTitle"] != null)
+                {
+                    reportGridView.ShowFooter = true;
+                    // save footer row here
+                    Session["footerName"] = Session["countTitle"].ToString();
+                    Session["footerEnabled"] = "true";
+                }
+                reportGridView.DataBind();
+            }
             if (!Page.IsPostBack)
             {
                 Session.Timeout = 60;
-                PostBackString = Page.ClientScript.GetPostBackEventReference(this, "saveOnClick");
+                //PostBackString = Page.ClientScript.GetPostBackEventReference(this, "saveOnClick");
                 string tdate = DateTime.Now.ToString("yyyy-MM-dd");
                 string txtTitle = Session["rptTitle"].ToString();
                 string txtDesc = Session["rptDesc"].ToString();
@@ -81,7 +94,6 @@ namespace FYP
                 }
                 //add check db here if needed
                 DataTable formTable = getFormData(query);
-                ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
                 if (Session["countTitle"] != null) {
                     reportGridView.ShowFooter = true;
@@ -90,6 +102,7 @@ namespace FYP
                     Session["footerEnabled"] =  "true";
                 }
                 hiddenFormID.Value = Session["formID"].ToString();
+                ViewState["formTable_data"] = formTable;
                 reportGridView.DataBind();
                 //implement a way to dynamically add/assign position for hidden fields based on position
                 
@@ -103,9 +116,6 @@ namespace FYP
                         CheckBoxList1.Items.Add(li);
                     }
                 }
-                Session.Remove("rptTitle");
-                Session.Remove("rptDesc");
-                Session.Remove("wantDate");
             }
         }
         
@@ -373,7 +383,7 @@ namespace FYP
                     int count = 0;
                     foreach (DataColumn col in formTable.Columns)
                     {
-                        if (col.ColumnName == Session["countTitle"].ToString())
+                        if (col.ColumnName == Session["footerName"].ToString())
                         {
                             break;
                         }
@@ -385,36 +395,23 @@ namespace FYP
                     e.Row.Cells[count-1].HorizontalAlign = HorizontalAlign.Right;
                     if (formTable.Columns[count].DataType.Name.ToString() == "Double")
                     {
-                        double total = formTable.AsEnumerable().Sum(row => row.Field<double>(Session["countTitle"].ToString()));
+                        double total = formTable.AsEnumerable().Sum(row => row.Field<double>(Session["footerName"].ToString()));
                         e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
                     }
                     else if (formTable.Columns[count].DataType.Name.ToString() == "Int32" || formTable.Columns[count].DataType.Name.ToString() == "Int64" || formTable.Columns[count].DataType.Name.ToString() == "Int16")
                     {
-                        int total = formTable.AsEnumerable().Sum(row => row.Field<int>(Session["countTitle"].ToString()));
+                        int total = formTable.AsEnumerable().Sum(row => row.Field<int>(Session["footerName"].ToString()));
                         e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
                     }
                     else if (formTable.Columns[count].DataType.Name.ToString() == "Decimal")
                     {
-                        Decimal total = formTable.AsEnumerable().Sum(row => row.Field<Decimal>(Session["countTitle"].ToString()));
+                        decimal total = formTable.AsEnumerable().Sum(row => row.Field<decimal>(Session["footerName"].ToString()));
                         e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
                     }
-
                 }
 
             }
         }
-
-        // display check box list items when choose form ddl is selected
-        //protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    Label7.Visible = true;
-        //    CheckBoxList1.Visible = true;
-        //    DataTable dt = getMappingData(DropDownList1.SelectedValue);
-        //    CheckBoxList1.DataValueField = "mappingId";
-        //    CheckBoxList1.DataTextField = "nameOfColumn";
-        //    CheckBoxList1.DataSource = dt;
-        //    CheckBoxList1.DataBind();
-        //}
 
         // display filter conditions upon selection of the column name in filter function
         protected void SelectedItemDDL1_SelectedIndexChanged(object sender, EventArgs e)
@@ -503,10 +500,10 @@ namespace FYP
                     }
                 }
             }
-            if (CheckBoxList1.SelectedIndex == -1)
-            {
-                filterTablePlaceHolder.Visible = false;
-            }
+            //if (CheckBoxList1.SelectedIndex == -1)
+            //{
+            //    filterTablePlaceHolder.Visible = false;
+            //}
         }
         
 
@@ -671,10 +668,12 @@ namespace FYP
             if (CheckBox3.Checked == true)
             {
                 selectCount.Visible = true;
+                Label5.Visible = true;
             }
             else
             {
                 selectCount.Visible = false;
+                Label5.Visible = false;
             }
         }
 
@@ -719,6 +718,9 @@ namespace FYP
             {
                 Session["countTitle"] = selectCount.SelectedItem.Text;
             }
+            else {
+                Session["countTitle"] = null;
+            }
             Session["cbListItems"] = CheckBoxList1.Items;
             Response.Redirect("~/DesignReport.aspx?queryString=" + query);
         }
@@ -726,7 +728,6 @@ namespace FYP
         protected void reportGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridView gv = (GridView)sender;
-            
             reportGridView.DataSource = ViewState["formTable_data"];
             reportGridView.PageIndex = e.NewPageIndex;
             if (reportGridView.PageCount - 1 == reportGridView.PageIndex)
