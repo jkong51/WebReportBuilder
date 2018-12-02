@@ -26,7 +26,7 @@
         }
 
             page[size="A4"] {
-                width: 26cm;
+                width: 25cm;
                 height: 34.7cm;
             }
 

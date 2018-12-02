@@ -565,7 +565,7 @@ namespace FYP
         // edit this save button to resubmit data on same page.
         protected void Button1_Click(object sender, EventArgs e)
         {
-            string qry = QueryBuilder();
+            //string qry = QueryBuilder();
             Session["rptTitle"] = lblRptTitle.Text;
             Session["rptDesc"] = lblRptDesc.Text;
             string wantDate = "";
@@ -582,7 +582,7 @@ namespace FYP
             {
                 Session["countTitle"] = selectCount.SelectedItem.Text;
             }
-            Response.Redirect("~/EditReport.aspx?queryString=" + qry);
+            //Response.Redirect("~/EditReport.aspx?queryString=" + qry);
         }
 
         protected void BtnSave_Click(object sender, EventArgs e)
