@@ -283,6 +283,7 @@
                                             <td>
                                                 <asp:TextBox ID="txtRptTitle"  CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;LimtCharacters(this,50,'lblcount');"></asp:TextBox>
                                             <label id="lblcount" style="font-weight: normal; font-size: smaller; color: gray"></label>
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="*" ToolTip="Report title is required" ValidationGroup="form1"></asp:RequiredFieldValidator>
                                             </td>
                                         </tr>
                                         <tr>
@@ -290,7 +291,8 @@
                                             </td>
                                             <td>
                                                 <asp:TextBox ID="txtRptDesc" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount2');"></asp:TextBox>
-                                            <label id="lblcount2" style="font-weight: normal; font-size: smaller; color: gray"></label>
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="*" ToolTip="Report description is required" ValidationGroup=""></asp:RequiredFieldValidator>
+                                                <label id="lblcount2" style="font-weight: normal; font-size: smaller; color: gray"></label>
                                             </td>
                                         </tr>
                                         <tr>

@@ -166,7 +166,7 @@ namespace FYP
                 //test footer
                 
                 //insert data for report
-                parameters.Add("@name", lblRptTitle.Text);
+                parameters.Add("@name", txtRptTitle.Text);
                 parameters.Add("@staffId", Session["userId"].ToString());
                 parameters.Add("@status", 1);
                 if (hiddenRptDate.Value == "")
@@ -177,7 +177,7 @@ namespace FYP
                 {
                     parameters.Add("@dateGenerated", DateTime.Now.ToString("yyyy-MM-dd"));
                 }
-                parameters.Add("@description", lblRptDesc.Text);
+                parameters.Add("@description", txtRptDesc.Text);
                 parameters.Add("@formId", hiddenFormID.Value);
                 string sql = "INSERT INTO Report" + "(name, staffId, status, dateGenerated, description, formId)" +
                     " VALUES(@name, @staffId, @status, @dateGenerated, @description, @formId)";
@@ -190,14 +190,14 @@ namespace FYP
                 string titlePosition = hiddenRptTitle.Value;
                 // solve the problem here, unable to split string.
                 string[] coords = Regex.Split(titlePosition, ",");
-                ReportElement reportEleTitle = new ReportElement(reportId, lblRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
+                ReportElement reportEleTitle = new ReportElement(reportId, txtRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
                 parameters.Add("@title", reportEleTitle);
                 coords = null;
 
                     // init reportElement for desc
                     string descPosition = hiddenRptDesc.Value;
                     coords = Regex.Split(descPosition, ",");
-                    ReportElement reportEleDesc = new ReportElement(reportId, lblRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
+                    ReportElement reportEleDesc = new ReportElement(reportId, txtRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
                     parameters.Add("@desc", reportEleDesc);
                     coords = null;
 

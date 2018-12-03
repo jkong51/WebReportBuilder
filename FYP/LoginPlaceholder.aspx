@@ -130,7 +130,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td align="center">
-                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" CssClass="lgbtncss" Text="Log In" ValidationGroup="Login1" OnClientClick="return confirm('Are you sure you want to submit?')" />
+                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" CssClass="lgbtncss" Text="Log In" ValidationGroup="Login1"/>
                                                     </td>
                                                 </tr>
                                             </table>

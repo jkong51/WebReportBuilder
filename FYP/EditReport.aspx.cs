@@ -743,13 +743,13 @@ namespace FYP
             string titlePosition = hiddenRptTitle.Value;
             // title of report
             string[] coords = Regex.Split(titlePosition, ",");
-            ReportElement reportEleTitle = new ReportElement(Convert.ToInt32(reportId), txtRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
+            ReportElement reportEleTitle = new ReportElement(Convert.ToInt32(reportId), txtRptTitle.Text, coords[0], coords[1], "label", txtRptTitle.Font.Name);
             parameters.Add(reportEleTitle);
             coords = null;
             //desc of report
             string descPosition = hiddenRptDesc.Value;
             coords = Regex.Split(descPosition, ",");
-            ReportElement reportEleDesc = new ReportElement(Convert.ToInt32(reportId), txtRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
+            ReportElement reportEleDesc = new ReportElement(Convert.ToInt32(reportId), txtRptDesc.Text, coords[0], coords[1], "label", txtRptDesc.Font.Name);
             parameters.Add(reportEleDesc);
             //date of report
             if (lblDate.Text != "")
