@@ -2,7 +2,7 @@
 
 
 <!DOCTYPE html>
-
+<link rel="icon" href="icons8-business-report-50.ico">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -17,6 +17,7 @@
             background-attachment: fixed;
             background-position: center;
             background-size: cover;
+            
         }
         .lgcss{
             text-align:center;
@@ -129,7 +130,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td align="center">
-                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" CssClass="lgbtncss" Text="Log In" ValidationGroup="Login1" />
+                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" CssClass="lgbtncss" Text="Log In" ValidationGroup="Login1" OnClientClick="return confirm('Are you sure you want to submit?')" />
                                                     </td>
                                                 </tr>
                                             </table>

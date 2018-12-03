@@ -49,13 +49,22 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.TextBox txtRptTitle;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// rptTitleRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rptTitleRequired;
+        
+        /// <summary>
+        /// Literal1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal1;
         
         /// <summary>
         /// txtRptDesc control.
@@ -65,6 +74,24 @@ namespace FYP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRptDesc;
+        
+        /// <summary>
+        /// rptDescRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rptDescRequired;
+        
+        /// <summary>
+        /// FailureText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal FailureText;
         
         /// <summary>
         /// BtnSave control.

@@ -91,6 +91,8 @@
     <Content Include="css.css" />
     <Content Include="EditReport.aspx" />
     <Content Include="Homepage.aspx" />
+    <Content Include="icons8-business-report-50.ico" />
+    <Content Include="icons8-business-report-50.png" />
     <Content Include="JavaScript.js" />
     <Content Include="jquery-1.12.4.js" />
     <Content Include="jquery-ui.js" />

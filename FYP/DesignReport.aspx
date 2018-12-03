@@ -55,7 +55,7 @@
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             text-align: center;
             background: rgb(204,204,204);
-            height: 100%;
+            /*overflow-x:hidden;*/
         }
 
         #sidebar {
@@ -296,15 +296,13 @@
                                             </td>
                                             <td>
                                                 <asp:TextBox ID="txtRptTitle" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;LimtCharacters(this,50,'lblcount');"></asp:TextBox>
-                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
-                                                    ControlToValidate="txtRptTitle"
-                                                    ErrorMessage="Title is a required field."
-                                                    ForeColor="Red" ValidationGroup="form1">
-                                                </asp:RequiredFieldValidator>
+                                                <asp:RequiredFieldValidator ID="rptTitleRequired" runat="server" ErrorMessage="*" ToolTip="Report Title is required" ValidationGroup="form1" ControlToValidate="txtRptTitle"></asp:RequiredFieldValidator>
                                                 <br />
                                                 <label id="lblcount" style="font-weight: normal; font-size: smaller; color: gray"></label>
                                             </td>
-
+                                            <td>
+                                                <asp:Literal ID="Literal1" runat="server" EnableViewState="False"></asp:Literal>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Report Description
@@ -312,9 +310,12 @@
                                             <td>
                                                 <asp:TextBox ID="txtRptDesc" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount2');"></asp:TextBox>
                                                 <br />
+                                                <asp:RequiredFieldValidator ID="rptDescRequired" runat="server" ErrorMessage="*" ToolTip="Report Description is required" ValidationGroup="form1" ControlToValidate="txtRptDesc"></asp:RequiredFieldValidator>
                                                 <label id="lblcount2" style="font-weight:normal;font-size:smaller;color:gray"></label>
                                             </td>
-
+                                            <td>
+                                                <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Table Content
@@ -328,7 +329,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">
-                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" OnClientClick="return confirm('Are you sure you want to submit?')" OnClick="BtnSave_Click"  ValidationGroup="form1"/></td>
+                                    <asp:Button runat="server" ID="BtnSave" class="button" Text="Save" OnClientClick="return confirm('Are you sure you want to submit?')" OnClick="BtnSave_Click" ValidationGroup="form1"/></td>
                             </tr>
                             <tr>
                                 <td colspan="2" style="vertical-align: bottom; height: 30px; padding: 5px 5px">

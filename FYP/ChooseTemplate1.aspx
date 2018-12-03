@@ -254,7 +254,7 @@
                                             </script>
                                             <td>
                                                 <asp:TextBox ID="txtRptTitle" CssClass="textbox" runat="server" ToolTip="Report title" placeholder="Report title" MaxLength="50" onkeyup="LimtCharacters(this,50,'lblcount');"></asp:TextBox>
-                                                
+                                                <asp:RequiredFieldValidator ID="rptTitleRequired" runat="server" ErrorMessage="*" ControlToValidate="txtRptTitle" ToolTip="Report Title is required" ValidationGroup="CreateRpt1"></asp:RequiredFieldValidator>
                                             </td>
                                             <td>
                                                 &nbsp;&nbsp;&nbsp;<label id="lblcount" style="font-weight:normal;font-size:smaller;color:gray"></label>
@@ -269,10 +269,11 @@
                                             </td>
                                             <td>
                                                 <asp:TextBox ID="txtRptDesc" CssClass="textbox" runat="server" ToolTip="Report description" placeholder="Report description" MaxLength="50" onkeyup="LimtCharacters(this,50,'lblcount2');"></asp:TextBox>
-                                                
+                                                <asp:RequiredFieldValidator ID="rptDescRequired" runat="server" ErrorMessage="*" ControlToValidate="txtRptDesc" ToolTip="Report Description is required" ValidationGroup="CreateRpt1"></asp:RequiredFieldValidator>
                                             </td>
                                             <td>
                                                 &nbsp;&nbsp;&nbsp;<label id="lblcount2" style="font-weight:normal;font-size:smaller;color:gray"></label>
+                                                <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
                                                 <br />
                                             </td>
                                         </tr>
@@ -373,7 +374,7 @@
                                             </table>
                                         </asp:PlaceHolder>
                                     </div>
-                                    <asp:Button ID="Button1" runat="server" Text="Create" OnClick="Button1_Click" CssClass="button" />
+                                    <asp:Button ID="Button1" runat="server" Text="Create" OnClick="Button1_Click" CssClass="button" ValidationGroup="CreateRpt1" />
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>

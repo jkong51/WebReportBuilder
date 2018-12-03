@@ -50,6 +50,8 @@ namespace FYP
             }
             // in the future, if more elements are added remember to generate a hidden field for each element intialized.
             Response.Redirect("~/DesignReport.aspx");
+            
+            
         }
 
         // display check box list items when choose form ddl is selected

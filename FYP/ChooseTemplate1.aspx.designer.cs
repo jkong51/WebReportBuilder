@@ -67,6 +67,15 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.TextBox txtRptTitle;
         
         /// <summary>
+        /// rptTitleRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rptTitleRequired;
+        
+        /// <summary>
         /// Label2 control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,24 @@ namespace FYP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRptDesc;
+        
+        /// <summary>
+        /// rptDescRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rptDescRequired;
+        
+        /// <summary>
+        /// FailureText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal FailureText;
         
         /// <summary>
         /// Label3 control.
