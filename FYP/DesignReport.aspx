@@ -363,7 +363,7 @@
             <div id="reportContent">
                 <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                <asp:GridView ID="reportGridView" PagerSettings-Position="Top" EnableViewState="true" PagerStyle-CssClass="pagerStyle" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging" PageSize="20">               
+                <asp:GridView ID="reportGridView" OnDataBound="reportGridView_DataBound" PagerSettings-Position="Top" EnableViewState="true" PagerStyle-CssClass="pagerStyle" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging" PageSize="20">               
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
                         </ContentTemplate>
