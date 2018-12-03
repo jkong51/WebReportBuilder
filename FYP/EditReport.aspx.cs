@@ -41,8 +41,25 @@ namespace FYP
         protected void Page_Load(object sender, EventArgs e)
         {
             Session.Timeout = 60;
+            if (Page.IsPostBack) {
+                //Rebind gridview
+                DataTable formTable = ViewState["formTable_data"] as DataTable;
+                reportGridView.DataSource = formTable;
+                if (Session["countTitle"] != null)
+                {
+                    reportGridView.ShowFooter = true;
+                    // save footer row here
+                    Session["footerName"] = Session["countTitle"].ToString();
+                    Session["footerEnabled"] = "true";
+                }
+                reportGridView.DataBind();
+            }
             if (!Page.IsPostBack)
             {
+                foreach (FontFamily font in FontFamily.Families)
+                {
+                    fontFamilyDrpDwnList.Items.Add(font.Name.ToString());
+                }
                 Dictionary<int, object> headerEleDictionary = getHeadEle(System.Convert.ToInt32(Session["reportId"].ToString()));
                 foreach (int key in headerEleDictionary.Keys)
                 {
@@ -55,7 +72,10 @@ namespace FYP
                         lblRptTitle.Text = headEle.Value;
                         txtRptTitle.Text = headEle.Value;
                         hiddenRptTitle.Value = headEle.XPos + "," + headEle.YPos;
-                        lblRptTitle.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblRptTitle.Font.Name = headEle.FontType;
+                        lblRptTitle.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;");
+                        reportGridView.Font.Name = headEle.FontType;
+                        fontFamilyDrpDwnList.SelectedIndex = fontFamilyDrpDwnList.Items.IndexOf(fontFamilyDrpDwnList.Items.FindByText(headEle.FontType));
                     }
                     else if (key == 1)
                     {
@@ -63,12 +83,14 @@ namespace FYP
                         lblRptDesc.Text = headEle.Value;
                         txtRptDesc.Text = headEle.Value;
                         hiddenRptDesc.Value = headEle.XPos + "," + headEle.YPos;
-                        lblRptDesc.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblRptDesc.Font.Name = headEle.FontType;
+                        lblRptDesc.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;");
                     }
                     else if (key == 2) {
                         lblDate.Text = headEle.Value;
                         hiddenRptDate.Value = headEle.XPos + "," + headEle.YPos;
-                        lblDate.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDate.Font.Name = headEle.FontType;
+                        lblDate.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;");
                     }
                     //newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                     //reportHeader.Controls.Add(newLabel);
@@ -86,10 +108,8 @@ namespace FYP
                 }
                 string query = sqlQuery.Value;
                 DataTable formTable = getFormData(query);
-                ViewState["formTable_data"] = formTable;
-                reportGridView.DataSource = formTable;
                 //check if footer exists for this
-                if (Session["countTitle"] == null)
+                if (Session["countTitle"] == null && Session["footerEnabled"] == null)
                 {
                     try
                     {
@@ -114,14 +134,17 @@ namespace FYP
 
                     }
                 }
-                reportGridView.DataBind();
-
-                foreach (FontFamily font in FontFamily.Families)
+                else if(Session["countTitle"] != null)
                 {
-                    fontFamilyDrpDwnList.Items.Add(font.Name.ToString());
+                    reportGridView.ShowFooter = true;
+                    // save footer row here
+                    Session["footerName"] = Session["countTitle"].ToString();
+                    Session["footerEnabled"] = "true";
                 }
 
-
+                reportGridView.DataSource = formTable;
+                ViewState["formTable_data"] = formTable;
+                reportGridView.DataBind();
             }
         }
 
@@ -280,10 +303,10 @@ namespace FYP
                     }
                 }
             }
-            if (CheckBoxList1.SelectedIndex == -1)
-            {
-                filterTablePlaceHolder.Visible = false;
-            }
+            //if (CheckBoxList1.SelectedIndex == -1)
+            //{
+            //    filterTablePlaceHolder.Visible = false;
+            //}
         }
 
 
@@ -438,10 +461,6 @@ namespace FYP
             {
                 reportGridView.ShowFooter = true;
             }
-            else
-            {
-                reportGridView.ShowFooter = false;
-            }
             reportGridView.DataBind();
         }
 
@@ -469,6 +488,7 @@ namespace FYP
             if (CheckBox3.Checked == true)
             {
                 selectCount.Visible = true;
+                // add label5 here
             }
             else
             {
@@ -565,7 +585,7 @@ namespace FYP
         // edit this save button to resubmit data on same page.
         protected void Button1_Click(object sender, EventArgs e)
         {
-            //string qry = QueryBuilder();
+            string qry = QueryBuilder();
             Session["rptTitle"] = lblRptTitle.Text;
             Session["rptDesc"] = lblRptDesc.Text;
             string wantDate = "";
@@ -582,7 +602,12 @@ namespace FYP
             {
                 Session["countTitle"] = selectCount.SelectedItem.Text;
             }
-            //Response.Redirect("~/EditReport.aspx?queryString=" + qry);
+            else {
+                Session["countTitle"] = null;
+                Session["footerEnabled"] = "false";
+            }
+            Session["cbListItems"] = CheckBoxList1.Items;
+            Response.Redirect("~/EditReport.aspx?queryString=" + qry);
         }
 
         protected void BtnSave_Click(object sender, EventArgs e)
@@ -613,8 +638,14 @@ namespace FYP
             List<int> headerIdList = getHeaderEleID(reportId);
             sql = "UPDATE Header_element " + "SET value = @value, xPosition = @xPos, yPosition = @yPos " + "WHERE headerID = @headerID";
             rowsAffected = getHeaderEle(sql, headerIdList);
+
+            if ((string)Session["footerEnabled"] == "true")
+            {
+                string footerName = Session["footerName"].ToString();
+                ReportElement footerElement = new ReportElement(Convert.ToInt32(reportId), footerName, "", "", "footer", "");
+                updateFooterEle(footerElement);
+            }
             Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
-           
             Response.Redirect("Homepage.aspx");
         }
 
@@ -663,6 +694,25 @@ namespace FYP
                     rowsreturned++;
                 }
                 return rowsreturned;
+            }
+        }
+
+        protected void updateFooterEle(ReportElement reportEle)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string sql = "UPDATE Footer_element SET value = @value WHERE reportID = @reportID";
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.CommandType = CommandType.Text;
+                using (cmd)
+                {
+                    cmd.Parameters.AddWithValue("@value", reportEle.Value);
+                    cmd.Parameters.AddWithValue("@reportID", reportEle.ReportID);
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+                }
             }
         }
 

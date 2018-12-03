@@ -53,6 +53,7 @@ namespace FYP
                 reportGridView.DataSource = formTable;
                 if (Session["countTitle"] != null)
                 {
+                    // default option
                     reportGridView.ShowFooter = true;
                     // save footer row here
                     Session["footerName"] = Session["countTitle"].ToString();
@@ -145,8 +146,6 @@ namespace FYP
                 lblRptDesc.ApplyStyle(primaryStyle);
                 lblDate.ApplyStyle(primaryStyle);
                 reportGridView.ApplyStyle(primaryStyle);
-
-
         }
 
         protected void BtnSave_Click(object sender, EventArgs e)
