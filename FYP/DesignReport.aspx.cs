@@ -741,5 +741,14 @@ namespace FYP
             }
             reportGridView.DataBind();
         }
+
+        protected void reportGridView_DataBound(object sender, EventArgs e)
+        {
+            if (Session["footerEnabled"] != null) {
+                if (Session["footerEnabled"].ToString() == "true") {
+                    reportGridView.FooterRow.Visible = this.reportGridView.PageIndex == this.reportGridView.PageCount - 1;
+                }
+            }
+        }
     }
 }
