@@ -257,7 +257,7 @@
                                                 <asp:RequiredFieldValidator ID="rptTitleRequired" runat="server" ErrorMessage="*" ControlToValidate="txtRptTitle" ToolTip="Report Title is required" ValidationGroup="CreateRpt1"></asp:RequiredFieldValidator>
                                             </td>
                                             <td>
-                                                &nbsp;&nbsp;&nbsp;<label id="lblcount" style="font-weight:normal;font-size:smaller;color:gray"></label>
+                                                &nbsp;&nbsp;&nbsp;<label id="lblcount" style="font-weight:normal;font-size:12px;color:gray"></label>
                                                 
                                                 <br />
                                             </td>
