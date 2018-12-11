@@ -58,7 +58,7 @@ namespace FYP
                     else if (key == 2) {
                         lblDate.CssClass = "reportHeader2";
                         lblDate.Font.Name = headEle.FontType;
-                        lblDate.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDate.Attributes.Add("style", " position:absolute;margin-left:-158px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                         lblDate.Text = headEle.Value;
                     }
                 }

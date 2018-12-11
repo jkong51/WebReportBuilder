@@ -53,6 +53,8 @@ namespace FYP
                     Session["footerEnabled"] = "true";
                 }
                 reportGridView.DataBind();
+                lblRptTitle.Text = txtRptTitle.Text;
+                lblRptDesc.Text = txtRptDesc.Text;
             }
             if (!Page.IsPostBack)
             {

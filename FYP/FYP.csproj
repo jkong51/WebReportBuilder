@@ -99,6 +99,7 @@
     <Content Include="LoginPlaceholder.aspx" />
     <Content Include="RetrieveReport.aspx" />
     <Content Include="style.css" />
+    <Content Include="StyleSheet1.css" />
     <Content Include="ViewReport.aspx" />
     <Content Include="WebForm2.aspx" />
     <Content Include="Home.Master" />

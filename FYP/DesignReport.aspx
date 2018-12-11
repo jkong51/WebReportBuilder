@@ -10,12 +10,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
+    <link type="text/css" rel="stylesheet" href="StyleSheet1.css" />
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="css.css"/>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
+    <link rel="icon" href="icons8-business-report-50.ico" />
     <script>
         $(function () {
             $(".draggable").draggable(
@@ -96,7 +97,7 @@
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            width: 100%;
+            width: 97%;
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
             border: 2px solid rgb(80, 142, 245);
@@ -404,7 +405,7 @@
                                             <td class="td1">
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                             </td>
-                                            <td>
+                                            <td align="left">
                                                 <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged"/>
                                             </td>
                                         </tr>
