@@ -204,8 +204,10 @@ namespace FYP
                             count++;
                     }
                     e.Row.ID = "footerRowId";
+                    if (count > 0) { 
                     e.Row.Cells[count - 1].Controls.Add(new Literal() { Text = "Total :" });
                     e.Row.Cells[count - 1].HorizontalAlign = HorizontalAlign.Right;
+                    }
                     if (formTable.Columns[count].DataType.Name.ToString() == "Double")
                     {
                         double total = formTable.AsEnumerable().Sum(row => row.Field<double>(Session["countTitle"].ToString()));

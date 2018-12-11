@@ -405,7 +405,7 @@
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                             </td>
                                             <td>
-                                                <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged"/>
+                                                <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server"  AutoPostBack="true" OnCheckedChanged="CheckBox3_CheckedChanged"/>
                                             </td>
                                         </tr>
                                         <%--<asp:PlaceHolder runat="server" ID="totalCount">--%>
@@ -422,7 +422,7 @@
                                     <div>
                                         <hr />
                                     </div>
-                                    <div>
+                                    <%--<div>
                                         <asp:PlaceHolder id="filterTablePlaceHolder" Visible="false" runat="server">
                                         <table>
                                             <tr>
@@ -442,7 +442,7 @@
                                         </tr>
                                        </table>
                                         </asp:PlaceHolder>
-                                    </div>
+                                    </div>--%>
                                     <asp:Button ID="Button1" runat="server" Text="Change" OnClick="Button1_Click" CssClass="button" />
                                 </div>
                             </ContentTemplate>

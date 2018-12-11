@@ -86,15 +86,7 @@ namespace FYP
                 lblRptDesc.Text = txtDesc;
                 txtRptTitle.Text = txtTitle;
                 txtRptDesc.Text = txtDesc;
-
-                //take variables to report
-                if (String.IsNullOrEmpty(Convert.ToString(Request.QueryString["queryString"]))) {
-                    query = Session["query"].ToString();
-                }
-                else
-                {
-                    query = Convert.ToString(Request.QueryString["queryString"]);
-                }
+                query = Convert.ToString(Request.QueryString["queryString"]);
                 //add check db here if needed
                 DataTable formTable = getFormData(query);
                 reportGridView.DataSource = formTable;
@@ -228,7 +220,7 @@ namespace FYP
 
                     parameters.Clear();
                     sql = "INSERT INTO Report_body " + "(reportID, query)" + " VALUES " + "(@reportID, @query)";
-                    string query = Session["query"].ToString();
+                    string query = Convert.ToString(Request.QueryString["queryString"]);
                     Session.Remove("query");
                     parameters.Add("@reportID", reportId);
                     parameters.Add("@query", query);
@@ -379,7 +371,8 @@ namespace FYP
             if (Session["countTitle"] != null) {
                 if (e.Row.RowType == DataControlRowType.Footer)
                 {
-                    DataTable formTable = getFormData(Session["query"].ToString());
+                    string query = Request.QueryString["queryString"];
+                    DataTable formTable = getFormData(Convert.ToString(Request.QueryString["queryString"]));
                     //get index of column
                     int count = 0;
                     foreach (DataColumn col in formTable.Columns)
@@ -392,8 +385,10 @@ namespace FYP
                             count++;
                     }
                     e.Row.ID = "footerRowId";
+                    if (count > 0) { 
                     e.Row.Cells[count-1].Controls.Add(new Literal() { Text = "Total :" });
                     e.Row.Cells[count-1].HorizontalAlign = HorizontalAlign.Right;
+                    }
                     if (formTable.Columns[count].DataType.Name.ToString() == "Double")
                     {
                         double total = formTable.AsEnumerable().Sum(row => row.Field<double>(Session["footerName"].ToString()));
@@ -413,98 +408,54 @@ namespace FYP
 
             }
         }
-
-        // display filter conditions upon selection of the column name in filter function
-        protected void SelectedItemDDL1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // optimize this
-            DataTable dt = getDBInfo(selectedItemDDL1.SelectedValue);
-
-            string rowType = "";
-            // returns only a single record, so change DT to something else later.
-            foreach (DataRow row in dt.Rows)
-            {
-                rowType = getColumnType(row["nameOfColumn"].ToString(), row["nameOfTable"].ToString());
-            }
-            conditionDDL.Items.Clear();
-            switch (rowType)
-            {
-                case "string":
-                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-                    conditionDDL.Items.Insert(1, new ListItem("does not equal", "<>"));
-                    break;
-                case "date":
-                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-                    conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
-                    conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
-                    conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-                    conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-                    break;
-                case "int":
-                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-                    conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
-                    conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
-                    conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-                    conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-
-                    break;
-                case "decimal":
-                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-                    conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
-                    conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
-                    conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-                    conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-                    break;
-                case "double":
-                    conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-                    conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
-                    conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
-                    conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-                    conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        
         // add items to filter dropdownlist if any checkbox item is checked.
         protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Session.Remove("tableName");
-            selectedItemDDL1.Items.Clear();
-            selectCount.Items.Clear();
-            ListItem firstele = new ListItem("", "", true);
-            int j = 0;
-            selectedItemDDL1.Items.Add(firstele);
-            for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+            if (CheckBox3.Checked == true)
             {
-                if (CheckBoxList1.Items[i].Selected)
+                selectCount.Items.Clear();
+                ListItem firstele = new ListItem("", "", true);
+                int j = 0;
+                for (int i = 0; i < CheckBoxList1.Items.Count; i++)
                 {
-                    ListItem cbItem = new ListItem(CheckBoxList1.Items[i].Text, CheckBoxList1.Items[i].Value);
-                    selectedItemDDL1.Items.Add(cbItem);
-
-                    DataTable dt = getDBInfo(CheckBoxList1.Items[i].Value);
-                    string rowType = "";
-                    foreach (DataRow row in dt.Rows)
+                    if (CheckBoxList1.Items[i].Selected)
                     {
-                        if (j == 0)
+                        ListItem cbItem = new ListItem(CheckBoxList1.Items[i].Text, CheckBoxList1.Items[i].Value);
+                        DataTable dt = getDBInfo(CheckBoxList1.Items[i].Value);
+                        string rowType = "";
+                        foreach (DataRow row in dt.Rows)
                         {
-                            Session.Add("nameOfTable", row["nameOfTable"].ToString());
-                            j++;
+                            if (j == 0)
+                            {
+                                Session.Add("nameOfTable", row["nameOfTable"].ToString());
+                                j++;
+                            }
+                            rowType = getColumnType(row["nameOfColumn"].ToString(), row["nameOfTable"].ToString());
                         }
-                        rowType = getColumnType(row["nameOfColumn"].ToString(), row["nameOfTable"].ToString());
-                    }
-                    if (rowType == "int" || rowType == "double" || rowType == "decimal")
-                    {
-                        selectCount.Items.Add(cbItem);
-                        selectCount.SelectedIndex = 0;
+                        if (rowType == "int" || rowType == "double" || rowType == "decimal")
+                        {
+                            selectCount.Items.Add(cbItem);
+                            selectCount.SelectedIndex = 0;
+                        }
                     }
                 }
+                if (selectCount.Items.Count != 0)
+                {
+                    selectCount.Visible = true;
+                    Label5.Visible = true;
+                }
+                else
+                {
+                    selectCount.Visible = false;
+                    Label5.Visible = false;
+                }
             }
-            //if (CheckBoxList1.SelectedIndex == -1)
-            //{
-            //    filterTablePlaceHolder.Visible = false;
-            //}
+            else {
+                selectCount.Visible = false;
+                Label5.Visible = false;
+            }
+            
         }
         
 
@@ -658,23 +609,48 @@ namespace FYP
             return query;
         }
 
-        protected void AddFilterBtn_Click(object sender, EventArgs e)
-        {
-            filterTablePlaceHolder.Visible = true;
-            //addFilter.Enabled = false;
-        }
+        
 
         protected void CheckBox3_CheckedChanged(object sender, EventArgs e)
         {
-            if (CheckBox3.Checked == true)
-            {
-                selectCount.Visible = true;
-                Label5.Visible = true;
-            }
-            else
+
+            if (CheckBox3.Checked == false)
             {
                 selectCount.Visible = false;
                 Label5.Visible = false;
+            }
+            else
+            {
+                selectCount.Items.Clear();
+                ListItem firstele = new ListItem("", "", true);
+                for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+                {
+                    if (CheckBoxList1.Items[i].Selected)
+                    {
+                        ListItem cbItem = new ListItem(CheckBoxList1.Items[i].Text, CheckBoxList1.Items[i].Value);
+                        DataTable dt = getDBInfo(CheckBoxList1.Items[i].Value);
+                        string rowType = "";
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            rowType = getColumnType(row["nameOfColumn"].ToString(), row["nameOfTable"].ToString());
+                        }
+                        if (rowType == "int" || rowType == "double" || rowType == "decimal")
+                        {
+                            selectCount.Items.Add(cbItem);
+                            selectCount.SelectedIndex = 0;
+                        }
+                    }
+                }
+                if (selectCount.Items.Count != 0)
+                {
+                    selectCount.Visible = true;
+                    Label5.Visible = true;
+                }
+                else
+                {
+                    selectCount.Visible = false;
+                    Label5.Visible = false;
+                }
             }
         }
 
@@ -685,17 +661,7 @@ namespace FYP
 
             DataTable dt = getMappingData(hiddenFormID.Value);
             string query = getColAndTable(dt);
-
-
-            if (selectedItemDDL1.SelectedIndex > -1 && conditionDDL.SelectedIndex > -1)
-            {
-                string filteredColName = selectedItemDDL1.SelectedItem.Text;
-                string condition = conditionDDL.SelectedValue;
-                query += " WHERE " + selectedItemDDL1.SelectedItem.Text + " " + conditionDDL.SelectedValue + " " + filterBox1.Text;
-                return query;
-            }
-            else
-                return query;
+            return query;
             // return non filtered query here.
 
         }
@@ -723,6 +689,7 @@ namespace FYP
                 Session["countTitle"] = null;
             }
             Session["cbListItems"] = CheckBoxList1.Items;
+            //Session["query"] = query;
             Response.Redirect("~/DesignReport.aspx?queryString=" + query);
         }
 

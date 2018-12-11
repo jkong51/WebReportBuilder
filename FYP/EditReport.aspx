@@ -379,10 +379,13 @@
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                             </td>
                                             <td>
-                                                <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged"/>
+                                                <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" AutoPostBack="true" OnCheckedChanged="CheckBox3_CheckedChanged"/>
                                             </td>
                                         </tr>
                                             <tr>
+                                                <td class="td1">
+                                                <asp:Label ID="Label5" runat="server" Text="Label" Visible="false"><strong>Select data to be summed</strong></asp:Label>
+                                                </td>
                                                 <td>
                                                     <asp:DropDownList ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
                                                 </td>
@@ -393,7 +396,7 @@
                                         <hr />
                                     </div>
                                     <div>
-                                        <asp:PlaceHolder id="filterTablePlaceHolder" Visible="false" runat="server">
+                                       <%-- <asp:PlaceHolder id="filterTablePlaceHolder" Visible="false" runat="server">
                                         <table>
                                             <tr>
                                             <td>
@@ -412,7 +415,7 @@
                                         </tr>
                                        </table>
                                         </asp:PlaceHolder>
-                                    </div>
+                                    </div>--%>
                                     <asp:Button ID="Button2" runat="server" Text="Create" OnClick="Button1_Click" CssClass="button" />
                                 </div>
                             </ContentTemplate>

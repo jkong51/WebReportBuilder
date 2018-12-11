@@ -328,8 +328,8 @@
                                             <td class="td1">
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                             </td>
-                                            <td align="left">
-                                                <asp:CheckBox ID="CheckBox3" CssClass="chkbox" runat="server" OnCheckedChanged="CheckBox3_CheckedChanged" />
+                                            <td>
+                                                <asp:CheckBox ID="countChkBox" CssClass="chkbox" runat="server" AutoPostBack="true" OnCheckedChanged="CheckBox3_CheckedChanged" />
                                             </td>
                                         </tr>
                                             <tr>
@@ -352,7 +352,7 @@
                                     <div>
                                         <hr />
                                     </div>
-                                    <div>
+                                   <%-- <div>
                                         <asp:PlaceHolder ID="filterTablePlaceHolder" Visible="false" runat="server">
                                             <table>
                                                 <tr>
@@ -369,11 +369,10 @@
                                                     <td>
                                                         <asp:Button ID="addFilter" runat="server" Text="Add Filter" />
                                                     </td>
-
                                                 </tr>
                                             </table>
                                         </asp:PlaceHolder>
-                                    </div>
+                                    </div>--%>
                                     <asp:Button ID="Button1" runat="server" Text="Create" OnClick="Button1_Click" CssClass="button" ValidationGroup="CreateRpt1" />
                                 </div>
                             </ContentTemplate>
