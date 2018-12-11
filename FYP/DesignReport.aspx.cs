@@ -368,6 +368,31 @@ namespace FYP
 
         protected void reportGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if(e.Row.RowType == DataControlRowType.DataRow) {
+                System.Data.DataRowView dtview;
+                DateTime dt;
+                int intCounter;
+                // Get the contents of the current row
+                // as a DataRowView 
+                dtview = (DataRowView)e.Row.DataItem;
+                // Loop through the individual values in the
+                // DataRowView's ItemArray 
+                for (intCounter = 0; intCounter <= dtview.Row.ItemArray.Length - 1; intCounter++)
+                {
+                    // Check if the current value is
+                    // a System.DateTime type 
+                    if (dtview.Row.ItemArray[intCounter] is System.DateTime)
+                    {
+                        // If it is a DateTime, cast it as such
+                        // into the variable 
+                        dt = (DateTime)dtview.Row.ItemArray[intCounter];
+                        // Set the text of the current cell
+                        // as the short date representation
+                        // of the datetime 
+                        e.Row.Cells[intCounter].Text = dt.ToShortDateString();
+                    }
+                }
+            }
             if (Session["countTitle"] != null) {
                 if (e.Row.RowType == DataControlRowType.Footer)
                 {
