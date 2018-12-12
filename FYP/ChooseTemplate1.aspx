@@ -272,7 +272,7 @@
                                                 <asp:RequiredFieldValidator ID="rptDescRequired" runat="server" ErrorMessage="*" ControlToValidate="txtRptDesc" ToolTip="Report Description is required" ValidationGroup="CreateRpt1"></asp:RequiredFieldValidator>
                                             </td>
                                             <td>
-                                                &nbsp;&nbsp;&nbsp;<label id="lblcount2" style="font-weight:normal;font-size:smaller;color:gray"></label>
+                                                &nbsp;&nbsp;&nbsp;<label id="lblcount2" style="font-weight:normal;font-size:12px;color:gray"></label>
                                                 <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
                                                 <br />
                                             </td>

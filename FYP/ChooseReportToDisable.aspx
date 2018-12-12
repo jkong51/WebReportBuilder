@@ -64,7 +64,7 @@
         border: 1px solid #3AC0F2;
     }
     .chkDisableCss{
-        margin-left:-40px;
+        margin-left:-70px;
     }
     .chkDisableCss input{
         width:15px;
