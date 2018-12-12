@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -14,7 +15,43 @@ namespace FYP
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ArrayList CheckBoxArray;
+            if (ViewState["CheckBoxArray"] != null)
+            {
+                CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+            }
+            else
+            {
+                CheckBoxArray = new ArrayList();
+            }
+
             Session.Timeout = 60;
+            if (IsPostBack) {
+                int CheckBoxIndex;
+                for (int i = 0; i < GridView1.Rows.Count; i++)
+                {
+                    if (GridView1.Rows[i].RowType == DataControlRowType.DataRow)
+                    {
+                        CheckBox chk = (CheckBox)GridView1.Rows[i].Cells[0].FindControl("chkDisable");
+                        CheckBoxIndex = GridView1.PageSize * GridView1.PageIndex + (i + 1);
+                        if (chk.Checked)
+                        {
+                            if (CheckBoxArray.IndexOf(CheckBoxIndex) == -1)
+                            {
+                                CheckBoxArray.Add(CheckBoxIndex);
+                            }
+                        }
+                        else
+                        {
+                            if (CheckBoxArray.IndexOf(CheckBoxIndex) != -1)
+                            {
+                                CheckBoxArray.Remove(CheckBoxIndex);
+                            }
+                        }
+                    }
+                }
+                ViewState["CheckBoxArray"] = CheckBoxArray;
+            }
         }
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -22,11 +59,11 @@ namespace FYP
 
         }
 
-        private void DataBind() {
-            if (ViewState["gv"] == null) {
+        //private void DataBind() {
+        //    if (ViewState["gv"] == null) {
                
-            }
-        }
+        //    }
+        //}
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -70,41 +107,62 @@ namespace FYP
                 cmd.ExecuteNonQuery();
             }
         }
+
         
+
+      
 
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            var selectedRows = (Session["checkedIDs"] != null) ? Session["checkedIDs"] as List<int> : new List<int>();
-            //current page. set the checked ids to a list
-            foreach (GridViewRow row in GridView1.Rows)
-            {
-                //get the checkbox in the row
-                CheckBox checkedBox = row.FindControl("chkDisable") as CheckBox;
-
-                var rowID = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Value);
-                bool isRowPresent = selectedRows.Contains(rowID);
-                if (checkedBox.Checked && !isRowPresent)
-                {
-                    selectedRows.Add(rowID);
-                }
-                if (!checkedBox.Checked && isRowPresent)
-                {
-                    selectedRows.Remove(rowID);
-                }
-            }
             GridView1.PageIndex = e.NewPageIndex;
             GridView1.DataBind();
-            //get the select ids and make the gridview checkbox checked accordingly
-            foreach (GridViewRow row in GridView1.Rows)
+            ArrayList CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+            for (int i = 0; i < GridView1.Rows.Count; i++)
             {
-                CheckBox checkBox = row.FindControl("chkDisable") as CheckBox;
-                var rowID = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Value);
-                if (selectedRows.Contains(rowID))
+                if (GridView1.Rows[i].RowType == DataControlRowType.DataRow)
                 {
-                    checkBox.Checked = true;
+                 int CheckBoxIndex = GridView1.PageSize * (GridView1.PageIndex) + (i + 1);
+                   if (CheckBoxArray.IndexOf(CheckBoxIndex) != -1)
+                        {
+                            CheckBox chk = (CheckBox)GridView1.Rows[i].Cells[0].FindControl("chkDisable");
+                            chk.Checked = true;
+                        }
+                    }
                 }
             }
-            Session["checkedIDs"] = (selectedRows.Count > 0) ? selectedRows : null;
+            //var selectedRows = (Session["checkedIDs"] != null) ? Session["checkedIDs"] as List<int> : new List<int>();
+            ////current page. set the checked ids to a list
+            //foreach (GridViewRow row in GridView1.Rows)
+            //{
+            //    //get the checkbox in the row
+            //    CheckBox checkedBox = row.FindControl("chkDisable") as CheckBox;
+            //    var rowID = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Value);
+            //    bool isRowPresent = selectedRows.Contains(rowID);
+            //    if (checkedBox.Checked && !isRowPresent)
+            //    {
+            //        selectedRows.Add(rowID);
+            //    }
+            //    if (!checkedBox.Checked && isRowPresent)
+            //    {
+            //        selectedRows.Remove(rowID);
+            //    }
+            //}
+            //GridView1.PageIndex = e.NewPageIndex;
+            //GridView1.DataBind();
+            ////get the select ids and make the gridview checkbox checked accordingly
+            //foreach (GridViewRow row in GridView1.Rows)
+            //{
+            //    CheckBox checkBox = row.FindControl("chkDisable") as CheckBox;
+            //    var rowID = Convert.ToInt32(GridView1.DataKeys[row.RowIndex].Value);
+            //    if (selectedRows.Contains(rowID))
+            //    {
+            //        checkBox.Checked = true;
+            //    }
+            //    else
+            //    {
+            //        checkBox.Checked = false;
+            //    }
+            //}
+            //Session["checkedIDs"] = (selectedRows.Count > 0) ? selectedRows : null;
         }
     }
-}

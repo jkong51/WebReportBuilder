@@ -213,6 +213,7 @@ namespace FYP
                     }
                 }
             }
+
             if (Session["countTitle"] != null)
             {
                 if (e.Row.RowType == DataControlRowType.Footer)
