@@ -501,12 +501,12 @@
                                             </tr>
                                             <tr>
                                                 <td class="td1">
-                                                    <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="true"></asp:Label>
-                                                </td>
-                                                <td align="justify">
-                                                    <asp:CheckBoxList ID="CheckBoxList1" Width="100%" CssClass="chkspacing" runat="server" Visible="true" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical">
-                                                    </asp:CheckBoxList>
-                                                </td>
+                                                <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="true"></asp:Label>
+                                            </td>
+                                            <td align="justify">
+                                                <asp:CheckBoxList ID="ColumnCbList" Width="100%" CssClass="chkspacing" runat="server" Visible="true" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
+                                                </asp:CheckBoxList>
+                                            </td>
                                             </tr>
                                             <tr>
                                                 <td class="td1">
@@ -525,39 +525,18 @@
                                                     <asp:DropDownList ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
                                                 </td>
                                             </tr>
-                                            <%--</asp:PlaceHolder>--%>
-                                        </table>
-                                        <div>
-                                            <hr />
-                                        </div>
-                                        <%--<div>
-                                        <asp:PlaceHolder id="filterTablePlaceHolder" Visible="false" runat="server">
-                                        <table>
-                                            <tr>
-                                            <td>
-                                                <asp:Label ID="Label8" runat="server" Text="&lt;strong&gt;Choose Filters&lt;/strong&gt;"></asp:Label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                                    <td>
-                                                        <asp:DropDownList ID="selectedItemDDL1" runat="server" OnSelectedIndexChanged="SelectedItemDDL1_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                                                        <asp:DropDownList ID="conditionDDL" runat="server"></asp:DropDownList>
-                                                        <asp:TextBox ID="filterBox1" runat="server"></asp:TextBox>
-                                                    </td>
-                                                <td>
-                                                    <asp:Button ID="addFilter" runat="server" Text="Add Filter"/>
-                                                </td>
-                                        </tr>
-                                       </table>
-                                        </asp:PlaceHolder>
-                                    </div>--%>
-                                        <asp:Button ID="Button1" runat="server" Text="Change" OnClick="Button1_Click" CssClass="button" />
+                                        <%--</asp:PlaceHolder>--%>
+                                    </table>
+                                    <div>
+                                        <hr />
                                     </div>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-                        </asp:Panel>
-                    </div>
+                                    <asp:Button ID="Button1" runat="server" Text="Change" OnClick="Button1_Click" CssClass="button" />
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </asp:Panel>
                 </div>
+            </div>
 
             </div>
         </div>

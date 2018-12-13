@@ -67,78 +67,50 @@ namespace FYP
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Label7.Visible = true;
-            CheckBoxList1.Visible = true;
+            ColumnCbList.Visible = true;
             DataTable dt = getMappingData(DropDownList1.SelectedValue);
-            CheckBoxList1.DataValueField = "mappingId";
-            CheckBoxList1.DataTextField = "nameOfColumn";
-            CheckBoxList1.DataSource = dt;
-            CheckBoxList1.DataBind();
+            ColumnCbList.DataValueField = "mappingId";
+            ColumnCbList.DataTextField = "nameOfColumn";
+            ColumnCbList.DataSource = dt;
+            ColumnCbList.DataBind();
+            ViewState["selectedCbList"] = null;
         }
-
-        // display filter conditions upon selection of the column name in filter function
-        //protected void SelectedItemDDL1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    // optimize this
-        //    DataTable dt = getDBInfo(selectedItemDDL1.SelectedValue);
-            
-        //    string rowType = "";
-        //    // returns only a single record, so change DT to something else later.
-        //    foreach (DataRow row in dt.Rows) {
-        //        rowType = getColumnType(row["nameOfColumn"].ToString(),row["nameOfTable"].ToString());
-        //    }
-        //    conditionDDL.Items.Clear();
-        //    switch (rowType) {
-        //        case "string":
-        //            conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-        //            conditionDDL.Items.Insert(1, new ListItem("does not equal", "<>"));
-        //            break;
-        //        case "date":
-        //            conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-        //            conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
-        //            conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
-        //            conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-        //            conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-        //            break;
-        //        case "int":
-        //            conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-        //            conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
-        //            conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
-        //            conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-        //            conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-                    
-        //            break;
-        //        case "decimal":
-        //            conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-        //            conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
-        //            conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
-        //            conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-        //            conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-        //            break;
-        //        case "double":
-        //            conditionDDL.Items.Insert(0, new ListItem("equals", "="));
-        //            conditionDDL.Items.Insert(1, new ListItem("less than", "<"));
-        //            conditionDDL.Items.Insert(2, new ListItem("more than", ">"));
-        //            conditionDDL.Items.Insert(3, new ListItem("more or equal than", ">="));
-        //            conditionDDL.Items.Insert(4, new ListItem("less or equal than", "<="));
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        
 
         // add items to filter dropdownlist if any checkbox item is checked.
-        protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ColumnCbList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            List<string> checkedList = new List<string>();
+            if (ViewState["selectedCbList"] != null)
+            {
+                checkedList = (List<string>)ViewState["selectedCbList"];
+            }
+            string value = string.Empty;
+            string result = Request.Form["__EVENTTARGET"];
+            string[] checkedBox = result.Split('$');
+            int index = int.Parse(checkedBox[checkedBox.Length - 1]);
+            if (ColumnCbList.Items[index].Selected)
+            {
+                value = ColumnCbList.Items[index].Text;
+                checkedList.Add(value);
+            }
+            else if(!ColumnCbList.Items[index].Selected)
+            {
+                value = ColumnCbList.Items[index].Text;
+                checkedList.Remove(value);
+            }
+            ViewState["selectedCbList"] = checkedList;
+
             if (countChkBox.Checked == true)
             {
                 selectCount.Items.Clear();
                 ListItem firstele = new ListItem("", "", true);
-                for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+                for (int i = 0; i < ColumnCbList.Items.Count; i++)
                 {
-                    if (CheckBoxList1.Items[i].Selected)
+                    if (ColumnCbList.Items[i].Selected)
                     {
-                        ListItem cbItem = new ListItem(CheckBoxList1.Items[i].Text, CheckBoxList1.Items[i].Value);
-                        DataTable dt = getDBInfo(CheckBoxList1.Items[i].Value);
+                        ListItem cbItem = new ListItem(ColumnCbList.Items[i].Text, ColumnCbList.Items[i].Value);
+                        DataTable dt = getDBInfo(ColumnCbList.Items[i].Value);
                         string rowType = "";
                         foreach (DataRow row in dt.Rows)
                         {
@@ -275,17 +247,10 @@ namespace FYP
 
         private string getColAndTable(DataTable colNameDT)
         {
-                string tableNames = "";
-                string columns = "";
-            // add in filters here
-            List<string> checkboxSelection = new List<string>();
-            foreach (ListItem listItem in CheckBoxList1.Items)
-            {
-                if (listItem.Selected)
-                {
-                    checkboxSelection.Add(listItem.Text);
-                }
-            }
+             string tableNames = "";
+             string columns = "";
+            // add in filters here 
+            List<string> checkboxSelection = (List<string>)ViewState["selectedCbList"];
             for (int i = 0; i < colNameDT.Rows.Count; i++)
                 {
                     //syntax dt.Rows[rowindex][columnName/columnIndex]
@@ -293,49 +258,42 @@ namespace FYP
                     {
                     tableNames = colNameDT.Rows[i]["nameOfTable"].ToString();
                     columns = checkboxSelection[0];
-                    checkboxSelection.RemoveAt(0);
+                    //checkboxSelection.RemoveAt(0);
                     }
+                    // will only enter this segment if it is the last item on checkBoxSelection
                     else if (i == colNameDT.Rows.Count - 1)
                     {
                         if (!colNameDT.Rows[i]["nameOfTable"].ToString().Equals(colNameDT.Rows[i - 1]["nameOfTable"].ToString()))
                         {
                             tableNames += ", " + colNameDT.Rows[i]["nameOfTable"].ToString() + " ";
                         }
-
-                    foreach (string listItem in checkboxSelection)
-                    {
-                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
-                        {
-                            columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString() + " ";
-                        }
                     }
-                    
-                    }
+                    //enter this segment only if it isn't the first or last item in checkBoxSelection
                     else
                     {
+                        //in case there are multiple tables required. (future improvement)
                         if (!colNameDT.Rows[i]["nameOfTable"].ToString().Equals(colNameDT.Rows[i - 1]["nameOfTable"].ToString()))
                         {
                             tableNames += ", " + colNameDT.Rows[i]["nameOfTable"].ToString();
                         }
-
-                    foreach (string listItem in checkboxSelection)
-                    {
-                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
-                        {
-                            columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString();
-                        }
                     }
-                    }
+            }
+            // ignore first element as it has been added already
+            Boolean ignoreFirstElement = false ;
+            foreach (string listItem in checkboxSelection)
+            {
+                if (ignoreFirstElement == false)
+                {
+                    ignoreFirstElement = true;
                 }
-                // insert query string here
-                string query = "SELECT " + columns + " FROM " + tableNames;
-                return query;
+                else {
+                    columns += ", " + listItem;
+                }
+            }
+            // insert query string here
+            string query = "SELECT " + columns + " FROM " + tableNames;
+            return query;
         }
-
-        //protected void AddFilterBtn_Click(object sender, EventArgs e)
-        //{
-        //    filterTablePlaceHolder.Visible = true;
-        //}
 
         protected void CheckBox3_CheckedChanged(object sender, EventArgs e)
         {
@@ -346,12 +304,12 @@ namespace FYP
             else {
                 selectCount.Items.Clear();
                 ListItem firstele = new ListItem("", "", true);
-                for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+                for (int i = 0; i < ColumnCbList.Items.Count; i++)
                 {
-                    if (CheckBoxList1.Items[i].Selected)
+                    if (ColumnCbList.Items[i].Selected)
                     {
-                        ListItem cbItem = new ListItem(CheckBoxList1.Items[i].Text, CheckBoxList1.Items[i].Value);
-                        DataTable dt = getDBInfo(CheckBoxList1.Items[i].Value);
+                        ListItem cbItem = new ListItem(ColumnCbList.Items[i].Text, ColumnCbList.Items[i].Value);
+                        DataTable dt = getDBInfo(ColumnCbList.Items[i].Value);
                         string rowType = "";
                         foreach (DataRow row in dt.Rows)
                         {
@@ -379,12 +337,5 @@ namespace FYP
                 }
             }
         }
-
-        //protected void selectFilter_CheckedChanged(object sender, EventArgs e)
-        //{
-
-        //}
     }
-
-
 }

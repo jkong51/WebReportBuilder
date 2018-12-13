@@ -111,6 +111,7 @@ namespace FYP
                 else {
                     initCheckBoxList(hiddenFormID.Value, reportId);
                 }
+
                 if (String.IsNullOrEmpty(Convert.ToString(Request.QueryString["queryString"])))
                 {
                     sqlQuery.Value = getQuery(Session["reportId"].ToString());
@@ -195,19 +196,7 @@ namespace FYP
 
         protected void ChangeFont(object sender, EventArgs e)
         {
-            //fix change font
             primaryStyle.Font.Name = fontFamilyDrpDwnList.SelectedItem.Text;
-            //foreach (Control c in updatePanel1.Controls) {
-            //    if (c.ID == "lbl0") {
-            //        ((Label)c).ApplyStyle(primaryStyle);
-            //    }
-            //    else if (c.ID == "lbl1") {
-            //        ((Label)c).ApplyStyle(primaryStyle);
-            //    }
-            //    else if (c.ID == "lbl2") {
-            //        ((Label)c).ApplyStyle(primaryStyle);
-            //    }
-            //}
             lblRptTitle.ApplyStyle(primaryStyle);
             lblRptDesc.ApplyStyle(primaryStyle);
             lblDate.ApplyStyle(primaryStyle);

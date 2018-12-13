@@ -105,12 +105,15 @@ namespace FYP
                 {
                     fontFamilyDrpDwnList.Items.Add(font.Name.ToString());
                 }
+                ViewState["selectedCbList"] = Session["checkedItems"];
+
                 ListItemCollection cbList = Session["cbListItems"] as ListItemCollection;
                 if (Session["cbListItems"] != null) {
                     foreach(ListItem li in cbList){
-                        CheckBoxList1.Items.Add(li);
+                        ColumnCbList.Items.Add(li);
                     }
                 }
+
             }
         }
         
@@ -439,17 +442,38 @@ namespace FYP
         // add items to filter dropdownlist if any checkbox item is checked.
         protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            List<string> checkedList = new List<string>();
+            if (ViewState["selectedCbList"] != null)
+            {
+                checkedList = (List<string>)ViewState["selectedCbList"];
+            }
+            string value = string.Empty;
+            string result = Request.Form["__EVENTTARGET"];
+            string[] checkedBox = result.Split('$');
+            int index = int.Parse(checkedBox[checkedBox.Length - 1]);
+            if (ColumnCbList.Items[index].Selected)
+            {
+                value = ColumnCbList.Items[index].Text;
+                checkedList.Add(value);
+            }
+            else if (!ColumnCbList.Items[index].Selected)
+            {
+                value = ColumnCbList.Items[index].Text;
+                checkedList.Remove(value);
+            }
+            ViewState["selectedCbList"] = checkedList;
+
             if (CheckBox3.Checked == true)
             {
                 selectCount.Items.Clear();
                 ListItem firstele = new ListItem("", "", true);
                 int j = 0;
-                for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+                for (int i = 0; i < ColumnCbList.Items.Count; i++)
                 {
-                    if (CheckBoxList1.Items[i].Selected)
+                    if (ColumnCbList.Items[i].Selected)
                     {
-                        ListItem cbItem = new ListItem(CheckBoxList1.Items[i].Text, CheckBoxList1.Items[i].Value);
-                        DataTable dt = getDBInfo(CheckBoxList1.Items[i].Value);
+                        ListItem cbItem = new ListItem(ColumnCbList.Items[i].Text, ColumnCbList.Items[i].Value);
+                        DataTable dt = getDBInfo(ColumnCbList.Items[i].Value);
                         string rowType = "";
                         foreach (DataRow row in dt.Rows)
                         {
@@ -581,14 +605,7 @@ namespace FYP
             string tableNames = "";
             string columns = "";
             // add in filters here
-            List<string> checkboxSelection = new List<string>();
-            foreach (ListItem listItem in CheckBoxList1.Items)
-            {
-                if (listItem.Selected)
-                {
-                    checkboxSelection.Add(listItem.Text);
-                }
-            }
+            List<string> checkboxSelection = (List<string>)ViewState["selectedCbList"];
             for (int i = 0; i < colNameDT.Rows.Count; i++)
             {
                 //syntax dt.Rows[rowindex][columnName/columnIndex]
@@ -596,8 +613,6 @@ namespace FYP
                 {
                     tableNames = colNameDT.Rows[i]["nameOfTable"].ToString();
                     columns = checkboxSelection[0];
-                    checkboxSelection.RemoveAt(0);
-
                 }
                 else if (i == colNameDT.Rows.Count - 1)
                 {
@@ -605,15 +620,6 @@ namespace FYP
                     {
                         tableNames += ", " + colNameDT.Rows[i]["nameOfTable"].ToString() + " ";
                     }
-
-                    foreach (string listItem in checkboxSelection)
-                    {
-                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
-                        {
-                            columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString() + " ";
-                        }
-                    }
-
                 }
                 else
                 {
@@ -621,14 +627,19 @@ namespace FYP
                     {
                         tableNames += ", " + colNameDT.Rows[i]["nameOfTable"].ToString();
                     }
+                }
+            }
 
-                    foreach (string listItem in checkboxSelection)
-                    {
-                        if (listItem == colNameDT.Rows[i]["nameOfColumn"].ToString())
-                        {
-                            columns += ", " + colNameDT.Rows[i]["nameOfColumn"].ToString();
-                        }
-                    }
+            Boolean ignoreFirstElement = false;
+            foreach (string listItem in checkboxSelection)
+            {
+                if (ignoreFirstElement == false)
+                {
+                    ignoreFirstElement = true;
+                }
+                else
+                {
+                    columns += ", " + listItem;
                 }
             }
             // insert query string here
@@ -650,12 +661,12 @@ namespace FYP
             {
                 selectCount.Items.Clear();
                 ListItem firstele = new ListItem("", "", true);
-                for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+                for (int i = 0; i < ColumnCbList.Items.Count; i++)
                 {
-                    if (CheckBoxList1.Items[i].Selected)
+                    if (ColumnCbList.Items[i].Selected)
                     {
-                        ListItem cbItem = new ListItem(CheckBoxList1.Items[i].Text, CheckBoxList1.Items[i].Value);
-                        DataTable dt = getDBInfo(CheckBoxList1.Items[i].Value);
+                        ListItem cbItem = new ListItem(ColumnCbList.Items[i].Text, ColumnCbList.Items[i].Value);
+                        DataTable dt = getDBInfo(ColumnCbList.Items[i].Value);
                         string rowType = "";
                         foreach (DataRow row in dt.Rows)
                         {
@@ -715,8 +726,8 @@ namespace FYP
             else {
                 Session["countTitle"] = null;
             }
-            Session["cbListItems"] = CheckBoxList1.Items;
-            //Session["query"] = query;
+            Session["cbListItems"] = ColumnCbList.Items;
+            Session["checkedItems"] = (List<string>)ViewState["selectedCbList"];
             Response.Redirect("~/DesignReport.aspx?queryString=" + query);
         }
 
