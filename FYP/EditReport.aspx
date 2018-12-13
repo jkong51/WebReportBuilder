@@ -400,27 +400,7 @@
                                         <hr />
                                     </div>
                                     <div>
-                                       <%-- <asp:PlaceHolder id="filterTablePlaceHolder" Visible="false" runat="server">
-                                        <table>
-                                            <tr>
-                                            <td>
-                                                <asp:Label ID="Label8" runat="server" Text="&lt;strong&gt;Choose Filters&lt;/strong&gt;"></asp:Label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                                    <td>
-                                                        <asp:DropDownList ID="selectedItemDDL1" runat="server" OnSelectedIndexChanged="SelectedItemDDL1_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                                                        <asp:DropDownList ID="conditionDDL" runat="server"></asp:DropDownList>
-                                                        <asp:TextBox ID="filterBox1" runat="server"></asp:TextBox>
-                                                    </td>
-                                                <td>
-                                                    <asp:Button ID="addFilter" runat="server" Text="Add Filter"/>
-                                                </td>
-                                        </tr>
-                                       </table>
-                                        </asp:PlaceHolder>
-                                    </div>--%>
-                                    <asp:Button ID="Button2" runat="server" Text="Create" OnClick="Button1_Click" CssClass="button" />
+                                    <asp:Button ID="Button2" runat="server" Text="Change" OnClick="Button1_Click" CssClass="button" />
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
