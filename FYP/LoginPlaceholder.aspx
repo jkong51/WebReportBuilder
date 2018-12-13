@@ -17,24 +17,23 @@
             background-attachment: fixed;
             background-position: center;
             background-size: cover;
-            
         }
-        .lgcss{
-            text-align:center;
-            overflow-x: hidden;
 
+        .lgcss {
+            text-align: center;
+            overflow-x: hidden;
             /*padding-top: 20px;*/
-            
         }
-        .loginCss{
+
+        .loginCss {
             /*font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
             font-family: 'lato', sans-serif;
-            width:400px;
-            height:250px;
-            text-align:center;
-            font-size:20px;
-            align-content:center;
-            color:darkslategray;
+            width: 400px;
+            height: 250px;
+            text-align: center;
+            font-size: 20px;
+            align-content: center;
+            color: darkslategray;
             border: 1px solid #BFBFBF;
             background-color: white;
             box-shadow: 5px 10px 5px #aaaaaa;
@@ -42,13 +41,14 @@
             font-family: "Gill Sans", sans-serif;
             cursor: pointer;
         }
-        .txtcss{
+
+        .txtcss {
             font-size: 15px;
             width: 270px;
             padding: 8px 8px;
         }
-        
-        .lgbtncss{
+
+        .lgbtncss {
             /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
             font-family: 'lato', sans-serif;
             background-color: rgb(80, 142, 245);
@@ -63,12 +63,17 @@
             transition-duration: 0.4s;
             border: 2px solid rgb(80, 142, 245);
         }
-        .lgbtncss:hover {
+
+            .lgbtncss:hover {
                 background-color: white;
                 color: rgb(80, 142, 245);
                 cursor: pointer;
             }
-        
+
+        .ErrorIndicator {
+            color: red;
+            font-size: 30px;
+        }
     </style>
     <title>i-Report Builder</title>
 </head>
@@ -76,16 +81,15 @@
     <header>
         <div>
             <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-            <img src="Tunku-Abdul-Rahman-University-College-TARC.png" width="250" height="100"/>
-            <h1 style="cursor:default">i-Report Builder               
+            <img src="Tunku-Abdul-Rahman-University-College-TARC.png" width="250" height="100" />
+            <h1 style="cursor: default">i-Report Builder               
             </h1>
         </div>
         <div>
-            
         </div>
     </header>
     <form id="form1" runat="server">
-        <div class="lgcss" style="text-align:center;">
+        <div class="lgcss" style="text-align: center;">
             <table align="center">
                 <tr>
                     <td>
@@ -113,14 +117,14 @@
                                                     <td style="text-align: left; font-weight: 200; font-size: 15px;">
                                                         <div style="padding-bottom: 10px">USERNAME</div>
                                                         <asp:TextBox ID="UserName" placeholder="Please enter your username" runat="server" CssClass="txtcss"></asp:TextBox>
-                                                        <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
+                                                        <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" CssClass="ErrorIndicator" ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: left; font-weight: 200; font-size: 15px">
                                                         <div style="padding-bottom: 10px">PASSWORD</div>
                                                         <asp:TextBox ID="Password" placeholder="Please enter your password" runat="server" CssClass="txtcss" TextMode="Password"></asp:TextBox>
-                                                        <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
+                                                        <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" CssClass="ErrorIndicator" ControlToValidate="Password" ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -130,7 +134,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td align="center">
-                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" CssClass="lgbtncss" Text="Log In" ValidationGroup="Login1"/>
+                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" CssClass="lgbtncss" Text="Log In" ValidationGroup="Login1" />
                                                     </td>
                                                 </tr>
                                             </table>
