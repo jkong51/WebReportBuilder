@@ -395,8 +395,8 @@
                     $("#imgFrame").resizable({
                         resize: function (e, ui) {
                             console.log(ui.size);
-                            $('#imgWidth').text(ui.size.width);
-                            $('#imgHeight').text(ui.size.height);
+                            //$('#imgWidth').text(ui.size.width);
+                            //$('#imgHeight').text(ui.size.height);
                         }
                     });
                     $("#imgFrame").resizable().draggable();
@@ -430,8 +430,7 @@
             </style>
 
             <page size="A4"> 
-                <asp:Label ID="imgWidth" runat="server" Text="Label" Visible="true"></asp:Label>
-                <asp:Label ID="imgHeight" runat="server" Text="Label" Visible="true"></asp:Label>
+                
                 <asp:Panel ID="imgFrame" runat="server" CssClass="ui-resizable-helper">
                     <img id="imgprw" class="Mouse"/>
                     

@@ -50,7 +50,7 @@ namespace FYP
                 //Session.Add("query",query);
                 Session.Add("wantDate", tDate);
                 // add cblist to session
-                Session.Add("cbListItems", CheckBoxList1.Items);
+                Session.Add("cbListItems", ColumnCbList.Items);
                 Session.Add("formID", DropDownList1.SelectedValue);
                 //check if show footer is checked.
                 if (countChkBox.Checked == true)
