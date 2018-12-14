@@ -627,7 +627,6 @@ namespace FYP
                     }
                 }
             }
-
             Boolean ignoreFirstElement = false;
             foreach (string listItem in checkboxSelection)
             {

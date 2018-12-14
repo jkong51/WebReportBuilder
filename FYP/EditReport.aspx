@@ -374,7 +374,7 @@
                                                 <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="true"></asp:Label>
                                             </td>
                                             <td align="justify">
-                                                <asp:CheckBoxList ID="CheckBoxList1" Width="100%" CssClass="chkspacing" runat="server" Visible="true" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
+                                                <asp:CheckBoxList ID="ColumnCbList" Width="100%" CssClass="chkspacing" runat="server" Visible="true" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
                                                 </asp:CheckBoxList>
                                             </td>
                                         </tr>
