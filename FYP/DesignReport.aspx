@@ -21,6 +21,7 @@
 
     <link rel="icon" href="icons8-business-report-50.ico" />
     <script>
+
         $(function () {
             $(".draggable").draggable(
                 { containment: "page", scroll: true },
@@ -36,7 +37,7 @@
 
             // get data from hiddenfield to be stored in db
             $('#<%=BtnSave.ClientID%>').click(function () {
-                
+
 
                 var lblTitle = $("#lblRptTitle");
                 var lblDesc = $("#lblRptDesc");
@@ -66,11 +67,20 @@
         // update data everytime an object is moved.
         $(function () {
             $(".resizable").resizable().draggable();
+            //$(document).ready(function () {
+            //    $("#imgFrame").hide();
+            //})
+            //$('#fileUpload').change(function () {
+            //    $("#imgFrame").show();
+            //})
         });
 
     </script>
     <%--<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>--%>
+
+    <%--Upload Image--%>
     <script type="text/javascript">
+
         function imagepreview(input) {
             if (input.files && input.files[0]) {
 
@@ -79,8 +89,10 @@
                     $('#imgprw').attr('src', e.target.result);
                 }
                 fildr.readAsDataURL(input.files[0]);
+
             }
         }
+
     </script>
 
     <style type="text/css">
@@ -319,11 +331,12 @@
                                     </asp:DropDownList>
                                 </td>
                             </tr>
+
                             <tr>
                                 <td>Add Image
                                 </td>
                                 <td>
-                                    <input type="file" name="fileupload" onchange="imagepreview(this);" />
+                                    <input type="file" id="fileupload" name="fileupload" onchange="imagepreview(this);" />
                                 </td>
 
 
@@ -393,6 +406,7 @@
             <script type="text/javascript">
                 $(function () {
                     $("#imgFrame").resizable({
+
                         resize: function (e, ui) {
                             console.log(ui.size);
                             //$('#imgWidth').text(ui.size.width);
@@ -415,6 +429,7 @@
                     position: absolute;
                     z-index: 3;
                     resize: both;
+                    border: none
                 }
 
                     #imgFrame img {
@@ -422,6 +437,7 @@
                         height: 100%;
                         z-index: 5;
                         overflow: hidden;
+                        border: none;
                     }
 
                 .ui-resizable-helper {
@@ -431,10 +447,7 @@
 
             <page size="A4"> 
                 
-                <asp:Panel ID="imgFrame" runat="server" CssClass="ui-resizable-helper">
-                    <img id="imgprw" class="Mouse"/>
-                    
-                </asp:Panel>
+                
                 <%--<div id="test" class="ui-resizable-helper">
                     <img id="imgprw" class="Mouse "/>
                 </div>--%>
@@ -452,14 +465,23 @@
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
             <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
+
             <ContentTemplate>
+                <asp:Panel ID="imgFrame" runat="server" CssClass="ui-resizable-helper">
+                    <%--<img id="imgprw" class="Mouse" />--%>
+                    <asp:Image ID="imgprw" runat="server" CssClass="Mouse"></asp:Image>
+                </asp:Panel>
+
             <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse"  runat="server"></asp:Label><br />
             <asp:Label ID="lblRptDesc"  CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
             </ContentTemplate>
+<%--            <triggers>
+                <asp:AsyncPostBackTrigger ControlID="fontFamilyDrpDwnList" EventName="SelectedIndexChanged" />
+            </triggers>--%>
             </asp:UpdatePanel>
             </asp:Panel>
-                
+                <br />
             <br />
             <br />
             <br />
@@ -500,12 +522,12 @@
                                             </tr>
                                             <tr>
                                                 <td class="td1">
-                                                <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="true"></asp:Label>
-                                            </td>
-                                            <td align="justify">
-                                                <asp:CheckBoxList ID="ColumnCbList" Width="100%" CssClass="chkspacing" runat="server" Visible="true" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical" >
-                                                </asp:CheckBoxList>
-                                            </td>
+                                                    <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="true"></asp:Label>
+                                                </td>
+                                                <td align="justify">
+                                                    <asp:CheckBoxList ID="ColumnCbList" Width="100%" CssClass="chkspacing" runat="server" Visible="true" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatLayout="flow" RepeatColumns="2" RepeatDirection="Vertical">
+                                                    </asp:CheckBoxList>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="td1">
@@ -524,18 +546,18 @@
                                                     <asp:DropDownList ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
                                                 </td>
                                             </tr>
-                                        <%--</asp:PlaceHolder>--%>
-                                    </table>
-                                    <div>
-                                        <hr />
+                                            <%--</asp:PlaceHolder>--%>
+                                        </table>
+                                        <div>
+                                            <hr />
+                                        </div>
+                                        <asp:Button ID="Button1" runat="server" Text="Change" OnClick="Button1_Click" CssClass="button" />
                                     </div>
-                                    <asp:Button ID="Button1" runat="server" Text="Change" OnClick="Button1_Click" CssClass="button" />
-                                </div>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </asp:Panel>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </asp:Panel>
+                    </div>
                 </div>
-            </div>
 
             </div>
         </div>
