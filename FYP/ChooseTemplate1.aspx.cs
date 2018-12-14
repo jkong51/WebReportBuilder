@@ -20,38 +20,47 @@ namespace FYP
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Session.Timeout = 60;
-            String formName = DropDownList1.SelectedItem.Text;
-            Session.Add("formName", formName);
-            String rptTitle = txtRptTitle.Text;
-            String rptDesc = txtRptDesc.Text;            
-            Session.Add("rptTitle", rptTitle);
-            Session.Add("rptDesc", rptDesc);
-            String tDate = "";
-            if (chkDate.Checked)
+
+            if (DropDownList1.SelectedItem.Text == "Select Table")
             {
-                tDate = "yes";
+                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "ClientScript", "alert('Form is not selected')", true);
+                
             }
             else
             {
-                tDate = "no";
+                Session.Timeout = 60;
+                String formName = DropDownList1.SelectedItem.Text;
+                Session.Add("formName", formName);
+                String rptTitle = txtRptTitle.Text;
+                String rptDesc = txtRptDesc.Text;
+                Session.Add("rptTitle", rptTitle);
+                Session.Add("rptDesc", rptDesc);
+                String tDate = "";
+                if (chkDate.Checked)
+                {
+                    tDate = "yes";
+                }
+                else
+                {
+                    tDate = "no";
+                }
+                // build sql query here.
+                string query = QueryBuilder();
+                // add error message if first option is selected.
+                //Session.Add("query",query);
+                Session.Add("wantDate", tDate);
+                // add cblist to session
+                Session.Add("cbListItems", ColumnCbList.Items);
+                Session.Add("formID", DropDownList1.SelectedValue);
+                //check if show footer is checked.
+                if (countChkBox.Checked == true)
+                {
+                    Session.Add("countTitle", selectCount.SelectedItem.Text);
+                }
+                // in the future, if more elements are added remember to generate a hidden field for each element intialized.
+                Response.Redirect("~/DesignReport.aspx?queryString=" + query);
+          
             }
-            // build sql query here.
-            string query = QueryBuilder();
-            // add error message if first option is selected.
-            Session.Add("wantDate", tDate);
-
-            // add the checkbox list items to session
-            Session.Add("cbListItems", ColumnCbList.Items);
-            // add the ordered checked items to session
-            Session.Add("checkedItems", (List<string>)ViewState["selectedCbList"]);
-            Session.Add("formID", DropDownList1.SelectedValue);
-            //check if show footer is checked.
-            if (countChkBox.Checked == true) {
-                Session.Add("countTitle",selectCount.SelectedItem.Text);
-            }
-            // in the future, if more elements are added remember to generate a hidden field for each element intialized.
-            Response.Redirect("~/DesignReport.aspx?queryString=" + query);
         }
 
         // display check box list items when choose form ddl is selected
@@ -118,16 +127,19 @@ namespace FYP
                 {
                     selectCount.Visible = true;
                     Label5.Visible = true;
+                    
                 }
                 else {
                     selectCount.Visible = false;
                     Label5.Visible = false;
+                    
                 }
             }
             else
             {
                 selectCount.Visible = false;
                 Label5.Visible = false;
+                
             }
         }
 
@@ -308,17 +320,20 @@ namespace FYP
                             selectCount.Items.Add(cbItem);
                             selectCount.SelectedIndex = 0;
                         }
+                        
                     }
                 }
                 if (selectCount.Items.Count != 0)
                 {
                     selectCount.Visible = true;
                     Label5.Visible = true;
+                    
                 }
                 else
                 {
                     selectCount.Visible = false;
                     Label5.Visible = false;
+                    ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "ClientScript", "alert('There is no data to be sum')", true);
                 }
             }
         }

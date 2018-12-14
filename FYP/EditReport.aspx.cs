@@ -662,7 +662,7 @@ namespace FYP
             if ((string)Session["footerEnabled"] == "true")
             {
                 string footerName = Session["footerName"].ToString();
-                ReportElement footerElement = new ReportElement(Convert.ToInt32(reportId), footerName, "", "", "footer", "");
+                ReportElement footerElement = new ReportElement(Convert.ToInt32(reportId), footerName, "", "", "footer", fontFamilyDrpDwnList.SelectedItem.Text);
                 updateFooterEle(footerElement);
             }
             Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
@@ -763,13 +763,13 @@ namespace FYP
             string titlePosition = hiddenRptTitle.Value;
             // title of report
             string[] coords = Regex.Split(titlePosition, ",");
-            ReportElement reportEleTitle = new ReportElement(Convert.ToInt32(reportId), txtRptTitle.Text, coords[0], coords[1], "label", txtRptTitle.Font.Name);
+            ReportElement reportEleTitle = new ReportElement(Convert.ToInt32(reportId), txtRptTitle.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text);
             parameters.Add(reportEleTitle);
             coords = null;
             //desc of report
             string descPosition = hiddenRptDesc.Value;
             coords = Regex.Split(descPosition, ",");
-            ReportElement reportEleDesc = new ReportElement(Convert.ToInt32(reportId), txtRptDesc.Text, coords[0], coords[1], "label", txtRptDesc.Font.Name);
+            ReportElement reportEleDesc = new ReportElement(Convert.ToInt32(reportId), txtRptDesc.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text);
             parameters.Add(reportEleDesc);
             //date of report
             if (lblDate.Text != "")
@@ -777,7 +777,7 @@ namespace FYP
                 coords = null;
                 string datePosition = hiddenRptDate.Value;
                 coords = Regex.Split(hiddenRptDate.Value, ",");
-                ReportElement reportEleDate = new ReportElement(Convert.ToInt32(reportId), lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name);
+                ReportElement reportEleDate = new ReportElement(Convert.ToInt32(reportId), lblDate.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text);
                 parameters.Add(reportEleDate);
             }
             int count = 0;

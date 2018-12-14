@@ -147,7 +147,9 @@ namespace FYP
 
         protected void BtnSave_Click(object sender, EventArgs e)
         {
-            
+            string height = hiddenHeight.Value;
+            string width = hiddenWidth.Value;
+            string pos = hiddenImage.Value;
             /*
              Variables to get
              Report
@@ -743,7 +745,7 @@ namespace FYP
             }
             reportGridView.DataBind();
         }
-
+        
         protected void reportGridView_DataBound(object sender, EventArgs e)
         {
             if (Session["footerEnabled"] != null) {
@@ -751,6 +753,14 @@ namespace FYP
                     reportGridView.FooterRow.Visible = this.reportGridView.PageIndex == this.reportGridView.PageCount - 1;
                 }
             }
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            DataTable formTable = getFormData(Request.QueryString["queryString"]);
+            reportGridView.DataSource = formTable;
+            reportGridView.PageIndex = reportGridView.PageIndex + 1;
+            reportGridView.DataBind();
         }
     }
 }

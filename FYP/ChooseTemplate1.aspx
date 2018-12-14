@@ -14,14 +14,13 @@
 
     </script>
     <style type="text/css">
-
     </style>
     <style type="text/css">
         .head {
             /*font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;*/
             font-family: 'lato', sans-serif;
             cursor: default;
-            font-weight:bold;
+            font-weight: bold;
         }
 
         .content {
@@ -43,18 +42,20 @@
             .border1:hover {
                 transform: scale(1.1);
             }
-            .b1:hover{
-                transform: none;
-            }
-            .ctent{
-                cursor:default;
-            }
+
+        .b1:hover {
+            transform: none;
+        }
+
+        .ctent {
+            cursor: default;
+        }
 
         .border2 {
             width: 300px;
             height: 300px;
         }
-        
+
 
         .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -76,40 +77,43 @@
                 color: rgb(80, 142, 245);
                 cursor: pointer;
             }
-            .btnDisabled{
-                opacity:0.65;
-            }
+
+        .btnDisabled {
+            opacity: 0.65;
+        }
+
             .btnDisabled:hover {
                 background-color: rgb(80, 142, 245);
                 color: white;
                 cursor: default;
-                cursor:not-allowed;
+                cursor: not-allowed;
             }
 
         .table1 {
             font-size: 15px;
             padding: 15px 15px;
         }
-        .table1 tr{
-            border:2px solid transparent;
-        }
+
+            .table1 tr {
+                border: 2px solid transparent;
+            }
 
         .td1 {
-            width: 200px;
+            width: 250px;
             text-align: right;
             padding-right: 30px;
         }
 
         .textbox {
-            border:0.5px solid lightgray;
-	        border-radius:10px;
+            border: 0.5px solid lightgray;
+            border-radius: 10px;
             font-size: 15px;
             width: 300px;
-            padding: 8px 8px;            
+            padding: 8px 8px;
         }
 
         .lstbox {
-            border:0.5px solid lightgray;
+            border: 0.5px solid lightgray;
             border-radius: 10px 10px;
             font-size: 15px;
             width: 300px;
@@ -123,45 +127,53 @@
         .chkbox input {
             width: 15px;
             height: 15px;
-           
         }
-        input[type=checkbox]{
-            cursor:pointer;
+
+        input[type=checkbox] {
+            cursor: pointer;
         }
-        
-        .charleft{
-            border:none;
+
+        .charleft {
+            border: none;
         }
-        .chkspacing input{
+
+        .chkspacing input {
             width: 15px;
             height: 15px;
-            cursor:pointer;
-            
+            cursor: pointer;
         }
-        
-        .chkspacing input + label{
-            cursor:pointer;
+
+            .chkspacing input + label {
+                cursor: pointer;
+            }
+
+        .chkspacing label {
+            margin-left: 10px;
+            vertical-align: middle;
+            padding: 1px;
+            width: 120px;
+            font-weight: normal;
+            text-transform: capitalize;
         }
-        .chkspacing label{
-            margin-left:10px;
-            vertical-align:middle;
-            padding:1px;
-            width:120px;
-            font-weight:normal;
-            text-transform:capitalize;          
+        .ErrorIndicator{
+            color: red;
+            font-size:30px;
         }
-        
+        .modal-content{
+            width:650px;
+            margin-left:-25px;
+        }
     </style>
     <script type="text/javascript">
         function Count() {
             var i = document.getElementById("txtRptTitle").value.length;
             document.getElementById("remainingChr").innerHTML = 50 - i;
         }
-        
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
+
     <div>
         <table align="center" style="margin-top: 80px">
             <tr>
@@ -196,7 +208,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <asp:Button ID="btnExist" runat="server" Text="Get Started" CssClass="button btnDisabled" Enabled="false"/></td>
+                                <asp:Button ID="btnExist" runat="server" Text="Get Started" CssClass="button btnDisabled" Enabled="false" /></td>
                         </tr>
                     </table>
                 </td>
@@ -207,9 +219,9 @@
 
     <div class="container">
         <style type="text/css">
-            .testing{
+            .testing {
                 z-index: 1;
-                color:black;
+                color: black;
             }
         </style>
         <!-- Modal -->
@@ -242,7 +254,7 @@
                                             <script type="text/javascript">
                                                 function LimtCharacters(txtMsg, CharLength, indicator) {
                                                     chars = txtMsg.value.length;
-                                                    
+
                                                     document.getElementById(indicator).innerHTML = CharLength - chars + " lefts";
                                                     if (chars > CharLength) {
                                                         txtMsg.value = txtMsg.value.substring(0, CharLength);
@@ -254,11 +266,10 @@
                                             </script>
                                             <td>
                                                 <asp:TextBox ID="txtRptTitle" CssClass="textbox" runat="server" ToolTip="Report title" placeholder="Report title" MaxLength="50" onkeyup="LimtCharacters(this,50,'lblcount');"></asp:TextBox>
-                                                <asp:RequiredFieldValidator ID="rptTitleRequired" runat="server" ErrorMessage="*" ControlToValidate="txtRptTitle" ToolTip="Report Title is required" ValidationGroup="CreateRpt1"></asp:RequiredFieldValidator>
+                                                <asp:RequiredFieldValidator ID="rptTitleRequired" runat="server" CssClass="ErrorIndicator" ErrorMessage="*" ControlToValidate="txtRptTitle" ToolTip="Report Title is required" ValidationGroup="CreateRpt1"></asp:RequiredFieldValidator>
                                             </td>
-                                            <td>
-                                                &nbsp;&nbsp;&nbsp;<label id="lblcount" style="font-weight:normal;font-size:12px;color:gray"></label>
-                                                
+                                            <td>&nbsp;&nbsp;&nbsp;<label id="lblcount" style="font-weight: normal; font-size: 12px; color: gray"></label>
+
                                                 <br />
                                             </td>
                                         </tr>
@@ -269,10 +280,9 @@
                                             </td>
                                             <td>
                                                 <asp:TextBox ID="txtRptDesc" CssClass="textbox" runat="server" ToolTip="Report description" placeholder="Report description" MaxLength="50" onkeyup="LimtCharacters(this,50,'lblcount2');"></asp:TextBox>
-                                                <asp:RequiredFieldValidator ID="rptDescRequired" runat="server" ErrorMessage="*" ControlToValidate="txtRptDesc" ToolTip="Report Description is required" ValidationGroup="CreateRpt1"></asp:RequiredFieldValidator>
+                                                <asp:RequiredFieldValidator ID="rptDescRequired" runat="server" CssClass="ErrorIndicator" ErrorMessage="*" ControlToValidate="txtRptDesc" ToolTip="Report Description is required" ValidationGroup="CreateRpt1"></asp:RequiredFieldValidator>
                                             </td>
-                                            <td>
-                                                &nbsp;&nbsp;&nbsp;<label id="lblcount2" style="font-weight:normal;font-size:12px;color:gray"></label>
+                                            <td>&nbsp;&nbsp;&nbsp;<label id="lblcount2" style="font-weight: normal; font-size: 12px; color: gray"></label>
                                                 <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
                                                 <br />
                                             </td>
@@ -317,9 +327,9 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                               <%-- <asp:Button ID="AddFilterBtn" runat="server" Text="Add Filter" OnClick="AddFilterBtn_Click"/>--%>
+                                                <%-- <asp:Button ID="AddFilterBtn" runat="server" Text="Add Filter" OnClick="AddFilterBtn_Click"/>--%>
                                             </td>
-                                            </tr>
+                                        </tr>
                                         <tr>
                                             <th colspan="2" style="padding-bottom: 20px">FOOTER
                                             </th>
@@ -328,19 +338,21 @@
                                             <td class="td1">
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                             </td>
-                                            <td>
+                                            <td align="left">
                                                 <asp:CheckBox ID="countChkBox" CssClass="chkbox" runat="server" AutoPostBack="true" OnCheckedChanged="CheckBox3_CheckedChanged" />
                                             </td>
                                         </tr>
-                                            <tr>
-                                                <td class="td1">
+                                        <tr>
+                                            <td class="td1">
                                                 <asp:Label ID="Label5" runat="server" Text="Label" Visible="false"><strong>Select data to be summed</strong></asp:Label>
                                             </td>
-                                                <td align="left" >
-                                                    <asp:DropDownList CssClass="lstbox" ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
-                                                </td>
-                                            </tr>
-                                            <%--<tr>
+                                            <td align="left">
+                                                <asp:DropDownList CssClass="lstbox" ID="selectCount" runat="server" Visible="false"></asp:DropDownList>
+                                            </td>
+                                        </tr>
+
+
+                                        <%--<tr>
                                                 <td>
                                                     <asp:Label ID="Label5" runat="server" Text="Label"><strong>Filter Records</strong></asp:Label>
                                                 </td>
@@ -352,7 +364,7 @@
                                     <div>
                                         <hr />
                                     </div>
-                                   <%-- <div>
+                                    <%-- <div>
                                         <asp:PlaceHolder ID="filterTablePlaceHolder" Visible="false" runat="server">
                                             <table>
                                                 <tr>
@@ -382,5 +394,5 @@
             </div>
 
         </div>
-        </div>
+    </div>
 </asp:Content>
