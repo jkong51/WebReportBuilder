@@ -20,7 +20,29 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link rel="icon" href="icons8-business-report-50.ico" />
-    <script>
+    <script type="text/javascript">
+        function setHiddenField() {
+            alert("Entered");
+            var lblTitle = $("#lblRptTitle");
+            var lblDesc = $("#lblRptDesc");
+            var lblDate = $("#lblDate");
+            var positionImg = $('#imgFrame').position();
+            var positionTitle = lblTitle.position();
+            var positionDesc = lblDesc.position();
+            if ($('#imgprw').attr('src') != "") {
+                //var hiddenImgHeight = ;
+                //var hiddenImgWidth = 
+                document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
+                document.getElementById('<%=hiddenWidth.ClientID%>').value = $('#imgFrame').width();
+                document.getElementById('<%=hiddenImage.ClientID%>').value = positionImg.left + "," + positionImg.top;
+            }
+            document.getElementById('<%=hiddenRptTitle.ClientID%>').value = positionTitle.left + "," + positionTitle.top;
+            document.getElementById('<%=hiddenRptDesc.ClientID%>').value = positionDesc.left + "," + positionDesc.top;
+            if (document.getElementById('<%=lblDate.ClientID%>').value != "") {
+                var positionDate = lblDate.position();
+                document.getElementById('<%=hiddenRptDate.ClientID%>').value = positionDate.left + "," + positionDate.top;
+            }
+        }
 
         $(function () {
             $(".draggable").draggable(
@@ -35,17 +57,15 @@
                     }
                 });
 
+
             // get data from hiddenfield to be stored in db
             $('#<%=BtnSave.ClientID%>').click(function () {
-
-
+                alert("Entered");
                 var lblTitle = $("#lblRptTitle");
                 var lblDesc = $("#lblRptDesc");
                 var lblDate = $("#lblDate");
-
-
                 var positionImg = $('#imgFrame').position();
-                if ($('#imgprw').attr('src') != null) {
+                if ($('#imgprw').attr('src') != "") {
                     alert("Image exist");
                     //var hiddenImgHeight = ;
                     //var hiddenImgWidth = 
@@ -62,24 +82,7 @@
                     document.getElementById('<%=hiddenRptDate.ClientID%>').value = positionDate.left + "," + positionDate.top;
                 }
             });
-            <%=PostBackString %>
         });
-        // update data everytime an object is moved.
-        $(function () {
-            $(".resizable").resizable().draggable();
-            //$(document).ready(function () {
-            //    $("#imgFrame").hide();
-            //})
-            //$('#fileUpload').change(function () {
-            //    $("#imgFrame").show();
-            //})
-        });
-
-    </script>
-    <%--<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>--%>
-
-    <%--Upload Image--%>
-    <script type="text/javascript">
 
         function imagepreview(input) {
             if (input.files && input.files[0]) {
@@ -93,6 +96,34 @@
             }
         }
 
+        function LimtCharacters(txtMsg, CharLength, indicator) {
+            chars = txtMsg.value.length;
+
+            document.getElementById(indicator).innerHTML = CharLength - chars + " lefts";
+            if (chars > CharLength) {
+                txtMsg.value = txtMsg.value.substring(0, CharLength);
+            }
+            if (chars == 0) {
+                document.getElementById(indicator).innerHTML = " ";
+            }
+        }
+
+        $(function () {
+            $("#imgFrame").resizable({
+
+                resize: function (e, ui) {
+                    console.log(ui.size);
+                    //$('#imgWidth').text(ui.size.width);
+                    //$('#imgHeight').text(ui.size.height);
+                }
+            });
+            $("#imgFrame").resizable().draggable();
+            $("#imgFrame").draggable({
+                containment: "page", scroll: true,
+                helper: "ui-resizable-helper"
+            });
+
+        });
     </script>
 
     <style type="text/css">
@@ -306,6 +337,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <input id="hiddenInput" type="hidden" runat="server" value="1"/>
         <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server" EnablePartialRendering="true">
         </asp:ScriptManager>
         <div id="sidebar">
@@ -336,24 +368,9 @@
                                 <td>Add Image
                                 </td>
                                 <td>
-                                    <input type="file" id="fileupload" name="fileupload" onchange="imagepreview(this);" />
+                                    <asp:FileUpload ID="fileupload" name="fileupload" onchange="imagepreview(this);" runat="server"/>
                                 </td>
-
-
                             </tr>
-                            <script type="text/javascript">
-                                function LimtCharacters(txtMsg, CharLength, indicator) {
-                                    chars = txtMsg.value.length;
-
-                                    document.getElementById(indicator).innerHTML = CharLength - chars + " lefts";
-                                    if (chars > CharLength) {
-                                        txtMsg.value = txtMsg.value.substring(0, CharLength);
-                                    }
-                                    if (chars == 0) {
-                                        document.getElementById(indicator).innerHTML = " ";
-                                    }
-                                }
-                            </script>
                             <tr>
                                 <td>Report Title
                                 </td>
@@ -403,24 +420,6 @@
 
         </div>
         <div style="padding: 50px; padding-left: 350px" id="containment-wrapper">
-            <script type="text/javascript">
-                $(function () {
-                    $("#imgFrame").resizable({
-
-                        resize: function (e, ui) {
-                            console.log(ui.size);
-                            //$('#imgWidth').text(ui.size.width);
-                            //$('#imgHeight').text(ui.size.height);
-                        }
-                    });
-                    $("#imgFrame").resizable().draggable();
-                    $("#imgFrame").draggable({
-                        containment: "page", scroll: true,
-                        helper: "ui-resizable-helper"
-                    });
-
-                });
-            </script>
             <style type="text/css">
                 #imgFrame {
                     width: 160px;
@@ -446,14 +445,7 @@
             </style>
 
             <page size="A4"> 
-                
-                
-                <%--<div id="test" class="ui-resizable-helper">
-                    <img id="imgprw" class="Mouse "/>
-                </div>--%>
-                
             <asp:Panel runat="server" ID="hiddenPanel">
-                
                 <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
@@ -465,20 +457,14 @@
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
             <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
-
             <ContentTemplate>
                 <asp:Panel ID="imgFrame" runat="server" CssClass="ui-resizable-helper">
-                    <%--<img id="imgprw" class="Mouse" />--%>
                     <asp:Image ID="imgprw" runat="server" CssClass="Mouse"></asp:Image>
                 </asp:Panel>
-
             <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse"  runat="server"></asp:Label><br />
             <asp:Label ID="lblRptDesc"  CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
             </ContentTemplate>
-<%--            <triggers>
-                <asp:AsyncPostBackTrigger ControlID="fontFamilyDrpDwnList" EventName="SelectedIndexChanged" />
-            </triggers>--%>
             </asp:UpdatePanel>
             </asp:Panel>
                 <br />
@@ -551,7 +537,7 @@
                                         <div>
                                             <hr />
                                         </div>
-                                        <asp:Button ID="Button1" runat="server" Text="Change" OnClick="Button1_Click" CssClass="button" />
+                                        <asp:Button ID="Button1" runat="server" Text="Change" OnClientClick="setHiddenField()" OnClick="Button1_Click" CssClass="button" />
                                     </div>
                                 </ContentTemplate>
                             </asp:UpdatePanel>

@@ -53,6 +53,7 @@ namespace FYP
                 Session.Add("cbListItems", ColumnCbList.Items);
                 Session.Add("formID", DropDownList1.SelectedValue);
                 //check if show footer is checked.
+                Session["checkedItems"] = (List<string>)ViewState["selectedCbList"];
                 if (countChkBox.Checked == true)
                 {
                     Session.Add("countTitle", selectCount.SelectedItem.Text);
