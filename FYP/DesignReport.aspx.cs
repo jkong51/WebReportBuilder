@@ -45,7 +45,10 @@ namespace FYP
         private Style primaryStyle = new Style();
         protected string PostBackString;
         protected string query;
-            protected void Page_Load(object sender, EventArgs e)
+        int pressNumberOfTimes;
+        Label lbl_homeCarouselAdd = new Label();
+        static StringBuilder strDiv = new StringBuilder();
+        protected void Page_Load(object sender, EventArgs e)
             {
             if (Page.IsPostBack) {
                 //rebind gridview
