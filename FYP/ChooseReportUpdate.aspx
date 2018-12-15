@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="ChooseReportUpdate.aspx.cs" Inherits="FYP.ChooseReportUpdate" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         .GridHeader {
@@ -6,66 +7,92 @@
             padding: 5px;
         }
 
+        .GridHeader1 {
+            width: 20%;
+        }
+
+        .GridHeader2 {
+            width: 35%;
+        }
+
+        .GridHeader3 {
+            width: 35%;
+        }
+
+        .GridHeader4 {
+            width: 5%;
+        }
+
         .grid {
             font-size: 20px;
+        }
 
+        .hiddencol {
+            display: none;
         }
-        .hiddencol { display: none; }
-        .button{
+
+        .button {
             padding: 0;
-border: none;
-background: none;
-margin-left:-60px;
+            border: none;
+            background: none;
         }
-        .GridPager a, .GridPager span
-    {
-            font-size:18px;
-        display: block;
-        height: 25px;
-        width: 25px;
-        font-weight: bold;
-        text-align: center;
-        text-decoration: none;
-        vertical-align:central;
-    }
-    .GridPager a
-    {
-        background-color: #f5f5f5;
-        color: #969696;
-        border: 1px solid #969696;
-    }
-    .GridPager span
-    {
-        background-color: #A1DCF2;
-        color: #000;
-        border: 1px solid #3AC0F2;
-    }
+
+        .GridPager a, .GridPager span {
+            font-size: 18px;
+            display: block;
+            height: 25px;
+            width: 25px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            vertical-align: central;
+        }
+
+        .GridPager a {
+            background-color: #f5f5f5;
+            color: #969696;
+            border: 1px solid #969696;
+        }
+
+        .GridPager span {
+            background-color: #A1DCF2;
+            color: #000;
+            border: 1px solid #3AC0F2;
+        }
+
+        .grid td {
+            border-right: 1px solid #ddd;
+        }
+
+        .descPadd {
+            padding-left: 10px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div style="text-align:left;padding-left:20px;">
+    <div style="text-align: left; padding-left: 20px;">
         <h3>Select report for editing purposes</h3>
 
     </div>
-    <div style="width:100%;padding:20px;">
+    <div style="width: 100%; padding: 20px;">
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FormNameConnectionString %>" SelectCommand="SELECT Report.reportID, Report.name, Report.dateGenerated, Report.description FROM Report INNER JOIN report_right ON Report.reportID = report_right.reportId WHERE (Report.status = 1) AND (report_right.staffId = @staffId) AND (report_right.rights LIKE '%E%')">
             <SelectParameters>
                 <asp:SessionParameter Name="staffId" SessionField="userId" />
             </SelectParameters>
         </asp:SqlDataSource>
         <asp:GridView CssClass="grid" ID="GridView1" AllowPaging="true" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" Width="100%" runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal" AutoGenerateColumns="False" DataKeyNames="reportID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
-            <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
+            <PagerStyle HorizontalAlign="Right" CssClass="GridPager" />
             <Columns>
                 <asp:BoundField HeaderStyle-CssClass="GridHeader hiddencol" ItemStyle-CssClass="hiddencol" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated"  ApplyFormatInEditMode="true" DataFormatString="{0:d}"/>
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="Name" SortExpression="name" />               
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="Description" HeaderStyle-HorizontalAlign="Left" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
-                <asp:TemplateField ItemStyle-HorizontalAlign="Center">
+                <asp:BoundField HeaderStyle-CssClass="GridHeader GridHeader1" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated" ApplyFormatInEditMode="true" DataFormatString="{0:d}" />
+                <asp:BoundField HeaderStyle-CssClass="GridHeader GridHeader2" DataField="name" HeaderText="Name" SortExpression="name" />
+                <asp:BoundField HeaderStyle-CssClass="GridHeader GridHeader3" ItemStyle-CssClass="descPadd" DataField="description" HeaderText="Description" HeaderStyle-HorizontalAlign="Left" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
+                <asp:TemplateField HeaderStyle-CssClass="GridHeader4" ItemStyle-HorizontalAlign="Center">
                     <HeaderTemplate>Action</HeaderTemplate>
-                    
-                <ItemTemplate>
-                <asp:Button ID="editReportBtn" CssClass="button" runat="server" Text="Edit" CausesValidation="false" OnClick="editReportBtn_Click"/>
-                </ItemTemplate>
+
+                    <ItemTemplate>
+                        <asp:Button ID="editReportBtn" CssClass="button" runat="server" Text="Edit" CausesValidation="false" OnClick="editReportBtn_Click" />
+                    </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />

@@ -40,6 +40,15 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.DropDownList fontFamilyDrpDwnList;
         
         /// <summary>
+        /// chkHrVis control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkHrVis;
+        
+        /// <summary>
         /// txtRptTitle control.
         /// </summary>
         /// <remarks>
@@ -92,6 +101,15 @@ namespace FYP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal FailureText;
+        
+        /// <summary>
+        /// chkImg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkImg;
         
         /// <summary>
         /// BtnSave control.
@@ -184,6 +202,24 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.HiddenField hiddenImage;
         
         /// <summary>
+        /// HiddenLinePositionTop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenLinePositionTop;
+        
+        /// <summary>
+        /// HiddenLinePositionLeft control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenLinePositionLeft;
+        
+        /// <summary>
         /// reportHeader control.
         /// </summary>
         /// <remarks>
@@ -218,6 +254,15 @@ namespace FYP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgprw;
+        
+        /// <summary>
+        /// hrLine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel hrLine;
         
         /// <summary>
         /// lblRptTitle control.

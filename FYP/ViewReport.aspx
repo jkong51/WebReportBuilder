@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    
+
     <style type="text/css">
         body {
             height: 100%;
@@ -13,16 +13,15 @@
             height: 100%;
             background: rgb(204,204,204);
         }
+
         page {
-            
             background: white;
             display: block;
             margin: 0 auto;
             margin-bottom: 0.5cm;
-            border:solid black 1px;
+            border: solid black 1px;
             /*box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);*/
             font-family: 'Times New Roman';
-            
         }
 
             page[size="A4"] {
@@ -36,7 +35,6 @@
             text-transform: uppercase;
             font-weight: bold;
             display: inline-block;
-            
         }
 
         .reportHeader2 {
@@ -48,13 +46,13 @@
             cursor: move;
         }
 
-        .padding{
-            padding:7px;
+        .padding {
+            padding: 7px;
             border-radius: 10px 10px;
             font-size: 15px;
+        }
 
-        } 
-            .button {
+        .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             color: black;
             padding: 15px 32px;
@@ -64,65 +62,92 @@
             font-size: 20px;
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
-            z-index: 3;float: left;font-weight: 100;
-            left:0;
-            width:auto;
-        }
-            .button2 {
-            z-index: 3;float: right;font-weight: 100;
-            right:0;
-            width:auto;
+            z-index: 3;
+            float: left;
+            font-weight: 100;
+            left: 0;
+            width: auto;
         }
 
-        .rpttable{ 
-            width: 90%; 
-            background-color: #fff;     
+        .button2 {
+            z-index: 3;
+            float: right;
+            font-weight: 100;
+            right: 0;
+            width: auto;
         }
-        .tableheader{
-            background-color:rgb(230,230,230);
-            padding-top:20px;
-            text-transform:uppercase;
 
+        .rpttable {
+            width: 90%;
+            background-color: #fff;
         }
-        .rpttable td{ 
-            border-left:none;
-            border-right:none;
-            border-color:rgb(230,230,230);
+
+        .tableheader {
+            background-color: rgb(230,230,230);
+            padding-top: 20px;
+            text-transform: uppercase;
         }
-        .rpttable th{ 
-            vertical-align:bottom;
-            padding-bottom:0px;
-            padding-top:20px;
-            border:none;
+
+        .rpttable td {
+            border-left: none;
+            border-right: none;
+            border-color: rgb(230,230,230);
         }
-        .GridPager a, .GridPager span
-    {
-        display: block;
-        height: 15px;
-        width: 15px;
-        font-weight: bold;
-        text-align: center;
-        text-decoration: none;
-        padding:3px;
-    }
-    .GridPager a
-    {
-        padding:3px;
-        background-color: #f5f5f5;
-        color: #969696;
-        border: 1px solid #969696;
-    }
-    .GridPager span
-    {
-        padding:3px;
-        background-color: #A1DCF2;
-        color: #000;
-        border: 1px solid #3AC0F2;
-    }
-    #lblTitle{
-        position:center;
-    }
+
+        .rpttable th {
+            vertical-align: bottom;
+            padding-bottom: 0px;
+            padding-top: 20px;
+            border: none;
+        }
+
+        .GridPager a, .GridPager span {
+            display: block;
+            height: 15px;
+            width: 15px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            padding: 3px;
+        }
+
+        .GridPager a {
+            padding: 3px;
+            background-color: #f5f5f5;
+            color: #969696;
+            border: 1px solid #969696;
+        }
+
+        .GridPager span {
+            padding: 3px;
+            background-color: #A1DCF2;
+            color: #000;
+            border: 1px solid #3AC0F2;
+        }
+
+        @media print {
+            #section-to-print {
+                position: absolute;
+                margin-left:-208px;
+                margin-top:-80px;
+                width:100%;
+            }
+            #section-to-adjust{
+                position: absolute;
+                margin-top:-50px;
+                width:500px;
+            }
+        }
     </style>
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
     <title>View Report</title>
 
 </head>
@@ -132,24 +157,29 @@
         <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server" EnablePartialRendering="true">
         </asp:ScriptManager>
         <a href="RetrieveReport.aspx" class="button">&lt; &nbsp;&nbsp;Back</a>
-        <a href="#" class="button button2" onclick="window.print()">Save &nbsp;&nbsp;&gt;</a>
-        <div id="printPDF" runat="server" style="padding-top:50px">
+
+        <button onclick="printDiv('printPDF')" class="button button2">Save</button>
+
+        <div id="printPDF" runat="server" style="padding-top: 50px">
             <div id="containment-wrapper">
+
                 <page size="A4" id="pdf">                
-<%--            <asp:UpdatePanel ID="updatePanel1" runat="server">
-            <ContentTemplate>--%>
+          <div id="section-to-print">                    
                 <asp:Label ID="lblTitle" runat="server" Text=""></asp:Label><br />
                 <asp:Label ID="lblDesc" runat="server" Text=""></asp:Label><br />
-                <asp:Label ID="lblDate" runat="server" Text=""></asp:Label><br />
-<%--           </ContentTemplate>
-          </asp:UpdatePanel>--%>
+              <div id="section-to-adjust">
+                  <asp:Label ID="lblDate" runat="server" Text=""></asp:Label><br />
+              </div>
+                
+          </div>
+
 
             <%-- Report Content (Table) --%>
 
             <div id="reportContent" style="padding-top:175px;padding-left:40px">
                 <asp:UpdatePanel ID="updatePanel2" runat="server">
             <ContentTemplate>
-                <asp:GridView ID="reportGridView" OnRowDataBound="reportGridView_RowDataBound" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="20" OnPageIndexChanging="reportGridView_PageIndexChanging">
+                <asp:GridView ID="reportGridView" OnRowDataBound="reportGridView_RowDataBound" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="30" OnPageIndexChanging="reportGridView_PageIndexChanging">
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
                     </ContentTemplate>

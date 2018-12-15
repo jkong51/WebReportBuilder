@@ -5,13 +5,25 @@
 
 </script>--%>
     <style type="text/css">
-        .head {
-            text-align: center;
-        }
-
         .GridHeader {
             text-align: center !important;
             padding: 5px;
+        }
+
+        .GridHeader1 {
+            width: 20%;
+        }
+
+        .GridHeader2 {
+            width: 35%;
+        }
+
+        .GridHeader3 {
+            width: 35%;
+        }
+
+        .GridHeader4 {
+            width: 5%;
         }
 
         .grid {
@@ -26,31 +38,38 @@
             padding: 0;
             border: none;
             background: none;
-            margin-left:-60px;
         }
-        .GridPager a, .GridPager span
-    {
-            font-size:18px;
-        display: block;
-        height: 25px;
-        width: 25px;
-        font-weight: bold;
-        text-align: center;
-        text-decoration: none;
-        vertical-align:central;
-    }
-    .GridPager a
-    {
-        background-color: #f5f5f5;
-        color: #969696;
-        border: 1px solid #969696;
-    }
-    .GridPager span
-    {
-        background-color: #A1DCF2;
-        color: #000;
-        border: 1px solid #3AC0F2;
-    }
+
+        .GridPager a, .GridPager span {
+            font-size: 18px;
+            display: block;
+            height: 25px;
+            width: 25px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            vertical-align: central;
+        }
+
+        .GridPager a {
+            background-color: #f5f5f5;
+            color: #969696;
+            border: 1px solid #969696;
+        }
+
+        .GridPager span {
+            background-color: #A1DCF2;
+            color: #000;
+            border: 1px solid #3AC0F2;
+        }
+
+        .grid td {
+            border-right: 1px solid #ddd;
+        }
+
+        .descPadd {
+            padding-left: 10px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -67,10 +86,10 @@
             <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
             <Columns>
                 <asp:BoundField HeaderStyle-CssClass="GridHeader hiddencol" ItemStyle-CssClass="hiddencol" DataField="reportID" HeaderText="reportID" InsertVisible="False" ReadOnly="True" SortExpression="reportID" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated" ApplyFormatInEditMode="true" DataFormatString="{0:d}" />
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="name" HeaderText="Name" SortExpression="name" />           
-                <asp:BoundField HeaderStyle-CssClass="GridHeader" DataField="description" HeaderText="Description" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
-                <asp:TemplateField ShowHeader="False">
+                <asp:BoundField HeaderStyle-CssClass="GridHeader GridHeader1" DataField="dateGenerated" HeaderText="Date Generated" SortExpression="dateGenerated" ApplyFormatInEditMode="true" DataFormatString="{0:d}" />
+                <asp:BoundField HeaderStyle-CssClass="GridHeader GridHeader2" DataField="name" HeaderText="Name" SortExpression="name" />           
+                <asp:BoundField HeaderStyle-CssClass="GridHeader GridHeader3" ItemStyle-CssClass="descPadd" DataField="description" HeaderText="Description" SortExpression="description" ItemStyle-HorizontalAlign="Left" />
+                <asp:TemplateField HeaderStyle-CssClass="GridHeader4" ShowHeader="False">
                     <HeaderTemplate>Action</HeaderTemplate>
                     <ItemTemplate>
                         <asp:Button ID="viewReportBtn" CssClass="button" runat="server" Text="View" CausesValidation="false" OnClick="viewReportBtn_Click"  />

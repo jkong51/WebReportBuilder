@@ -13,6 +13,39 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="icon" href="icons8-business-report-50.ico" />
     <script>
+         $(document).ready(function () {
+            //Uncheck the CheckBox initially
+            $('#chkHrVis').removeAttr('checked');
+            // Initially, Hide the horizontal line when Web Form is loaded
+            $('#hrLine').hide();
+            $('#chkHrVis').change(function () {
+                if (this.checked) {
+                    $('#hrLine').show();
+                }
+                else {
+                    $('#hrLine').hide();
+                }
+            });
+
+            //Uncheck the CheckBox initially
+            $('#chkImg').removeAttr('checked');
+            // Initially, Hide the horizontal line when Web Form is loaded
+            $('#fileupload').hide();
+            $('#imgFrame').hide();
+            $('.fileupload').hide();
+            $('#chkImg').change(function () {
+                if (this.checked) {
+                    $('#fileupload').show();
+                    $('.fileupload').show();
+                    $('#imgFrame').show();
+                }
+                else {
+                    $('#fileupload').hide();
+                    $('.fileupload').hide();
+                    $('#imgFrame').hide();
+                }
+            });
+        });
         $(function () {
             $(".draggable").draggable(
                 { containment: "page", scroll: true },

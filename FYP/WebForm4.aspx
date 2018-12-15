@@ -36,16 +36,49 @@
                         var xPos = offset.left;
                         var yPos = offset.top;
                         $('#posX').text('x: ' + xPos);
+                        $('#HiddenLinePositionTop').val(xPos);
                         $('#posY').text('y: ' + yPos);
                     }
                 });
             $("#test1").resizable({ grid: [10, 10000] });
         });
-        $('#body1').change(function () {
+        //$('#posX').change(function () {
+
+        //})
+        <%--$('#body1').change(function () {
             document.getElementById('<%=HiddenLinePositionTop.ClientID%>').value = $('#posX').value;
             document.getElementById('<%=HiddenLinePositionLeft.ClientID%>').value = $('#posY').value;
+        });--%>
+<%--        $("<%=chkHrVic.ClientID%>").change(function () {
+            if ($("<%=chkHrVic.ClientID%>").is(':checked')) {
+                $('#test1').show();
+            }
+            if ($("<%=chkHrVic.ClientID%>").is(':checked')) {
+                $('#test1').hide();
+            }
+        });--%>
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //Uncheck the CheckBox initially
+            $('#chkHrVic').removeAttr('checked');
+            // Initially, Hide the SSN textbox when Web Form is loaded
+
+            $('#test1').hide();
+            document.getElementById('<%=HiddenLinePositionTop.ClientID%>').value = $('#posX').value;
+            document.getElementById('<%=HiddenLinePositionLeft.ClientID%>').value = $('#posY').value;
+            $('#chkHrVic').change(function () {
+                if (this.checked) {
+                    $('#test1').show();
+                }
+                else {
+                    $('#test1').hide();
+                }
+            });
         });
-</script>
+
+    </script>
     <style type="text/css">
         #dragThis {
             width: 6em;
@@ -80,12 +113,11 @@
 </head>
 <body id="body1">
     <form id="form1" runat="server">
-        <div id="test1">
-            <hr id="addline" />
-        </div>
+
         <div id="current">
             Current Position:<br />
             Top:
+            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
             <asp:Label ID="posX" runat="server" Text="Label"></asp:Label><br />
             Left:
             <asp:Label ID="posY" runat="server" Text="Label"></asp:Label>
@@ -93,16 +125,24 @@
         <div>
             Position After Postback<br />
             Top:
-            <asp:Label ID="width" runat="server" Text="Label"></asp:Label><br />
+            <asp:Label ID="top" runat="server" Text="Label"></asp:Label><br />
             Left:
-            <asp:Label ID="height" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="left" runat="server" Text="Label"></asp:Label>
         </div>
         <%--        <div>
             <asp:Button ID="add" runat="server" Text="Add more" OnClick="add_click" />
             <asp:Panel ID="Panel1" runat="server"></asp:Panel>
         </div>--%>
+
+        <div>
+            <asp:CheckBox ID="chkHrVic" runat="server" CssClass="chkHrVis" />
+            <div id="test1">
+                <hr id="addline" />
+            </div>
+        </div>
         <asp:HiddenField ID="HiddenLinePositionTop" runat="server" />
         <asp:HiddenField ID="HiddenLinePositionLeft" runat="server" />
+
     </form>
 
 </body>

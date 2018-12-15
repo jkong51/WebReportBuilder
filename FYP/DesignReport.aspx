@@ -20,6 +20,43 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link rel="icon" href="icons8-business-report-50.ico" />
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //Uncheck the CheckBox initially
+            $('#chkHrVis').removeAttr('checked');
+            // Initially, Hide the horizontal line when Web Form is loaded
+            $('#hrLine').hide();
+            $('#chkHrVis').change(function () {
+                if (this.checked) {
+                    $('#hrLine').show();
+                }
+                else {
+                    $('#hrLine').hide();
+                }
+            });
+
+            //Uncheck the CheckBox initially
+            $('#chkImg').removeAttr('checked');
+            // Initially, Hide the horizontal line when Web Form is loaded
+            $('#fileupload').hide();
+            $('#imgFrame').hide();
+            $('.fileupload').hide();
+            $('#chkImg').change(function () {
+                if (this.checked) {
+                    $('#fileupload').show();
+                    $('.fileupload').show();
+                    $('#imgFrame').show();
+                }
+                else {
+                    $('#fileupload').hide();
+                    $('.fileupload').hide();
+                    $('#imgFrame').hide();
+                }
+            });
+        });
+
+    </script>
     <script>
 
         $(function () {
@@ -34,11 +71,24 @@
                         $('#posY').text(yPos);
                     }
                 });
+            $("#hrLine").resizable();
+            $('#hrLine').draggable(
+                {
+                    drag: function () {
+                        var offset = $(this).offset();
+                        var xPos = offset.left;
+                        var yPos = offset.top;
+                        //$('#posX').text('x: ' + xPos);
+                        //$('#posY').text('y: ' + yPos);
+                        $('#HiddenLinePositionTop').val(xPos);
+                        $('#HiddenLinePositionLeft').val(yPos);
+
+                    }
+                });
+            $("#hrLine").resizable({ grid: [10, 10000] });
 
             // get data from hiddenfield to be stored in db
             $('#<%=BtnSave.ClientID%>').click(function () {
-
-
                 var lblTitle = $("#lblRptTitle");
                 var lblDesc = $("#lblRptDesc");
                 var lblDate = $("#lblDate");
@@ -46,7 +96,7 @@
 
                 var positionImg = $('#imgFrame').position();
                 if ($('#imgprw').attr('src') != null) {
-                    alert("Image exist");
+                    //alert("Image exist");
                     //var hiddenImgHeight = ;
                     //var hiddenImgWidth = 
                     document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
@@ -101,12 +151,14 @@
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             text-align: center;
             background: rgb(204,204,204);
-            /*overflow-x:hidden;*/
+            overflow-x:hidden;
+            font-family: 'lato', sans-serif;
         }
 
         #sidebar {
+
             height: 100%;
-            width: 23%;
+            width: 25%;
             position: fixed;
             z-index: 1;
             top: 0;
@@ -118,7 +170,6 @@
         }
 
             #sidebar table {
-                width: 100%;
                 height: 100%;
                 z-index: 1;
                 top: 0;
@@ -130,8 +181,14 @@
             border-right: none;
             border-top: none;
             border-collapse: collapse;
+            width:100%;
         }
 
+        .padding{
+            padding:7px;
+            font-size: 15px;
+            width:95%;
+        }
         .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             background-color: rgb(80, 142, 245);
@@ -141,21 +198,17 @@
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            width: 80%;
+            width: 100%;
             -webkit-transition-duration: 0.4s;
             transition-duration: 0.4s;
             border: 2px solid rgb(80, 142, 245);
         }
 
-        .btnMargin {
-            margin-left: -50px;
-        }
-
-        .button:hover {
-            background-color: white;
-            color: rgb(80, 142, 245);
-            cursor: pointer;
-        }
+            .button:hover {
+                background-color: white;
+                color: rgb(80, 142, 245);
+                cursor: pointer;
+            }
 
         .table1 {
             font-size: 15px;
@@ -163,16 +216,9 @@
         }
 
         .td1 {
-            width: 200px;
+            width: 10%;
             text-align: right;
             padding-right: 30px;
-        }
-
-        .textbox {
-            border-radius: 10px 10px;
-            font-size: 15px;
-            width: 300px;
-            padding: 8px 8px;
         }
 
         .lstbox {
@@ -223,12 +269,7 @@
         .Mouse {
             cursor: move;
         }
-
-        .padding {
-            padding: 7px;
-            border-radius: 10px 10px;
-            font-size: 15px;
-        }
+        
 
         #reportContent {
             width: 100%;
@@ -301,6 +342,34 @@
             font-weight: normal;
             text-transform: capitalize;
         }
+
+        #hrLine {
+            position: absolute;
+            width: 200px;
+            cursor: move;
+        }
+
+            #hrLine .ui-resizable-e {
+                height: 100%;
+                position: absolute;
+                right: 0px;
+                width: 10px;
+            }
+
+            #hrLine .ui-resizable-s {
+                bottom: 0px;
+                height: 10px;
+                position: absolute;
+                width: 100%;
+            }
+
+            #hrLine .ui-resizable-se {
+                bottom: 0px;
+                height: 10px;
+                position: absolute;
+                right: 0px;
+                width: 10px;
+            }
     </style>
     <title>i-Report Builder</title>
 </head>
@@ -312,34 +381,29 @@
             <table class="border">
                 <tr class="border">
                     <td style="font-size: 30px;" colspan="2">
-                        <div style="margin-left: -50px">
+                        <div>
                             <img src="Tunku-Abdul-Rahman-University-College-TARC.png" width="180" height="70" /><br />
                             i-Report Builder
                         </div>
                     </td>
                 </tr>
                 <tr class="border" style="border-bottom: none">
-                    <td style="padding-top: 15px; vertical-align: central" colspan="2">
-                        <strong style="font-size: larger; visibility: hidden">Header & Footer</strong>
-                        <br />
+                    <td style="vertical-align: central" colspan="2">
                         <table style="padding: 5px; text-align: left">
                             <tr>
-                                <td>Font Style
+                                <td class="td1">Font Style
                                 </td>
                                 <td>
-                                    <asp:DropDownList ClientIDMode="Static" ID="fontFamilyDrpDwnList" AutoPostBack="True" runat="server" Width="70%" OnSelectedIndexChanged="ChangeFont">
+                                    <asp:DropDownList ClientIDMode="Static" ID="fontFamilyDrpDwnList" AutoPostBack="True" runat="server" CssClass="padding" OnSelectedIndexChanged="ChangeFont">
                                     </asp:DropDownList>
                                 </td>
                             </tr>
-
                             <tr>
-                                <td>Add Image
+                                <td class="td1">Show Line
                                 </td>
                                 <td>
-                                    <input type="file" id="fileupload" name="fileupload" onchange="imagepreview(this);" />
+                                    <asp:CheckBox ID="chkHrVis" runat="server" CssClass="chkHrVis chkbox" />
                                 </td>
-
-
                             </tr>
                             <script type="text/javascript">
                                 function LimtCharacters(txtMsg, CharLength, indicator) {
@@ -355,33 +419,41 @@
                                 }
                             </script>
                             <tr>
-                                <td>Report Title
+                                <td class="td1">
+                                    <p style="margin-top:-8px">Report Title</p>
                                 </td>
                                 <td>
-                                    <asp:TextBox ID="txtRptTitle" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;LimtCharacters(this,50,'lblcount');"></asp:TextBox>
+                                    <asp:TextBox ID="txtRptTitle" MaxLength="100" CssClass="padding" Width="90%" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;LimtCharacters(this,50,'lblcount');"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rptTitleRequired" runat="server" ErrorMessage="*" ToolTip="Report Title is required" ValidationGroup="form1" ControlToValidate="txtRptTitle"></asp:RequiredFieldValidator>
-                                    <br />
-                                    <label id="lblcount" style="font-weight: normal; font-size: smaller; color: gray"></label>
-                                </td>
-                                <td>
+<%--                                    <label id="lblcount" style="font-weight: normal; font-size: smaller; color: gray"></label>--%>
                                     <asp:Literal ID="Literal1" runat="server" EnableViewState="False"></asp:Literal>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Report Description
+                                <td class="td1">
+                                    <p style="margin-top:-8px">Report Description</p>
                                 </td>
                                 <td>
-                                    <asp:TextBox ID="txtRptDesc" MaxLength="50" CssClass="padding" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount2');"></asp:TextBox>
-                                    <br />
+                                    <asp:TextBox ID="txtRptDesc" MaxLength="100" CssClass="padding" Width="90%" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount2');"></asp:TextBox>                                    
                                     <asp:RequiredFieldValidator ID="rptDescRequired" runat="server" ErrorMessage="*" ToolTip="Report Description is required" ValidationGroup="form1" ControlToValidate="txtRptDesc"></asp:RequiredFieldValidator>
-                                    <label id="lblcount2" style="font-weight: normal; font-size: smaller; color: gray"></label>
-                                </td>
-                                <td>
+                                    <%--<label id="lblcount2" style="font-weight: normal; font-size: smaller; color: gray"></label>--%>
                                     <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Table Content
+                                <td class="td1">Add Image
+                                </td>
+                                <td>
+                                    <asp:CheckBox ID="chkImg" runat="server" CssClass="chkHrVis chkbox" />
+                                </td>
+                            </tr>
+                            <tr class="fileupload" align="right">
+                                <td colspan="2">
+                                    <input type="file" id="fileupload" name="fileupload" onchange="imagepreview(this);" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">Table Content
                                 </td>
                                 <td>
                                     <button type="button" class="button btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="border-radius: initial">Edit</button>
@@ -445,43 +517,43 @@
                 }
             </style>
 
-            <page size="A4"> 
-                
-                
-                <%--<div id="test" class="ui-resizable-helper">
-                    <img id="imgprw" class="Mouse "/>
-                </div>--%>
-                
+            <page size="A4">                           
             <asp:Panel runat="server" ID="hiddenPanel">
                 
+                <%-- Hidden Field for report header --%>
                 <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenFormID" runat="server"></asp:HiddenField>
 
+                <%-- Hidden Field for Image --%>
                 <asp:HiddenField ID="hiddenWidth" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenHeight" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="hiddenImage" runat="server"></asp:HiddenField>
+
+                <%-- Hidden Field for Horizontal Line --%>
+                <asp:HiddenField ID="HiddenLinePositionTop" runat="server" />
+                <asp:HiddenField ID="HiddenLinePositionLeft" runat="server" />
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
             <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
-
             <ContentTemplate>
+
                 <asp:Panel ID="imgFrame" runat="server" CssClass="ui-resizable-helper">
-                    <%--<img id="imgprw" class="Mouse" />--%>
                     <asp:Image ID="imgprw" runat="server" CssClass="Mouse"></asp:Image>
                 </asp:Panel>
 
+                <asp:Panel ID="hrLine" runat="server" CssClass="ui-resizable-helper">
+                    <hr id="addline" />
+                </asp:Panel>
+            
             <asp:Label ID="lblRptTitle" CssClass="reportHeader1 draggable Mouse"  runat="server"></asp:Label><br />
             <asp:Label ID="lblRptDesc"  CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label><br />
             <asp:Label ID="lblDate" CssClass="reportHeader2 draggable Mouse" runat="server"></asp:Label>
             </ContentTemplate>
-<%--            <triggers>
-                <asp:AsyncPostBackTrigger ControlID="fontFamilyDrpDwnList" EventName="SelectedIndexChanged" />
-            </triggers>--%>
             </asp:UpdatePanel>
             </asp:Panel>
-                <br />
+            <br />
             <br />
             <br />
             <br />
@@ -489,7 +561,7 @@
             <div id="reportContent">
                 <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                <asp:GridView ID="reportGridView" OnDataBound="reportGridView_DataBound" PagerSettings-Position="Top" EnableViewState="true" PagerStyle-CssClass="pagerStyle" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging" PageSize="20">               
+                <asp:GridView ID="reportGridView" OnDataBound="reportGridView_DataBound" PagerSettings-Position="Top" EnableViewState="true" PagerStyle-CssClass="pagerStyle" Border="0" runat="server" CssClass="rpttable" CellPadding="6" HeaderStyle-CssClass="tableheader" OnRowDataBound="reportGridView_RowDataBound" AllowPaging="true" OnPageIndexChanging="reportGridView_PageIndexChanging" PageSize="30">               
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
                         <asp:Button ID="Next_Page" runat="server" OnClick="Button3_Click" Text="Display Next Page"></asp:Button>

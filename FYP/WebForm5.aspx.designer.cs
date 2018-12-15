@@ -10,7 +10,7 @@
 namespace FYP {
     
     
-    public partial class WebForm4 {
+    public partial class WebForm5 {
         
         /// <summary>
         /// form1 control.
@@ -22,75 +22,102 @@ namespace FYP {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// TextBox1 control.
+        /// fontFamilyDrpDwnList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.DropDownList fontFamilyDrpDwnList;
         
         /// <summary>
-        /// posX control.
+        /// chkHrVis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label posX;
+        protected global::System.Web.UI.WebControls.CheckBox chkHrVis;
         
         /// <summary>
-        /// posY control.
+        /// txtRptTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label posY;
+        protected global::System.Web.UI.WebControls.TextBox txtRptTitle;
         
         /// <summary>
-        /// top control.
+        /// rptTitleRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label top;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rptTitleRequired;
         
         /// <summary>
-        /// left control.
+        /// Literal1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label left;
+        protected global::System.Web.UI.WebControls.Literal Literal1;
         
         /// <summary>
-        /// chkHrVic control.
+        /// txtRptDesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkHrVic;
+        protected global::System.Web.UI.WebControls.TextBox txtRptDesc;
         
         /// <summary>
-        /// HiddenLinePositionTop control.
+        /// rptDescRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenLinePositionTop;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rptDescRequired;
         
         /// <summary>
-        /// HiddenLinePositionLeft control.
+        /// FailureText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenLinePositionLeft;
+        protected global::System.Web.UI.WebControls.Literal FailureText;
+        
+        /// <summary>
+        /// chkImg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkImg;
+        
+        /// <summary>
+        /// BtnSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSave;
+        
+        /// <summary>
+        /// Button2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
     }
 }

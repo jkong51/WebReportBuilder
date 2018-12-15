@@ -13,20 +13,20 @@ namespace FYP
         int pressNumberOfTimes;
         Label lbl_homeCarouselAdd = new Label();
         static StringBuilder strDiv = new StringBuilder();
+
+        string positionX, positionY;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
-            {
                 InitControls();
-            }
         }
 
         protected void InitControls() {
-            string linePositionTop = HiddenLinePositionTop.Value;
-            string linePositionLeft = HiddenLinePositionLeft.Value;
+            positionX = posX.Text;
+            positionY = posY.Text;
 
-            width.Text = linePositionTop;
-            height.Text = linePositionLeft;
+            top.Text = positionX;
+            left.Text = positionY;
         }
         //protected void add_click(object sender, EventArgs e)
         //{
