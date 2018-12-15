@@ -20,11 +20,9 @@ namespace FYP
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-
             if (DropDownList1.SelectedItem.Text == "Select Table")
             {
                 ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "ClientScript", "alert('Form is not selected')", true);
-                
             }
             else
             {

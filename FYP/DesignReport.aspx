@@ -42,8 +42,6 @@
                         var offset = $(this).offset();
                         var xPos = offset.left;
                         var yPos = offset.top;
-                        //$('#posX').text('x: ' + xPos);
-                        //$('#posY').text('y: ' + yPos);
                         $('#HiddenLinePositionTop').val(xPos);
                         $('#HiddenLinePositionLeft').val(yPos);
 
@@ -72,7 +70,22 @@
                 }
             });
         });
+        // update data everytime an object is moved.
+        $(function () {
+            $(".resizable").resizable().draggable();
+            //$(document).ready(function () {
+            //    $("#imgFrame").hide();
+            //})
+            //$('#fileUpload').change(function () {
+            //    $("#imgFrame").show();
+            //})
+        });
 
+    </script>
+    <%--<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>--%>
+
+    <%--Upload Image--%>
+    <script type="text/javascript">
         function imagepreview(input) {
             if (input.files && input.files[0]) {
 
