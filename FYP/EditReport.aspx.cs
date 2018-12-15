@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -43,8 +44,28 @@ namespace FYP
         protected void Page_Load(object sender, EventArgs e)
         {
             Session.Timeout = 60;
+            if (!ClientScript.IsClientScriptBlockRegistered("EscapeText"))
+            {
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "EscapeText",
+                " // save the original function pointer of the .NET __doPostBack function\n" +
+                " // in a global variable netPostBack\n" +
+                " var netPostBack = __doPostBack;\n" +
+                " // replace __doPostBack with your own function\n" +
+                " __doPostBack = EscapeHtml;\n" +
+                " \n" +
+                " function EscapeHtml (eventTarget, eventArgument) \n" +
+                " {\n" +
+                " // execute your own code before the page is submitted\n" +
+                "setHiddenField();" +
+                " \n" +
+                " // call base functionality\n" +
+                " \n" +
+                " return netPostBack (eventTarget, eventArgument);\n" +
+                " }\n", true);
+            }
             if (Page.IsPostBack) {
                 //Rebind gridview
+                SaveState();
                 DataTable formTable = ViewState["formTable_data"] as DataTable;
                 reportGridView.DataSource = formTable;
                 if (Session["countTitle"] != null)
@@ -70,7 +91,7 @@ namespace FYP
                     //Label newLabel = new Label();
                     header_element headEle = (header_element)headerEleDictionary[key];
                     //set title
-                    if (key == 0)
+                    if (headEle.EleType == "title")
                     {
                         //label is title
                         lblRptTitle.Text = headEle.Value;
@@ -81,7 +102,7 @@ namespace FYP
                         reportGridView.Font.Name = headEle.FontType;
                         fontFamilyDrpDwnList.SelectedIndex = fontFamilyDrpDwnList.Items.IndexOf(fontFamilyDrpDwnList.Items.FindByText(headEle.FontType));
                     }
-                    else if (key == 1)
+                    else if (headEle.EleType == "desc")
                     {
                         //lbl1 is desc. lbl2 is date(if have)
                         lblRptDesc.Text = headEle.Value;
@@ -90,25 +111,61 @@ namespace FYP
                         lblRptDesc.Font.Name = headEle.FontType;
                         lblRptDesc.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;");
                     }
-                    else if (key == 2) {
+                    else if (headEle.EleType == "date") {
                         lblDate.Text = headEle.Value;
                         hiddenRptDate.Value = headEle.XPos + "," + headEle.YPos;
                         lblDate.Font.Name = headEle.FontType;
                         lblDate.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;");
                     }
-                    //newLabel.Attributes.Add("style", " position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
-                    //reportHeader.Controls.Add(newLabel);
+                    else if (headEle.EleType == "line")
+                    {
+                        chkHrVis.Checked = true;
+                        //hrLine.Attributes.Add("style", "position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;" + "width:" + hiddenLineWidth.Value + "px;");
+                        hrLine.Attributes.Add("style", "position:absolute; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "width:" + headEle.Width + "px;");
+                        hiddenLineWidth.Value = headEle.Width;
+                        hiddenLinePosition.Value = headEle.XPos + "," + headEle.YPos;
+                    }
+                }
+                try
+                {
+                    string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+                    using (SqlConnection con = new SqlConnection(connectionString))
+                    {
+                        con.Open();
+                        //SELECT fe.[value], fe.[eleTypeId] FROM Footer_element fe
+                        string sql = "SELECT imagePath, width, height, xPosition, yPosition FROM Header_image where reportID = @reportID";
+                        SqlCommand cmd = new SqlCommand(sql, con);
+                        using (cmd)
+                        {
+                            cmd.Parameters.AddWithValue("@reportID", Session["reportId"].ToString());
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                chkImg.Checked = true;
+                                imgprw.ImageUrl = reader["imagePath"].ToString();
+                                imgFrame.Attributes.Add("style", "position:absolute; top:" + reader["yPosition"].ToString() + "px; left:" + reader["xPosition"].ToString() + "px;" + "width:" + reader["width"].ToString() + "px;" + "height:" + reader["height"].ToString() + "px;");
+                                hiddenImage.Value = reader["xPosition"].ToString() + "," + reader["yPosition"].ToString();
+                                hiddenHeight.Value = reader["height"].ToString();
+                                hiddenWidth.Value = reader["width"].ToString();
+                            }
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+
                 }
                 reportId = Session["reportId"].ToString();
                 hiddenFormID.Value = getFormID(Convert.ToInt32(reportId));
                 List<string> checkedList = new List<string>();
-                if (Session["cbListItems"] != null)
+                if (Session["checkedItems"] != null)
                 {
                     ListItemCollection cbList = Session["cbListItems"] as ListItemCollection;
                     foreach (ListItem li in cbList)
                     {
                         ColumnCbList.Items.Add(li);
                     }
+                    ViewState["selectedCbList"] = (List<string>)Session["checkedItems"];
                 }
                 else {
                     checkedList = initCheckBoxList(hiddenFormID.Value, reportId);
@@ -157,10 +214,106 @@ namespace FYP
                     Session["footerName"] = Session["countTitle"].ToString();
                     Session["footerEnabled"] = "true";
                 }
+                if (Session["isRedirect"] != null)
+                {
+                    if ((Boolean)Session["isRedirect"] == true)
+                    {
+                        // re initalize hidden fields
+                        if (Session["imgPathSession"] != null)
+                        {
+                            hiddenImage.Value = Session["hiddenImage"].ToString();
+                            hiddenHeight.Value = Session["hiddenHeight"].ToString();
+                            hiddenWidth.Value = Session["hiddenWidth"].ToString();
+                            chkImg.Checked = true;
+                        }
+
+                        hiddenRptTitle.Value = Session["hiddenRptTitle"].ToString();
+                        hiddenRptDesc.Value = Session["hiddenRptDesc"].ToString();
+                        if (Session["hiddenRptDate"] != null)
+                        {
+                            hiddenRptDate.Value = Session["hiddenRptDate"].ToString();
+                            Session["hiddenRptDate"] = null;
+                        }
+
+                        if (Session["linePos"] != null)
+                        {
+                            hiddenLinePosition.Value = Session["linePos"].ToString();
+                            hiddenLineWidth.Value = Session["lineWidth"].ToString();
+                            chkHrVis.Checked = true;
+                        }
+                        LoadState();
+                        Session["isRedirect"] = false;
+                    }
+                }
                 reportGridView.DataSource = formTable;
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataBind();
             }
+        }
+
+        protected void SaveState()
+        {
+            // save image path
+            if (fileuploadASP.HasFile)
+            {
+                System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)FindControl("imgprw");
+                string folderName = "~/Images";
+                string fileName = Path.GetFileName(fileuploadASP.PostedFile.FileName);
+                string fullpath = Path.Combine(folderName, fileName);
+                fileuploadASP.SaveAs(Server.MapPath(fullpath));
+                ViewState["imgPath"] = fullpath;
+            }
+            if (chkHrVis.Checked)
+            {
+                ViewState["hrPos"] = hiddenLinePosition.Value;
+                ViewState["hrWidth"] = hiddenLineWidth.Value;
+            }
+            else if (!chkHrVis.Checked)
+            {
+                ViewState["hrPos"] = null;
+                ViewState["hrWidth"] = null;
+            }
+        }
+
+        protected void LoadState()
+        {
+            string[] coords = null;
+            if (Session["imgPathSession"] != null && ViewState["imgPath"] == null)
+            {
+                coords = Regex.Split(hiddenImage.Value, ",");
+                ViewState["imgPath"] = Session["imgPathSession"].ToString();
+                Session["imgPathSession"] = null;
+                coords = null;
+            }
+            if (chkHrVis.Checked)
+            {
+                coords = Regex.Split(hiddenLinePosition.Value, ",");
+                hrLine.Attributes.Add("style", "position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;" + "width:" + hiddenLineWidth.Value + "px;");
+                coords = null;
+            }
+            if (ViewState["imgPath"] != null)
+            {
+                System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)FindControl("imgprw");
+                img.ImageUrl = (string)ViewState["imgPath"];
+                System.Web.UI.WebControls.Panel imgDiv = (System.Web.UI.WebControls.Panel)FindControl("imgFrame");
+                coords = Regex.Split(hiddenImage.Value, ",");
+                imgDiv.Attributes.Add("style", "position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;" + "width:" + hiddenWidth.Value + "px;" + "height:" + hiddenHeight.Value + "px;");
+                coords = null;
+            }
+            //set coords for title
+            coords = Regex.Split(hiddenRptTitle.Value, ",");
+            lblRptTitle.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
+            coords = null;
+            //set coords for desc
+            coords = Regex.Split(hiddenRptDesc.Value, ",");
+            lblRptDesc.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
+            coords = null;
+            if (lblDate.Text != "")
+            {
+                coords = Regex.Split(hiddenRptDate.Value, ",");
+                lblDate.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
+            }
+
         }
 
         private Dictionary<int, object> getHeadEle(int reportID)
@@ -448,8 +601,6 @@ namespace FYP
             {
                 // think about getting and passing formId if needed
                 string query = "SELECT mappingId, nameOfColumn, nameOfTable FROM Mapping WHERE formId = @formId";
-
-
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@formId", formId);
                 con.Open();
@@ -629,6 +780,28 @@ namespace FYP
             }
             Session["cbListItems"] = ColumnCbList.Items;
             Session["checkedItems"] = (List<string>)ViewState["selectedCbList"];
+            if (ViewState["imgPath"] != null)
+            {
+                Session["imgPathSession"] = (string)ViewState["imgPath"];
+                Session["hiddenImage"] = hiddenImage.Value;
+                Session["hiddenHeight"] = hiddenHeight.Value;
+                Session["hiddenWidth"] = hiddenWidth.Value;
+            }
+
+            if (chkHrVis.Checked)
+            {
+                Session["linePos"] = hiddenLinePosition.Value;
+                Session["lineWidth"] = hiddenLineWidth.Value;
+            }
+            Session["isRedirect"] = true;
+
+            //set back values for hidden fields
+            Session["hiddenRptTitle"] = hiddenRptTitle.Value;
+            Session["hiddenRptDesc"] = hiddenRptDesc.Value;
+            if (hiddenRptDate.Value != "")
+            {
+                Session["hiddenRptDate"] = hiddenRptDate.Value;
+            }
             Response.Redirect("~/EditReport.aspx?queryString=" + qry);
         }
 
@@ -658,7 +831,7 @@ namespace FYP
             rowsAffected = updateRecord(sql,parameters);
 
             List<int> headerIdList = getHeaderEleID(reportId);
-            sql = "UPDATE Header_element " + "SET value = @value, xPosition = @xPos, yPosition = @yPos " + "WHERE headerID = @headerID";
+            sql = "UPDATE Header_element " + "SET value = @value, xPosition = @xPos, yPosition = @yPos, width = @width " + "WHERE headerID = @headerID";
             rowsAffected = getHeaderEle(sql, headerIdList);
 
             if ((string)Session["footerEnabled"] == "true")
@@ -667,8 +840,36 @@ namespace FYP
                 ReportElement footerElement = new ReportElement(Convert.ToInt32(reportId), footerName, "", "", "footer", fontFamilyDrpDwnList.SelectedItem.Text,"");
                 updateFooterEle(footerElement);
             }
+
+            //update image if new one is uploaded
+            if (fileuploadASP.HasFile) {
+                sql = "UPDATE Header_image " + "SET imagePath = @imagePath, width = @width, height = @height, xPosition = @xPosition. yPosition = @yPosition " + "WHERE reportID = @reportID";
+                //x = coords[0] y = coords[1]
+                string[] coords = Regex.Split(hiddenImage.Value, ",");
+                rowsAffected = updateImage(sql, reportId, coords);
+            }
             Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
             Response.Redirect("Homepage.aspx");
+        }
+
+        protected int updateImage(string sql,string reportID,string[] coords)
+        {
+            int rows;
+            string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@imagePath", ViewState["imgPath"].ToString());
+                cmd.Parameters.AddWithValue("@width", hiddenWidth.Value);
+                cmd.Parameters.AddWithValue("@height", hiddenHeight.Value);
+                cmd.Parameters.AddWithValue("@xPosition", coords[0]);
+                cmd.Parameters.AddWithValue("@yPosition", coords[1]);
+                cmd.Parameters.AddWithValue("@reportID", reportID);
+                rows = cmd.ExecuteNonQuery();
+            }
+            return rows;
         }
 
         protected int updateRecord(string sql, Dictionary<string, object> parameters) {
@@ -702,6 +903,7 @@ namespace FYP
                     cmd.Parameters.AddWithValue("@xPos",reportEle.PosX);
                     cmd.Parameters.AddWithValue("@yPos",reportEle.PosY);
                     cmd.Parameters.AddWithValue("@headerID",headerId);
+                    cmd.Parameters.AddWithValue("@width",reportEle.Width);
                     cmd.ExecuteNonQuery();
                     cmd.Parameters.Clear();
                 }
@@ -762,25 +964,28 @@ namespace FYP
             int rows = 0;
             
             List<ReportElement> parameters = new List<ReportElement>();
-            string titlePosition = hiddenRptTitle.Value;
             // title of report
-            string[] coords = Regex.Split(titlePosition, ",");
-            ReportElement reportEleTitle = new ReportElement(Convert.ToInt32(reportId), txtRptTitle.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text,"");
+            string[] coords = Regex.Split(hiddenRptTitle.Value, ",");
+            ReportElement reportEleTitle = new ReportElement(Convert.ToInt32(reportId), txtRptTitle.Text, coords[0], coords[1], "title", fontFamilyDrpDwnList.SelectedItem.Text,"");
             parameters.Add(reportEleTitle);
             coords = null;
             //desc of report
-            string descPosition = hiddenRptDesc.Value;
-            coords = Regex.Split(descPosition, ",");
-            ReportElement reportEleDesc = new ReportElement(Convert.ToInt32(reportId), txtRptDesc.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text,"");
+            coords = Regex.Split(hiddenRptDesc.Value, ",");
+            ReportElement reportEleDesc = new ReportElement(Convert.ToInt32(reportId), txtRptDesc.Text, coords[0], coords[1], "desc", fontFamilyDrpDwnList.SelectedItem.Text,"");
             parameters.Add(reportEleDesc);
             //date of report
             if (lblDate.Text != "")
             {
                 coords = null;
-                string datePosition = hiddenRptDate.Value;
                 coords = Regex.Split(hiddenRptDate.Value, ",");
-                ReportElement reportEleDate = new ReportElement(Convert.ToInt32(reportId), lblDate.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text,"");
+                ReportElement reportEleDate = new ReportElement(Convert.ToInt32(reportId), lblDate.Text, coords[0], coords[1], "date", fontFamilyDrpDwnList.SelectedItem.Text,"");
                 parameters.Add(reportEleDate);
+            }
+            if (chkHrVis.Checked) {
+                coords = null;
+                coords = Regex.Split(hiddenRptDate.Value, ",");
+                ReportElement reportEleLine = new ReportElement(Convert.ToInt32(reportId), "", coords[0], coords[1], "line", "", hiddenLineWidth.Value);
+                parameters.Add(reportEleLine);
             }
             int count = 0;
             int test = 0;
