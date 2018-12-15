@@ -172,7 +172,7 @@ namespace FYP
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     con.Open();
-                    string sql = "SELECT he.value, et.name, he.xPosition, he.yPosition, et.fontType, he.width" +
+                    string sql = "SELECT he.value, et.name, he.xPosition, he.yPosition, et.fontType, he.width " +
                         "FROM Header_element he, Element_type et WHERE he.eleTypeId = et.eleTypeId AND he.reportID = @reportID";
                     SqlCommand cmd = new SqlCommand(sql, con);
                     cmd.Parameters.AddWithValue("@reportID", reportID);
