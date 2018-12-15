@@ -20,9 +20,41 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link rel="icon" href="icons8-business-report-50.ico" />
-    
-<script>
 
+    <script>
+        $(document).ready(function () {
+            //Uncheck the CheckBox initially
+            $('#chkHrVis').removeAttr('checked');
+            // Initially, Hide the horizontal line when Web Form is loaded
+            $('#hrLine').hide();
+            $('#chkHrVis').change(function () {
+                if (this.checked) {
+                    $('#hrLine').show();
+                }
+                else {
+                    $('#hrLine').hide();
+                }
+            });
+
+            //Uncheck the CheckBox initially
+            $('#chkImg').removeAttr('checked');
+            // Initially, Hide the horizontal line when Web Form is loaded
+            $('#fileupload').hide();
+            $('#imgFrame').hide();
+            $('.fileupload').hide();
+            $('#chkImg').change(function () {
+                if (this.checked) {
+                    $('#fileupload').show();
+                    $('.fileupload').show();
+                    $('#imgFrame').show();
+                }
+                else {
+                    $('#fileupload').hide();
+                    $('.fileupload').hide();
+                    $('#imgFrame').hide();
+                }
+            });
+        });
         $(function () {
             $(".draggable").draggable(
                 { containment: "page", scroll: true },
@@ -121,12 +153,11 @@
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             text-align: center;
             background: rgb(204,204,204);
-            overflow-x:hidden;
+            overflow-x: hidden;
             font-family: 'lato', sans-serif;
         }
 
         #sidebar {
-
             height: 100%;
             width: 25%;
             position: fixed;
@@ -151,14 +182,15 @@
             border-right: none;
             border-top: none;
             border-collapse: collapse;
-            width:100%;
+            width: 100%;
         }
 
-        .padding{
-            padding:7px;
+        .padding {
+            padding: 7px;
             font-size: 15px;
-            width:95%;
+            width: 95%;
         }
+
         .button {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             background-color: rgb(80, 142, 245);
@@ -239,7 +271,7 @@
         .Mouse {
             cursor: move;
         }
-        
+
 
         #reportContent {
             width: 100%;
@@ -345,7 +377,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <input id="hiddenInput" type="hidden" runat="server" value="1"/>
+        <input id="hiddenInput" type="hidden" runat="server" value="1" />
         <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server" EnablePartialRendering="true">
         </asp:ScriptManager>
         <div id="sidebar">
@@ -378,21 +410,21 @@
                             </tr>
                             <tr>
                                 <td class="td1">
-                                    <p style="margin-top:-8px">Report Title</p>
+                                    <p style="margin-top: -8px">Report Title</p>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="txtRptTitle" MaxLength="100" CssClass="padding" Width="90%" runat="server" onkeyup="document.getElementById('lblRptTitle').innerHTML=this.value;LimtCharacters(this,50,'lblcount');"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rptTitleRequired" runat="server" ErrorMessage="*" ToolTip="Report Title is required" ValidationGroup="form1" ControlToValidate="txtRptTitle"></asp:RequiredFieldValidator>
-<%--                                    <label id="lblcount" style="font-weight: normal; font-size: smaller; color: gray"></label>--%>
+                                    <%--                                    <label id="lblcount" style="font-weight: normal; font-size: smaller; color: gray"></label>--%>
                                     <asp:Literal ID="Literal1" runat="server" EnableViewState="False"></asp:Literal>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="td1">
-                                    <p style="margin-top:-8px">Report Description</p>
+                                    <p style="margin-top: -8px">Report Description</p>
                                 </td>
                                 <td>
-                                    <asp:TextBox ID="txtRptDesc" MaxLength="100" CssClass="padding" Width="90%" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount2');"></asp:TextBox>                                    
+                                    <asp:TextBox ID="txtRptDesc" MaxLength="100" CssClass="padding" Width="90%" runat="server" onkeyup="document.getElementById('lblRptDesc').innerHTML=this.value;LimtCharacters(this,50,'lblcount2');"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rptDescRequired" runat="server" ErrorMessage="*" ToolTip="Report Description is required" ValidationGroup="form1" ControlToValidate="txtRptDesc"></asp:RequiredFieldValidator>
                                     <%--<label id="lblcount2" style="font-weight: normal; font-size: smaller; color: gray"></label>--%>
                                     <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
@@ -407,7 +439,7 @@
                             </tr>
                             <tr class="fileupload" align="right">
                                 <td colspan="2">
-                                   <asp:FileUpload ID="fileupload" name="fileupload" onchange="imagepreview(this);" runat="server"/>
+                                    <asp:FileUpload ID="fileupload" name="fileupload" onchange="imagepreview(this);" runat="server" />
                                 </td>
                             </tr>
                             <tr>

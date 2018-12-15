@@ -107,7 +107,6 @@
     <Content Include="jquery-ui.js" />
     <Content Include="LoginPlaceholder.aspx" />
     <Content Include="RetrieveReport.aspx" />
-    <Content Include="Service1.svc" />
     <Content Include="style.css" />
     <Content Include="StyleSheet1.css" />
     <Content Include="ViewReport.aspx" />
@@ -186,7 +185,6 @@
     <Compile Include="EditReport.aspx.designer.cs">
       <DependentUpon>EditReport.aspx</DependentUpon>
     </Compile>
-    <Compile Include="IService1.cs" />
     <Compile Include="LoginPlaceholder.aspx.cs">
       <DependentUpon>LoginPlaceholder.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -215,9 +213,6 @@
     </Compile>
     <Compile Include="RetrieveReport.aspx.designer.cs">
       <DependentUpon>RetrieveReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Service1.svc.cs">
-      <DependentUpon>Service1.svc</DependentUpon>
     </Compile>
     <Compile Include="ViewReport.aspx.cs">
       <DependentUpon>ViewReport.aspx</DependentUpon>
