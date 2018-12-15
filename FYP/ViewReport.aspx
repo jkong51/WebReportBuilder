@@ -80,6 +80,7 @@
         .rpttable {
             width: 90%;
             background-color: #fff;
+            
         }
 
         .tableheader {
@@ -124,18 +125,29 @@
             color: #000;
             border: 1px solid #3AC0F2;
         }
+        #section-to-print{
+            width:100%;
+        }
 
         @media print {
             #section-to-print {
                 position: absolute;
                 margin-left:-208px;
-                margin-top:-80px;
+                margin-top:-50px;
                 width:100%;
             }
             #section-to-adjust{
                 position: absolute;
                 margin-top:-50px;
                 width:500px;
+            }
+            #reportGridView 
+            {
+                page-break-after:always;
+            }
+            #reportGridView table
+            {
+                page-break-after:always;
             }
         }
     </style>
@@ -160,6 +172,8 @@
 
         <button onclick="printDiv('printPDF')" class="button button2">Save</button>
 
+        <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Print" />
+
         <div id="printPDF" runat="server" style="padding-top: 50px">
             <div id="containment-wrapper">
 
@@ -179,7 +193,7 @@
             <div id="reportContent" style="padding-top:175px;padding-left:40px">
                 <asp:UpdatePanel ID="updatePanel2" runat="server">
             <ContentTemplate>
-                <asp:GridView ID="reportGridView" OnRowDataBound="reportGridView_RowDataBound" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="true" CssClass="rpttable" PageSize="30" OnPageIndexChanging="reportGridView_PageIndexChanging">
+                <asp:GridView ID="reportGridView" OnRowDataBound="reportGridView_RowDataBound" PagerSettings-Position="Top" PagerStyle-CssClass="pagerStyle" Border="0" CellPadding="6" HeaderStyle-CssClass="tableheader" runat="server" AllowPaging="false" CssClass="rpttable" PageSize="30" OnPageIndexChanging="reportGridView_PageIndexChanging">
                 <PagerStyle HorizontalAlign = "Right" CssClass = "GridPager" />
                 </asp:GridView>
                     </ContentTemplate>
