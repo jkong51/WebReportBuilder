@@ -146,6 +146,7 @@ namespace FYP
                             hiddenImage.Value = Session["hiddenImage"].ToString();
                             hiddenHeight.Value = Session["hiddenHeight"].ToString();
                             hiddenWidth.Value = Session["hiddenWidth"].ToString();
+                            chkImg.Checked = true;
                         }
 
                         hiddenRptTitle.Value = Session["hiddenRptTitle"].ToString();
@@ -154,6 +155,13 @@ namespace FYP
                         {
                             hiddenRptDate.Value = Session["hiddenRptDate"].ToString();
                             Session["hiddenRptDate"] = null;
+                        }
+
+                        if (Session["linePos"] != null)
+                        {
+                            hiddenLinePosition.Value = Session["linePos"].ToString();
+                            hiddenLineWidth.Value = Session["lineWidth"].ToString();
+                            chkHrVis.Checked = true;
                         }
                         LoadState();
                         Session["isRedirect"] = false;
@@ -173,14 +181,22 @@ namespace FYP
 
         protected void SaveState() {
             // save image path
-            if (fileupload.FileName != "")
+            if (fileuploadASP.HasFile)
             {
-                System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)FindControl("imgprw");
-                string folderName = "~/Images";
-                string fileName = Path.GetFileName(fileupload.PostedFile.FileName);
-                string fullpath = Path.Combine(folderName, fileName);
-                fileupload.SaveAs(Server.MapPath(fullpath));
-                ViewState["imgPath"] = fullpath;
+                    System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)FindControl("imgprw");
+                    string folderName = "~/Images";
+                    string fileName = Path.GetFileName(fileuploadASP.PostedFile.FileName);
+                    string fullpath = Path.Combine(folderName, fileName);
+                    fileuploadASP.SaveAs(Server.MapPath(fullpath));
+                    ViewState["imgPath"] = fullpath;
+            }
+            if (chkHrVis.Checked) {
+                ViewState["hrPos"] = hiddenLinePosition.Value;
+                ViewState["hrWidth"] = hiddenLineWidth.Value;
+            }
+            else if (!chkHrVis.Checked) {
+                ViewState["hrPos"] =  null;
+                ViewState["hrWidth"] = null;
             }
         }
 
@@ -188,8 +204,15 @@ namespace FYP
             string[] coords = null;
             if (Session["imgPathSession"] != null && ViewState["imgPath"] == null)
             {
+                coords = Regex.Split(hiddenImage.Value, ",");
                 ViewState["imgPath"] = Session["imgPathSession"].ToString();
                 Session["imgPathSession"] = null;
+                coords = null;
+            }
+            if (chkHrVis.Checked) {
+                coords = Regex.Split(hiddenLinePosition.Value, ",");
+                hrLine.Attributes.Add("style", "position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;" + "width:" + hiddenLineWidth.Value + "px;");
+                coords = null;
             }
             if (ViewState["imgPath"] != null)
             {
@@ -213,6 +236,7 @@ namespace FYP
                 coords = Regex.Split(hiddenRptDate.Value, ",");
                 lblDate.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
             }
+
         }
         
         private DataTable getFormData(string query)
@@ -864,6 +888,11 @@ namespace FYP
                 Session["hiddenImage"] = hiddenImage.Value;
                 Session["hiddenHeight"] = hiddenHeight.Value;
                 Session["hiddenWidth"] = hiddenWidth.Value;
+            }
+
+            if (chkHrVis.Checked) {
+                Session["linePos"] = hiddenLinePosition.Value;
+                Session["lineWidth"] = hiddenLineWidth.Value;
             }
             Session["isRedirect"] = true;
 

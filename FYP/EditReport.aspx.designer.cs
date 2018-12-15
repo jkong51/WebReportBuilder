@@ -112,13 +112,13 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.CheckBox chkImg;
         
         /// <summary>
-        /// fileupload control.
+        /// fileuploadASP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileupload;
+        protected global::System.Web.UI.WebControls.FileUpload fileuploadASP;
         
         /// <summary>
         /// BtnSave control.
@@ -211,22 +211,22 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.HiddenField hiddenImage;
         
         /// <summary>
-        /// HiddenLinePositionTop control.
+        /// hiddenLineWidth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenLinePositionTop;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenLineWidth;
         
         /// <summary>
-        /// HiddenLinePositionLeft control.
+        /// hiddenLinePosition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenLinePositionLeft;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenLinePosition;
         
         /// <summary>
         /// reportHeader control.
