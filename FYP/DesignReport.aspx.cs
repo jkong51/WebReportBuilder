@@ -329,6 +329,7 @@ namespace FYP
                     rowsAffected = InsertUpdate(sql, parameters);
 
                 //Add image to db
+                if (ViewState["imgPath"] != null) { 
                 parameters.Clear();
                 coords = Regex.Split(hiddenImage.Value, ",");
                 sql = "INSERT INTO Header_image " + "(reportID, imagePath, width, height, xPosition, yPosition)" + " VALUES " + "(@reportID, @imagePath, @width, @height, @xPosition, @yPosition)";
@@ -340,7 +341,7 @@ namespace FYP
                 parameters.Add("@yPosition", coords[1]);
                 rowsAffected = InsertUpdate(sql, parameters);
                 coords = null;
-
+                }
                 //Add permissions
                 parameters.Clear();
                 sql = "INSERT INTO report_right " + "(reportId, staffId, rights)" + "VALUES " + "(@reportId, @staffId, @rights)";

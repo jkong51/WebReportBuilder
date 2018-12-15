@@ -22,6 +22,28 @@
     <link rel="icon" href="icons8-business-report-50.ico" />
 
     <script>
+        function setHiddenField() {
+            alert("Entered");
+            var lblTitle = $("#lblRptTitle");
+            var lblDesc = $("#lblRptDesc");
+            var lblDate = $("#lblDate");
+            var positionImg = $('#imgFrame').position();
+            var positionTitle = lblTitle.position();
+            var positionDesc = lblDesc.position();
+            if ($('#imgprw').attr('src') != "") {
+                document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
+                document.getElementById('<%=hiddenWidth.ClientID%>').value = $('#imgFrame').width();
+                document.getElementById('<%=hiddenImage.ClientID%>').value = positionImg.left + "," + positionImg.top;
+            }
+            document.getElementById('<%=hiddenRptTitle.ClientID%>').value = positionTitle.left + "," + positionTitle.top;
+            document.getElementById('<%=hiddenRptDesc.ClientID%>').value = positionDesc.left + "," + positionDesc.top;
+            if (document.getElementById('<%=lblDate.ClientID%>').value != "") {
+                var positionDate = lblDate.position();
+                document.getElementById('<%=hiddenRptDate.ClientID%>').value = positionDate.left + "," + positionDate.top;
+            }
+        }
+
+
         $(document).ready(function () {
             //Uncheck the CheckBox initially
             $('#chkHrVis').removeAttr('checked');
@@ -55,6 +77,7 @@
                 }
             });
         });
+
         $(function () {
             $(".draggable").draggable(
                 { containment: "page", scroll: true },
