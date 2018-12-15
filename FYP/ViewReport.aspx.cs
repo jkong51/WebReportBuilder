@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -90,7 +91,6 @@ namespace FYP
 
                 }
                 reportGridView.DataBind();
-                reportGridView.Attributes["style"] = "border-collapse:separate";
                 foreach (GridViewRow row in reportGridView.Rows)
                 {
                     if(row.RowIndex == 10)
@@ -270,7 +270,56 @@ namespace FYP
 
             }
         }
-        
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            /* Confirms that an HtmlForm control is rendered for the specified ASP.NET
+               server control at run time. */
+        }
+        protected void Print(object sender, EventArgs e)
+        {
+            reportGridView.AllowPaging = false;
+            reportGridView.UseAccessibleHeader = true;
+            reportGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
+            reportGridView.FooterRow.TableSection = TableRowSection.TableFooter;
+            if (reportGridView.TopPagerRow != null)
+            {
+                reportGridView.TopPagerRow.TableSection = TableRowSection.TableHeader;
+            }
+            if (reportGridView.BottomPagerRow != null)
+            {
+                reportGridView.BottomPagerRow.TableSection = TableRowSection.TableFooter;
+            }
+            reportGridView.Attributes["style"] = "border-collapse:separate";
+            foreach (GridViewRow row in reportGridView.Rows)
+            {
+                if (row.RowIndex % 10 == 0 && row.RowIndex != 0)
+                {
+                    row.Attributes["style"] = "page-break-after:always;";
+                }
+            }
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            reportGridView.RenderControl(hw);
+            string gridHTML = sw.ToString().Replace("\"", "'").Replace(System.Environment.NewLine, "");
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<script type = 'text/javascript'>");
+            sb.Append("window.onload = new function(){");
+            sb.Append("var printWin = window.open('', '', 'left=0");
+            sb.Append(",top=0,width=1000,height=600,status=0');");
+            sb.Append("printWin.document.write(\""+ lblTitle.Text + lblDesc.Text +lblDate.Text);
+            string style = "<style type = 'text/css'>thead {display:table-header-group;vertical-align: bottom;padding-bottom: 0px;padding-top: 20px;border: none;background-color: rgb(230,230,230);padding-top: 20px;text-transform: uppercase;} tfoot{display:table-footer-group;} table{width: 90%;background-color: #fff;} table td{border-left: none;border-right: none;border-color: rgb(230,230,230);text-align:center;CellPadding:6;}</style>";
+            sb.Append(style + gridHTML);
+            sb.Append("\");");          
+            sb.Append("printWin.document.close();");
+            sb.Append("printWin.focus();");
+            sb.Append("printWin.print();");
+            sb.Append("printWin.close();");
+            sb.Append("};");
+            sb.Append("</script>");
+            ClientScript.RegisterStartupScript(this.GetType(), "GridPrint", sb.ToString());
+            reportGridView.DataBind();
+        }
+
         /* 
          * 
 * >> label.Attributes.Add("style", "top:10; right:10; position:absolute;"); <<
