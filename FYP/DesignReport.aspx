@@ -30,8 +30,6 @@
             var positionTitle = lblTitle.position();
             var positionDesc = lblDesc.position();
             if ($('#imgprw').attr('src') != "") {
-                //var hiddenImgHeight = ;
-                //var hiddenImgWidth = 
                 document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
                 document.getElementById('<%=hiddenWidth.ClientID%>').value = $('#imgFrame').width();
                 document.getElementById('<%=hiddenImage.ClientID%>').value = positionImg.left + "," + positionImg.top;
@@ -60,15 +58,11 @@
 
             // get data from hiddenfield to be stored in db
             $('#<%=BtnSave.ClientID%>').click(function () {
-                alert("Entered");
                 var lblTitle = $("#lblRptTitle");
                 var lblDesc = $("#lblRptDesc");
                 var lblDate = $("#lblDate");
                 var positionImg = $('#imgFrame').position();
                 if ($('#imgprw').attr('src') != "") {
-                    alert("Image exist");
-                    //var hiddenImgHeight = ;
-                    //var hiddenImgWidth = 
                     document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
                     document.getElementById('<%=hiddenWidth.ClientID%>').value = $('#imgFrame').width();
                     document.getElementById('<%=hiddenImage.ClientID%>').value = positionImg.left + "," + positionImg.top;

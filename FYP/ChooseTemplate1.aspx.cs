@@ -259,6 +259,7 @@ namespace FYP
                     {
                     tableNames = colNameDT.Rows[i]["nameOfTable"].ToString();
                     columns = checkboxSelection[0];
+                    // check if checkbox is not checked
                     //checkboxSelection.RemoveAt(0);
                     }
                     // will only enter this segment if it is the last item on checkBoxSelection

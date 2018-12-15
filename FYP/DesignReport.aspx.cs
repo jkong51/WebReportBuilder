@@ -328,7 +328,18 @@ namespace FYP
                     parameters.Add("@query", query);
                     rowsAffected = InsertUpdate(sql, parameters);
 
-                
+                //Add image to db
+                parameters.Clear();
+                coords = Regex.Split(hiddenImage.Value, ",");
+                sql = "INSERT INTO Header_image " + "(reportID, imagePath, width, height, xPosition, yPosition)" + " VALUES " + "(@reportID, @imagePath, @width, @height, @xPosition, @yPosition)";
+                parameters.Add("@reportID", reportId);
+                parameters.Add("@imagePath", ViewState["imgPath"].ToString());
+                parameters.Add("@width", hiddenWidth.Value);
+                parameters.Add("@height", hiddenHeight.Value);
+                parameters.Add("@xPosition", coords[0]);
+                parameters.Add("@yPosition", coords[1]);
+                rowsAffected = InsertUpdate(sql, parameters);
+                coords = null;
 
                 //Add permissions
                 parameters.Clear();
