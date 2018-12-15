@@ -92,6 +92,7 @@
                 });
             $("#hrLine").resizable();
             $('#hrLine').draggable(
+                { containment: "page", scroll: true },
                 {
                     drag: function () {
                         var offset = $(this).offset();
@@ -255,6 +256,10 @@
 
         .td1 {
             width: 10%;
+            text-align: right;
+            padding-right: 30px;
+        }
+                .td2 {
             text-align: right;
             padding-right: 30px;
         }
@@ -596,12 +601,12 @@
                                             </p>
                                             <hr />
                                         </div>
-                                        <table class="table1" align="center" style="width: 100%">
+                                        <table class="table2" align="center" style="width: 100%">
                                             <tr>
                                                 <asp:Label ID="Label2" runat="server" Text="&lt;strong&gt;Select the column to be used&lt;/strong&gt;"></asp:Label>
                                             </tr>
                                             <tr>
-                                                <td class="td1">
+                                                <td class="td2">
                                                     <asp:Label ID="Label7" runat="server" Text="&lt;strong&gt;Select the form's displayed data&lt;/strong&gt;" Visible="true"></asp:Label>
                                                 </td>
                                                 <td align="justify">
@@ -610,7 +615,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="td1">
+                                                <td class="td2">
                                                     <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                                 </td>
                                                 <td>
@@ -619,7 +624,7 @@
                                             </tr>
                                             <%--<asp:PlaceHolder runat="server" ID="totalCount">--%>
                                             <tr>
-                                                <td class="td1">
+                                                <td class="td2">
                                                     <asp:Label ID="Label5" runat="server" Text="Label" Visible="false"><strong>Select data to be summed</strong></asp:Label>
                                                 </td>
                                                 <td>
