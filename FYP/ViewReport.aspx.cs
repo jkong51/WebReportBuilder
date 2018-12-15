@@ -135,6 +135,9 @@ namespace FYP
                 {
 
                 }
+                if (Session["countTitle"] != null) {
+                    reportGridView.ShowFooter = true;
+                }
                 reportGridView.DataBind();
             }
 
@@ -302,6 +305,7 @@ namespace FYP
 
             }
         }
+
         public override void VerifyRenderingInServerForm(Control control)
         {
             /* Confirms that an HtmlForm control is rendered for the specified ASP.NET
