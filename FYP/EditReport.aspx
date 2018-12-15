@@ -17,13 +17,18 @@
 
     <script>
         function setHiddenField() {
-            alert("Entered");
             var lblTitle = $("#lblRptTitle");
             var lblDesc = $("#lblRptDesc");
             var lblDate = $("#lblDate");
             var positionImg = $('#imgFrame').position();
             var positionTitle = lblTitle.position();
             var positionDesc = lblDesc.position();
+            var isChecked = $('#chkHrVis').is(':checked');
+            if (isChecked == true) {
+                var positionLine = $('#hrLine').position();
+                document.getElementById('<%=hiddenLinePosition.ClientID%>').value = positionLine.left + "," + positionLine.top;
+                document.getElementById('<%=hiddenLineWidth.ClientID%>').value = $('#hrLine').width();
+            }
             if ($('#imgprw').attr('src') != "") {
                 document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
                 document.getElementById('<%=hiddenWidth.ClientID%>').value = $('#imgFrame').width();
@@ -91,8 +96,6 @@
                         var offset = $(this).offset();
                         var xPos = offset.left;
                         var yPos = offset.top;
-                        $('#HiddenLinePositionTop').val(xPos);
-                        $('#HiddenLinePositionLeft').val(yPos);
 
                     }
                 });
@@ -104,6 +107,13 @@
                 var lblDesc = $("#lblRptDesc");
                 var lblDate = $("#lblDate");
                 var positionImg = $('#imgFrame').position();
+                var isChecked = $('#chkHrVis').is(':checked');
+                if (isChecked == true) {
+                    var positionLine = $('#hrLine').position();
+                    document.getElementById('<%=hiddenLinePosition.ClientID%>').value = positionLine.left + "," + positionLine.top;
+                    document.getElementById('<%=hiddenLineWidth.ClientID%>').value = $('#hrLine').width();
+                }
+
                 if ($('#imgprw').attr('src') != "") {
                     document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
                     document.getElementById('<%=hiddenWidth.ClientID%>').value = $('#imgFrame').width();
@@ -493,7 +503,7 @@
                             </tr>
                             <tr class="fileupload" align="right">
                                 <td colspan="2">
-                                    <asp:FileUpload ID="fileupload" name="fileupload" onchange="imagepreview(this);" runat="server" />
+                                    <asp:FileUpload ID="fileuploadASP" name="fileupload" onchange="imagepreview(this);" runat="server" />
                                 </td>
                             </tr>
                             <tr>
@@ -535,8 +545,8 @@
                 <asp:HiddenField ID="hiddenImage" runat="server"></asp:HiddenField>
 
                 <%-- Hidden Field for Horizontal Line --%>
-                <asp:HiddenField ID="HiddenLinePositionTop" runat="server" />
-                <asp:HiddenField ID="HiddenLinePositionLeft" runat="server" />
+                <asp:HiddenField ID="hiddenLineWidth" runat="server"></asp:HiddenField>
+                <asp:HiddenField ID="hiddenLinePosition" runat="server" />
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
                 <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">
@@ -624,6 +634,9 @@
                                             <asp:Button ID="Button2" runat="server" Text="Change" OnClick="Button1_Click" CssClass="button" />
                                         </div>
                                 </ContentTemplate>
+                                <Triggers>
+                                    <asp:PostBackTrigger ControlID="Button2" />
+                                </Triggers>
                             </asp:UpdatePanel>
                         </asp:Panel>
                     </div>

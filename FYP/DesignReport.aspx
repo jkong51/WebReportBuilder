@@ -23,7 +23,6 @@
 
     <script>
         function setHiddenField() {
-            alert("Entered");
             var lblTitle = $("#lblRptTitle");
             var lblDesc = $("#lblRptDesc");
             var lblDate = $("#lblDate");
@@ -52,9 +51,9 @@
 
         $(document).ready(function () {
             //Uncheck the CheckBox initially
-            $('#chkHrVis').removeAttr('checked');
+            //  $('#chkHrVis').removeAttr('checked');
             // Initially, Hide the horizontal line when Web Form is loaded
-            $('#hrLine').hide();
+            // $('#hrLine').hide();
             $('#chkHrVis').change(function () {
                 if (this.checked) {
                     $('#hrLine').show();
@@ -64,12 +63,25 @@
                 }
             });
 
-            //Uncheck the CheckBox initially
-            $('#chkImg').removeAttr('checked');
-            // Initially, Hide the horizontal line when Web Form is loaded
-            $('#fileupload').hide();
-            $('#imgFrame').hide();
-            $('.fileupload').hide();
+            if ($("#chkHrVis").is(':checked')) {
+                $('#hrLine').show();
+            }
+            else {
+                $('#hrLine').hide();
+            }
+
+            if ($("#chkImg").is(':checked')) {
+                $('#fileupload').show();
+                $('.fileupload').show();
+                $('#imgFrame').show();
+            }
+            else {
+                $('#fileupload').hide();
+                $('.fileupload').hide();
+                $('#imgFrame').hide();
+            }
+
+
             $('#chkImg').change(function () {
                 if (this.checked) {
                     $('#fileupload').show();
@@ -269,7 +281,8 @@
             text-align: right;
             padding-right: 30px;
         }
-                .td2 {
+
+        .td2 {
             text-align: right;
             padding-right: 30px;
         }
@@ -423,6 +436,11 @@
                 right: 0px;
                 width: 10px;
             }
+
+        .modal-content {
+            width: 650px;
+            margin-left: -25px;
+        }
     </style>
     <title>i-Report Builder</title>
 </head>
@@ -490,7 +508,7 @@
                             </tr>
                             <tr class="fileupload" align="right">
                                 <td colspan="2">
-                                    <asp:FileUpload ID="fileupload" name="fileupload" onchange="imagepreview(this);" runat="server" />
+                                  <asp:FileUpload ID="fileuploadASP" onchange="imagepreview(this);" runat="server" />
                                 </td>
                             </tr>
                             <tr>
@@ -649,6 +667,9 @@
                                         <asp:Button ID="Button1" runat="server" Text="Change" OnClientClick="setHiddenField()" OnClick="Button1_Click" CssClass="button" />
                                     </div>
                                 </ContentTemplate>
+                                <Triggers>
+                                    <asp:PostBackTrigger ControlID="Button1" />
+                                </Triggers>
                             </asp:UpdatePanel>
                         </asp:Panel>
                     </div>

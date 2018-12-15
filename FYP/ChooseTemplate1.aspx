@@ -160,8 +160,8 @@
             font-size:30px;
         }
         .modal-content{
-            width:650px;
-            margin-left:-25px;
+            width:670px;
+            margin-left:-35px;
         }
     </style>
     <script type="text/javascript">
