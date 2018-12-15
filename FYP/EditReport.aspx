@@ -427,6 +427,12 @@
                 right: 0px;
                 width: 10px;
             }
+
+            
+        .modal-content {
+            width: 650px;
+            margin-left: -25px;
+        }
     </style>
     <style type="text/css">
         #imgFrame {
