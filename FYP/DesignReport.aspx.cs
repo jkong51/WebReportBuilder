@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using System.IO;
 using System.Web.UI.HtmlControls;
 using System.Text.RegularExpressions;
 
@@ -48,9 +49,31 @@ namespace FYP
         int pressNumberOfTimes;
         Label lbl_homeCarouselAdd = new Label();
         static StringBuilder strDiv = new StringBuilder();
+
         protected void Page_Load(object sender, EventArgs e)
-            {
+        {
+            if (!ClientScript.IsClientScriptBlockRegistered("EscapeText")) {
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "EscapeText",
+                " // save the original function pointer of the .NET __doPostBack function\n" +
+                " // in a global variable netPostBack\n" +
+                " var netPostBack = __doPostBack;\n" +
+                " // replace __doPostBack with your own function\n" +
+                " __doPostBack = EscapeHtml;\n" +
+                " \n" +
+                " function EscapeHtml (eventTarget, eventArgument) \n" +
+                " {\n" +
+                " // execute your own code before the page is submitted\n" +
+                "setHiddenField();" +
+                " \n" +
+                " // call base functionality\n" +
+                " \n" +
+                " return netPostBack (eventTarget, eventArgument);\n" +
+                " }\n", true);
+            }
             if (Page.IsPostBack) {
+                //set location of controls
+                //save state of controls
+                SaveState();
                 //rebind gridview
                 DataTable formTable = ViewState["formTable_data"] as DataTable;
                 reportGridView.DataSource = formTable;
@@ -65,11 +88,11 @@ namespace FYP
                 reportGridView.DataBind();
                 lblRptTitle.Text = txtRptTitle.Text;
                 lblRptDesc.Text = txtRptDesc.Text;
+                
             }
             if (!Page.IsPostBack)
             {
                 Session.Timeout = 60;
-                //PostBackString = Page.ClientScript.GetPostBackEventReference(this, "saveOnClick");
                 string tdate = DateTime.Now.ToString("yyyy-MM-dd");
                 string txtTitle = Session["rptTitle"].ToString();
                 string txtDesc = Session["rptDesc"].ToString();
@@ -83,7 +106,6 @@ namespace FYP
                 {
                     lblDate.Text = "";
                 }
-
                 lblFormName.Text = formName;
                 lblRptTitle.Text = txtTitle;
                 lblRptDesc.Text = txtDesc;
@@ -102,21 +124,93 @@ namespace FYP
                 hiddenFormID.Value = Session["formID"].ToString();
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataBind();
+
                 //implement a way to dynamically add/assign position for hidden fields based on position
-                
                 foreach (FontFamily font in FontFamily.Families)
                 {
                     fontFamilyDrpDwnList.Items.Add(font.Name.ToString());
                 }
-                ViewState["selectedCbList"] = Session["checkedItems"];
+                //set default selected font
+                fontFamilyDrpDwnList.SelectedIndex = fontFamilyDrpDwnList.Items.IndexOf(fontFamilyDrpDwnList.Items.FindByText("Times New Roman"));
+                //set all to times new roman text
+                primaryStyle.Font.Name = fontFamilyDrpDwnList.SelectedItem.Text;
+                lblRptTitle.ApplyStyle(primaryStyle);
+                lblRptDesc.ApplyStyle(primaryStyle);
+                lblDate.ApplyStyle(primaryStyle);
+                if (Session["isRedirect"] != null) {
+                    if ((Boolean)Session["isRedirect"] == true)
+                    {
+                        // re initalize hidden fields
+                        if (Session["imgPathSession"] != null) { 
+                            hiddenImage.Value = Session["hiddenImage"].ToString();
+                            hiddenHeight.Value = Session["hiddenHeight"].ToString();
+                            hiddenWidth.Value = Session["hiddenWidth"].ToString();
+                        }
 
+                        hiddenRptTitle.Value = Session["hiddenRptTitle"].ToString();
+                        hiddenRptDesc.Value = Session["hiddenRptDesc"].ToString();
+                        if (Session["hiddenRptDate"] != null)
+                        {
+                            hiddenRptDate.Value = Session["hiddenRptDate"].ToString();
+                            Session["hiddenRptDate"] = null;
+                        }
+                        LoadState();
+                        Session["isRedirect"] = false;
+                    }
+                }
+                reportGridView.ApplyStyle(primaryStyle);
+
+                ViewState["selectedCbList"] = Session["checkedItems"];
                 ListItemCollection cbList = Session["cbListItems"] as ListItemCollection;
                 if (Session["cbListItems"] != null) {
                     foreach(ListItem li in cbList){
                         ColumnCbList.Items.Add(li);
                     }
                 }
+            }
+        }
 
+        protected void SaveState() {
+            // save image path
+            if (fileupload.FileName != "")
+            {
+                System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)FindControl("imgprw");
+                string folderName = "~/Images";
+                string fileName = Path.GetFileName(fileupload.PostedFile.FileName);
+                string fullpath = Path.Combine(folderName, fileName);
+                fileupload.SaveAs(Server.MapPath(fullpath));
+                ViewState["imgPath"] = fullpath;
+            }
+        }
+
+        protected void LoadState() {
+            string[] coords = null;
+            if (Session["imgPathSession"] != null && ViewState["imgPath"] == null)
+            {
+                ViewState["imgPath"] = Session["imgPathSession"].ToString();
+                Session["imgPathSession"] = null;
+            }
+            if (ViewState["imgPath"] != null)
+            {
+                System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)FindControl("imgprw");
+                img.ImageUrl = (string)ViewState["imgPath"];
+                System.Web.UI.WebControls.Panel imgDiv = (System.Web.UI.WebControls.Panel)FindControl("imgFrame");
+                coords = Regex.Split(hiddenImage.Value, ",");
+                imgDiv.Attributes.Add("style", "position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;" + "width:" + hiddenWidth.Value + "px;" + "height:" + hiddenHeight.Value + "px;");
+                coords = null;
+            }
+            //set coords for title
+            coords = Regex.Split(hiddenRptTitle.Value, ",");
+            lblRptTitle.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
+            coords = null;
+            //set coords for desc
+            coords = Regex.Split(hiddenRptDesc.Value, ",");
+            lblRptDesc.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
+            coords = null;
+            if (lblDate.Text != "")
+            {
+                coords = Regex.Split(hiddenRptDate.Value, ",");
+                lblDate.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
             }
         }
         
@@ -140,12 +234,12 @@ namespace FYP
 
         protected void ChangeFont(object sender, EventArgs e)
         {
-                primaryStyle.Font.Name =
-                fontFamilyDrpDwnList.SelectedItem.Text;
+                primaryStyle.Font.Name = fontFamilyDrpDwnList.SelectedItem.Text;
                 lblRptTitle.ApplyStyle(primaryStyle);
                 lblRptDesc.ApplyStyle(primaryStyle);
                 lblDate.ApplyStyle(primaryStyle);
                 reportGridView.ApplyStyle(primaryStyle);
+                LoadState();
         }
 
         protected void BtnSave_Click(object sender, EventArgs e)
@@ -234,7 +328,18 @@ namespace FYP
                     parameters.Add("@query", query);
                     rowsAffected = InsertUpdate(sql, parameters);
 
-                
+                //Add image to db
+                parameters.Clear();
+                coords = Regex.Split(hiddenImage.Value, ",");
+                sql = "INSERT INTO Header_image " + "(reportID, imagePath, width, height, xPosition, yPosition)" + " VALUES " + "(@reportID, @imagePath, @width, @height, @xPosition, @yPosition)";
+                parameters.Add("@reportID", reportId);
+                parameters.Add("@imagePath", ViewState["imgPath"].ToString());
+                parameters.Add("@width", hiddenWidth.Value);
+                parameters.Add("@height", hiddenHeight.Value);
+                parameters.Add("@xPosition", coords[0]);
+                parameters.Add("@yPosition", coords[1]);
+                rowsAffected = InsertUpdate(sql, parameters);
+                coords = null;
 
                 //Add permissions
                 parameters.Clear();
@@ -632,7 +737,6 @@ namespace FYP
                     }
                 }
             }
-
             Boolean ignoreFirstElement = false;
             foreach (string listItem in checkboxSelection)
             {
@@ -731,6 +835,22 @@ namespace FYP
             }
             Session["cbListItems"] = ColumnCbList.Items;
             Session["checkedItems"] = (List<string>)ViewState["selectedCbList"];
+            if (ViewState["imgPath"] != null)
+            {
+                Session["imgPathSession"] = (string)ViewState["imgPath"];
+                Session["hiddenImage"] = hiddenImage.Value;
+                Session["hiddenHeight"] = hiddenHeight.Value;
+                Session["hiddenWidth"] = hiddenWidth.Value;
+            }
+            Session["isRedirect"] = true;
+
+            //set back values for hidden fields
+            Session["hiddenRptTitle"] = hiddenRptTitle.Value;
+            Session["hiddenRptDesc"] = hiddenRptDesc.Value;
+            if (hiddenRptDate.Value != "") { 
+                Session["hiddenRptDate"] = hiddenRptDate.Value;
+            }
+
             Response.Redirect("~/DesignReport.aspx?queryString=" + query);
         }
 
