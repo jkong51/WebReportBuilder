@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -312,6 +313,21 @@ namespace FYP
         }
         protected void Print(object sender, EventArgs e)
         {
+            string[] coords = null;
+            coords = Regex.Split(hiddenRptTitle.Value, ",");
+            lblTitle.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
+            coords = null;
+            //set coords for desc
+            coords = Regex.Split(hiddenRptDesc.Value, ",");
+            lblDesc.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
+            coords = null;
+            if (lblDate.Text != "")
+            {
+                coords = Regex.Split(hiddenRptDate.Value, ",");
+                //99,22 [0] -> 
+                lblDate.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
+            }
+
             reportGridView.AllowPaging = false;
             reportGridView.UseAccessibleHeader = true;
             reportGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
@@ -341,8 +357,28 @@ namespace FYP
             sb.Append("window.onload = new function(){");
             sb.Append("var printWin = window.open('', '', 'left=0");
             sb.Append(",top=0,width=1000,height=600,status=0');");
-            sb.Append("printWin.document.write(\""+ lblTitle.Text + lblDesc.Text +lblDate.Text);
-            string style = "<style type = 'text/css'>thead {display:table-header-group;vertical-align: bottom;padding-bottom: 0px;padding-top: 20px;border: none;background-color: rgb(230,230,230);padding-top: 20px;text-transform: uppercase;} tfoot{display:table-footer-group;} table{width: 90%;background-color: #fff;} table td{border-left: none;border-right: none;border-color: rgb(230,230,230);text-align:center;CellPadding:6;}</style>";
+            //get coordinates of elements
+            coords = null;
+            coords = Regex.Split(hiddenRptTitle.Value, ",");
+            string lblTitleTop = coords[1];
+            string lblTitleLeft = coords[0];
+
+            coords = null;
+            coords = Regex.Split(hiddenRptDesc.Value, ",");
+            string lblDescTop = coords[1];
+            string lblDescLeft = coords[0];
+
+            coords = null;
+            string lblDateTop;
+            string lblDateLeft;
+
+                coords = Regex.Split(hiddenRptDate.Value, ",");
+                //99,22 [0] -> 
+                lblDateTop = coords[1];
+                lblDateLeft = coords[0];
+
+            sb.Append("printWin.document.write(\""+ "<div style='position:absolute;top:"+ lblTitleTop + "px;left:"+ lblTitleLeft + "px;font-size:30;text-transform: uppercase;font-weight: bold;display: inline-block;'>" + lblTitle.Text + "</div><div style='position:absolute;top:" + lblDescTop + "px;left:" + lblDescLeft + "px;font-size:30;text-transform: uppercase;font-weight: bold;display: inline-block;'>"+ lblDesc.Text +"</div><div style='position:absolute;top:" + lblDateTop + "px;left:" + lblDateLeft + "px;font-size:30;text-transform: uppercase;font-weight: bold;display: inline-block;'>" + lblDate.Text + " </div>");
+            string style = "<style type = 'text/css'>thead {display:table-header-group;vertical-align: bottom;padding-bottom: 0px;padding-top: 20px;border: none;background-color: rgb(230,230,230);padding-top: 20px;text-transform: uppercase;} tfoot{display:table-footer-group;} table{width: 90%;background-color: #fff;CellPadding:6;width:100%;margin-top:100px} table td{border-left: none;border-right: none;border-color: rgb(230,230,230);text-align:center;} table th{border: none}</style>";
             sb.Append(style + gridHTML);
             sb.Append("\");");          
             sb.Append("printWin.document.close();");
