@@ -90,6 +90,20 @@ namespace FYP
 
                 }
                 reportGridView.DataBind();
+                reportGridView.Attributes["style"] = "border-collapse:separate";
+                foreach (GridViewRow row in reportGridView.Rows)
+                {
+                    if(row.RowIndex == 10)
+                    {
+                        rowCount.Text = row.ToString();
+
+                    }
+                    //rowCount.Text = row.RowIndex.ToString();
+                    if (row.RowIndex % 10 == 0 && row.RowIndex != 0)
+                    {
+                        row.Attributes["style"] = "page-break-after:always;";
+                    }
+                }
             }
 
         }

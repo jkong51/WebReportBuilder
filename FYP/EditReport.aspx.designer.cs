@@ -40,6 +40,15 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.DropDownList fontFamilyDrpDwnList;
         
         /// <summary>
+        /// chkHrVis control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkHrVis;
+        
+        /// <summary>
         /// txtRptTitle control.
         /// </summary>
         /// <remarks>
@@ -49,13 +58,22 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.TextBox txtRptTitle;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// rptTitleRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rptTitleRequired;
+        
+        /// <summary>
+        /// Literal1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal1;
         
         /// <summary>
         /// txtRptDesc control.
@@ -67,13 +85,40 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.TextBox txtRptDesc;
         
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// rptDescRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rptDescRequired;
+        
+        /// <summary>
+        /// FailureText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal FailureText;
+        
+        /// <summary>
+        /// chkImg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkImg;
+        
+        /// <summary>
+        /// fileupload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileupload;
         
         /// <summary>
         /// BtnSave control.
@@ -85,13 +130,13 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.Button BtnSave;
         
         /// <summary>
-        /// BtnCancel control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnCancel;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
         /// hiddenPanel control.
@@ -139,6 +184,51 @@ namespace FYP {
         protected global::System.Web.UI.WebControls.HiddenField hiddenFormID;
         
         /// <summary>
+        /// hiddenWidth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenWidth;
+        
+        /// <summary>
+        /// hiddenHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenHeight;
+        
+        /// <summary>
+        /// hiddenImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenImage;
+        
+        /// <summary>
+        /// HiddenLinePositionTop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenLinePositionTop;
+        
+        /// <summary>
+        /// HiddenLinePositionLeft control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenLinePositionLeft;
+        
+        /// <summary>
         /// reportHeader control.
         /// </summary>
         /// <remarks>
@@ -155,6 +245,33 @@ namespace FYP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel updatePanel1;
+        
+        /// <summary>
+        /// imgFrame control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel imgFrame;
+        
+        /// <summary>
+        /// imgprw control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgprw;
+        
+        /// <summary>
+        /// hrLine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel hrLine;
         
         /// <summary>
         /// sqlQuery control.

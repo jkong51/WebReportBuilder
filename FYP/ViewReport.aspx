@@ -185,6 +185,7 @@
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
+                    <asp:Label ID="rowCount" runat="server" Text="Label"></asp:Label>
             <asp:Panel ID="reportFooter" runat="server">
             </asp:Panel>
         </page>
