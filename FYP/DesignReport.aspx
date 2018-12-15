@@ -30,10 +30,11 @@
             var positionImg = $('#imgFrame').position();
             var positionTitle = lblTitle.position();
             var positionDesc = lblDesc.position();
-            var positionLine = $('#hrLine').position();
             var isChecked = $('#chkHrVis').is(':checked');
             if (isChecked == true) {
-
+                var positionLine = $('#hrLine').position();
+                document.getElementById('<%=hiddenLinePosition.ClientID%>').value = positionLine.left + "," + positionLine.top;
+                document.getElementById('<%=hiddenLineWidth.ClientID%>').value = $('#hrLine').width();
             }
             if ($('#imgprw').attr('src') != "") {
                 document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
@@ -103,9 +104,6 @@
                         var offset = $(this).offset();
                         var xPos = offset.left;
                         var yPos = offset.top;
-                        $('#HiddenLinePositionTop').val(xPos);
-                        $('#HiddenLinePositionLeft').val(yPos);
-
                     }
                 });
             $("#hrLine").resizable({ grid: [10, 10000] });
@@ -116,6 +114,13 @@
                 var lblDesc = $("#lblRptDesc");
                 var lblDate = $("#lblDate");
                 var positionImg = $('#imgFrame').position();
+                var isChecked = $('#chkHrVis').is(':checked');
+                if (isChecked == true) {
+                    var positionLine = $('#hrLine').position();
+                    document.getElementById('<%=hiddenLinePosition.ClientID%>').value = positionLine.left + "," + positionLine.top;
+                    document.getElementById('<%=hiddenLineWidth.ClientID%>').value = $('#hrLine').width();
+                }
+
                 if ($('#imgprw').attr('src') != "") {
                     document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
                     document.getElementById('<%=hiddenWidth.ClientID%>').value = $('#imgFrame').width();
@@ -550,8 +555,8 @@
                 <asp:HiddenField ID="hiddenImage" runat="server"></asp:HiddenField>
 
                 <%-- Hidden Field for Horizontal Line --%>
-                <asp:HiddenField ID="HiddenLinePositionTop" runat="server" />
-                <asp:HiddenField ID="HiddenLinePositionLeft" runat="server" />
+                <asp:HiddenField ID="hiddenLineWidth" runat="server"></asp:HiddenField>
+                <asp:HiddenField ID="hiddenLinePosition" runat="server" />
             </asp:Panel>
             <asp:Panel runat="server" ID="reportHeader" CssClass="reportHeaderClass">
             <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Conditional">

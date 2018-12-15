@@ -24,8 +24,9 @@ namespace FYP
             public string XPos { get; set; }
             public string YPos { get; set; }
             public string FontType { get; set; }
+            public string Width { get; set; }
 
-            public header_element(int reportID, string val, string eleType, string xPos, string yPos, string fontType)
+            public header_element(int reportID, string val, string eleType, string xPos, string yPos, string fontType, string width)
             {
                 ReportID = reportID;
                 Value = val;
@@ -33,6 +34,7 @@ namespace FYP
                 XPos = xPos;
                 YPos = yPos;
                 FontType = fontType;
+                Width = width;
             }
         }
 
@@ -170,7 +172,7 @@ namespace FYP
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     con.Open();
-                    string sql = "SELECT he.value, et.name, he.xPosition, he.yPosition, et.fontType " +
+                    string sql = "SELECT he.value, et.name, he.xPosition, he.yPosition, et.fontType, he.width" +
                         "FROM Header_element he, Element_type et WHERE he.eleTypeId = et.eleTypeId AND he.reportID = @reportID";
                     SqlCommand cmd = new SqlCommand(sql, con);
                     cmd.Parameters.AddWithValue("@reportID", reportID);
@@ -179,7 +181,7 @@ namespace FYP
                         int i = 0;
                         while (sqlDataReader.Read())
                         {
-                            header_element headEle = new header_element(reportID, sqlDataReader["value"].ToString(), sqlDataReader["name"].ToString(), sqlDataReader["xPosition"].ToString(), sqlDataReader["yPosition"].ToString(), sqlDataReader["fontType"].ToString());
+                            header_element headEle = new header_element(reportID, sqlDataReader["value"].ToString(), sqlDataReader["name"].ToString(), sqlDataReader["xPosition"].ToString(), sqlDataReader["yPosition"].ToString(), sqlDataReader["fontType"].ToString(), sqlDataReader["width"].ToString());
                             headerEleDictionary.Add(i, headEle);
                             i++;
                         }
@@ -662,7 +664,7 @@ namespace FYP
             if ((string)Session["footerEnabled"] == "true")
             {
                 string footerName = Session["footerName"].ToString();
-                ReportElement footerElement = new ReportElement(Convert.ToInt32(reportId), footerName, "", "", "footer", fontFamilyDrpDwnList.SelectedItem.Text);
+                ReportElement footerElement = new ReportElement(Convert.ToInt32(reportId), footerName, "", "", "footer", fontFamilyDrpDwnList.SelectedItem.Text,"");
                 updateFooterEle(footerElement);
             }
             Response.Write("<script>alert('" + "Report saved successfully." + "')</script>");
@@ -763,13 +765,13 @@ namespace FYP
             string titlePosition = hiddenRptTitle.Value;
             // title of report
             string[] coords = Regex.Split(titlePosition, ",");
-            ReportElement reportEleTitle = new ReportElement(Convert.ToInt32(reportId), txtRptTitle.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text);
+            ReportElement reportEleTitle = new ReportElement(Convert.ToInt32(reportId), txtRptTitle.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text,"");
             parameters.Add(reportEleTitle);
             coords = null;
             //desc of report
             string descPosition = hiddenRptDesc.Value;
             coords = Regex.Split(descPosition, ",");
-            ReportElement reportEleDesc = new ReportElement(Convert.ToInt32(reportId), txtRptDesc.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text);
+            ReportElement reportEleDesc = new ReportElement(Convert.ToInt32(reportId), txtRptDesc.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text,"");
             parameters.Add(reportEleDesc);
             //date of report
             if (lblDate.Text != "")
@@ -777,7 +779,7 @@ namespace FYP
                 coords = null;
                 string datePosition = hiddenRptDate.Value;
                 coords = Regex.Split(hiddenRptDate.Value, ",");
-                ReportElement reportEleDate = new ReportElement(Convert.ToInt32(reportId), lblDate.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text);
+                ReportElement reportEleDate = new ReportElement(Convert.ToInt32(reportId), lblDate.Text, coords[0], coords[1], "label", fontFamilyDrpDwnList.SelectedItem.Text,"");
                 parameters.Add(reportEleDate);
             }
             int count = 0;

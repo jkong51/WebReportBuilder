@@ -26,10 +26,11 @@ namespace FYP
         public string PosY { get; set; }
         public string EleTypeName { get; set; }
         public string FontType { get; set; }
-        
+        public string Width { get; set; }
 
 
-        public ReportElement(int reportID, string value, string posX, string posY, string eleTypeName, string fontType)
+
+        public ReportElement(int reportID, string value, string posX, string posY, string eleTypeName, string fontType, string width)
         {
             ReportID = reportID;
             Value = value;
@@ -37,6 +38,7 @@ namespace FYP
             PosY = posY;
             EleTypeName = eleTypeName;
             FontType = fontType;
+            Width = width;
         }
 
     }
@@ -46,7 +48,6 @@ namespace FYP
         private Style primaryStyle = new Style();
         protected string PostBackString;
         protected string query;
-        int pressNumberOfTimes;
         Label lbl_homeCarouselAdd = new Label();
         static StringBuilder strDiv = new StringBuilder();
 
@@ -286,14 +287,14 @@ namespace FYP
                 string titlePosition = hiddenRptTitle.Value;
                 // solve the problem here, unable to split string.
                 string[] coords = Regex.Split(titlePosition, ",");
-                ReportElement reportEleTitle = new ReportElement(reportId, txtRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name);
+                ReportElement reportEleTitle = new ReportElement(reportId, txtRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name,"");
                 parameters.Add("@title", reportEleTitle);
                 coords = null;
 
                     // init reportElement for desc
                     string descPosition = hiddenRptDesc.Value;
                     coords = Regex.Split(descPosition, ",");
-                    ReportElement reportEleDesc = new ReportElement(reportId, txtRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name);
+                    ReportElement reportEleDesc = new ReportElement(reportId, txtRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name,"");
                     parameters.Add("@desc", reportEleDesc);
                     coords = null;
 
@@ -302,7 +303,7 @@ namespace FYP
                     {
                         string datePosition = hiddenRptDate.Value;
                         coords = Regex.Split(hiddenRptDate.Value, ",");
-                        ReportElement reportEleDate = new ReportElement(reportId, lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name);
+                        ReportElement reportEleDate = new ReportElement(reportId, lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name,"");
                         parameters.Add("@date", reportEleDate);
                         coords = null;
                     }
@@ -311,8 +312,15 @@ namespace FYP
                 if ((string)Session["footerEnabled"] == "true")
                 {
                     string footerName = Session["footerName"].ToString();
-                    ReportElement footerElement = new ReportElement(reportId, footerName, "", "", "footer", "");
+                    ReportElement footerElement = new ReportElement(reportId, footerName, "", "", "footer", "","");
                     parameters.Add("@footer", footerElement);
+                }
+                //add line if exists
+                if (chkHrVis.Checked)
+                {
+                    coords = Regex.Split(hiddenLinePosition.Value, ",");
+                    ReportElement lineElement = new ReportElement(reportId,"line",coords[0],coords[1],"line","",hiddenLineWidth.Value);
+                    parameters.Add("@line", lineElement);
                 }
 
                 //add element_type
@@ -342,6 +350,7 @@ namespace FYP
                 rowsAffected = InsertUpdate(sql, parameters);
                 coords = null;
                 }
+
                 //Add permissions
                 parameters.Clear();
                 sql = "INSERT INTO report_right " + "(reportId, staffId, rights)" + "VALUES " + "(@reportId, @staffId, @rights)";
@@ -441,18 +450,31 @@ namespace FYP
                                 cmd.Parameters.Clear();
                             }
                         }
-                        else
-                        using (cmd) { 
-                            cmd.CommandText = "INSERT INTO Header_element" + "(reportID, value, eleTypeId, xPosition, yPosition)" + " VALUES " + "(@reportID, @value, @eleTypeId, @xPosition, @yPosition)";
-                            cmd.Parameters.AddWithValue("@reportID", reportEle.ReportID);
-                            cmd.Parameters.AddWithValue("@value", reportEle.Value);
-                            cmd.Parameters.AddWithValue("@eleTypeId", eleTypeId);
-                            cmd.Parameters.AddWithValue("@xPosition", reportEle.PosX);
-                            cmd.Parameters.AddWithValue("@yPosition", reportEle.PosY);
-                            cmd.ExecuteNonQuery();
-                            cmd.Parameters.Clear();
+                        else if (key == "@line") {
+                            using (cmd)
+                            {
+                                cmd.CommandText = "INSERT INTO Header_element" + "(reportID, value, eleTypeId, xPosition, yPosition, width)" + " VALUES " + "(@reportID, @value, @eleTypeId, @xPosition, @yPosition, @width)";
+                                cmd.Parameters.AddWithValue("@reportID", reportEle.ReportID);
+                                cmd.Parameters.AddWithValue("@value", reportEle.Value);
+                                cmd.Parameters.AddWithValue("@eleTypeId", eleTypeId);
+                                cmd.Parameters.AddWithValue("@xPosition", reportEle.PosX);
+                                cmd.Parameters.AddWithValue("@yPosition", reportEle.PosY);
+                                cmd.Parameters.AddWithValue("@width", reportEle.Width);
+                                cmd.ExecuteNonQuery();
+                                cmd.Parameters.Clear();
+                            }
                         }
-                        
+                        else
+                            using (cmd) {
+                                cmd.CommandText = "INSERT INTO Header_element" + "(reportID, value, eleTypeId, xPosition, yPosition)" + " VALUES " + "(@reportID, @value, @eleTypeId, @xPosition, @yPosition)";
+                                cmd.Parameters.AddWithValue("@reportID", reportEle.ReportID);
+                                cmd.Parameters.AddWithValue("@value", reportEle.Value);
+                                cmd.Parameters.AddWithValue("@eleTypeId", eleTypeId);
+                                cmd.Parameters.AddWithValue("@xPosition", reportEle.PosX);
+                                cmd.Parameters.AddWithValue("@yPosition", reportEle.PosY);
+                                cmd.ExecuteNonQuery();
+                                cmd.Parameters.Clear();
+                            }
                     }
                 }
                 if (isReportEle == false)
