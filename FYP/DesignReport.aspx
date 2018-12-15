@@ -30,6 +30,11 @@
             var positionImg = $('#imgFrame').position();
             var positionTitle = lblTitle.position();
             var positionDesc = lblDesc.position();
+            var positionLine = $('#hrLine').position();
+            var isChecked = $('#chkHrVis').is(':checked');
+            if (isChecked == true) {
+
+            }
             if ($('#imgprw').attr('src') != "") {
                 document.getElementById('<%=hiddenHeight.ClientID%>').value = $('#imgFrame').height();
                 document.getElementById('<%=hiddenWidth.ClientID%>').value = $('#imgFrame').width();
