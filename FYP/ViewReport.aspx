@@ -15,26 +15,26 @@
         }
 
         #imgFrame {
-                    width: 160px;
-                    height: 90px;
-                    padding: 0;
-                    position: absolute;
-                    z-index: 3;
-                    resize: both;
-                    border: none
-                }
+            width: 160px;
+            height: 90px;
+            padding: 0;
+            position: absolute;
+            z-index: 3;
+            resize: both;
+            border: none
+        }
 
-                    #imgFrame img {
-                        width: 100%;
-                        height: 100%;
-                        z-index: 5;
-                        overflow: hidden;
-                        border: none;
-                    }
-        
+            #imgFrame img {
+                width: 100%;
+                height: 100%;
+                z-index: 5;
+                overflow: hidden;
+                border: none;
+            }
+
         #imgprw {
-            width:100%;
-            height:100%;
+            width: 100%;
+            height: 100%;
         }
 
         page {
@@ -101,7 +101,7 @@
         }
 
         .rpttable {
-            width: 90%;
+            width: 95%;
             background-color: #fff;
         }
 
@@ -152,7 +152,7 @@
             width: 100%;
         }
 
-        @media print {
+        /*@media print {
             #section-to-print {
                 position: absolute;
                 margin-left: -208px;
@@ -172,7 +172,7 @@
 
                 #reportGridView table {
                     page-break-after: always;
-                }
+                }*/
         }
     </style>
     <script>
@@ -193,27 +193,25 @@
         <asp:ScriptManager ID="ScriptManger1" EnablePageMethods="true" runat="Server" EnablePartialRendering="true">
         </asp:ScriptManager>
         <asp:Panel runat="server" ID="hiddenPanel">
-                
-                <%-- Hidden Field for report header --%>
-                <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
-                <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
-                <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
-                <asp:HiddenField ID="hiddenFormID" runat="server"></asp:HiddenField>
 
-                <%-- Hidden Field for Image --%>
-                <asp:HiddenField ID="hiddenWidth" runat="server"></asp:HiddenField>
-                <asp:HiddenField ID="hiddenHeight" runat="server"></asp:HiddenField>
-                <asp:HiddenField ID="hiddenImage" runat="server"></asp:HiddenField>
+            <%-- Hidden Field for report header --%>
+            <asp:HiddenField ID="hiddenRptTitle" runat="server"></asp:HiddenField>
+            <asp:HiddenField ID="hiddenRptDesc" runat="server"></asp:HiddenField>
+            <asp:HiddenField ID="hiddenRptDate" runat="server"></asp:HiddenField>
+            <asp:HiddenField ID="hiddenFormID" runat="server"></asp:HiddenField>
 
-                <%-- Hidden Field for Horizontal Line --%>
-                <asp:HiddenField ID="hiddenLineWidth" runat="server"></asp:HiddenField>
-                <asp:HiddenField ID="hiddenLinePosition" runat="server" />
-            </asp:Panel>
+            <%-- Hidden Field for Image --%>
+            <asp:HiddenField ID="hiddenWidth" runat="server"></asp:HiddenField>
+            <asp:HiddenField ID="hiddenHeight" runat="server"></asp:HiddenField>
+            <asp:HiddenField ID="hiddenImage" runat="server"></asp:HiddenField>
+
+            <%-- Hidden Field for Horizontal Line --%>
+            <asp:HiddenField ID="hiddenLineWidth" runat="server"></asp:HiddenField>
+            <asp:HiddenField ID="hiddenLinePosition" runat="server" />
+        </asp:Panel>
         <a href="RetrieveReport.aspx" class="button">&lt; &nbsp;&nbsp;Back</a>
-
-        <button onclick="printDiv('printPDF')" class="button button2">Save</button>
-
-        <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Print" />
+        <asp:Button onclick="Print" ID="Button1" CssClass="button button2" runat="server" Text="Save" />
+       
 
         <div id="printPDF" runat="server" style="padding-top: 50px">
             <div id="containment-wrapper">
@@ -230,6 +228,7 @@
 
                     <asp:Panel ID="imgFrame" Visible="false" runat="server">
                         <asp:Image ID="imgprw" runat="server"></asp:Image>
+                        
                     </asp:Panel>
 
                     <asp:Panel ID="hrLine" Visible="false" runat="server">

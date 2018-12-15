@@ -140,6 +140,112 @@ namespace FYP
                 }
                 reportGridView.DataBind();
             }
+            if (Page.IsPostBack)
+            {
+                Dictionary<int, object> headerEleDictionary = getHeadEle(System.Convert.ToInt32(Session["reportId"].ToString()));
+                int i = 0;
+                foreach (int key in headerEleDictionary.Keys)
+                {
+                    header_element headEle = (header_element)headerEleDictionary[key];
+                    if (headEle.EleType == "title")
+                    {
+                        //title
+                        lblTitle.CssClass = "reportHeader1";
+                        lblTitle.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblTitle.Text = headEle.Value;
+                        reportGridView.Font.Name = headEle.FontType;
+                        lblTitle.Font.Name = headEle.FontType;
+                        hiddenRptTitle.Value = headEle.XPos + "," + headEle.YPos;
+                    }
+                    else if (headEle.EleType == "desc")
+                    {
+                        //desc
+                        lblDesc.CssClass = "reportHeader2";
+                        lblDesc.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDesc.Text = headEle.Value;
+                        lblDesc.Font.Name = headEle.FontType;
+                        hiddenRptDesc.Value = headEle.XPos + "," + headEle.YPos;
+                    }
+                    else if (headEle.EleType == "date")
+                    {
+                        //date
+                        lblDate.CssClass = "reportHeader2";
+                        lblDate.Font.Name = headEle.FontType;
+                        lblDate.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDate.Text = headEle.Value;
+                        hiddenRptDate.Value = headEle.XPos + "," + headEle.YPos;
+                    }
+                    else if (headEle.EleType == "line")
+                    {
+                        //line
+                        hrLine.Visible = true;
+                        hrLine.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "width:" + headEle.Width + "px;");
+                        hiddenLineWidth.Value = headEle.Width;
+                        hiddenLinePosition.Value = headEle.XPos + "," + headEle.YPos;
+                    }
+                }
+                try
+                {
+                    string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+                    using (SqlConnection con = new SqlConnection(connectionString))
+                    {
+                        con.Open();
+                        //SELECT fe.[value], fe.[eleTypeId] FROM Footer_element fe
+                        string sql = "SELECT imagePath, width, height, xPosition, yPosition FROM Header_image where reportID = @reportID";
+                        SqlCommand cmd = new SqlCommand(sql, con);
+                        using (cmd)
+                        {
+                            cmd.Parameters.AddWithValue("@reportID", Session["reportId"].ToString());
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                imgFrame.Visible = true;
+                                imgprw.ImageUrl = reader["imagePath"].ToString();
+                                imgFrame.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + reader["yPosition"].ToString() + "px; left:" + reader["xPosition"].ToString() + "px;" + "width:" + reader["width"].ToString() + "px;" + "height:" + reader["height"].ToString() + "px;");
+                                hiddenImage.Value = reader["xPosition"].ToString() + "," + reader["yPosition"].ToString();
+                                hiddenHeight.Value = reader["height"].ToString();
+                                hiddenWidth.Value = reader["width"].ToString();
+                            }
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+
+                }
+                DataTable formTable = getFormData(Session["reportId"].ToString());
+                ViewState["formTable_data"] = formTable;
+                reportGridView.DataSource = formTable;
+                try
+                {
+                    string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+                    using (SqlConnection con = new SqlConnection(connectionString))
+                    {
+                        con.Open();
+                        //SELECT fe.[value], fe.[eleTypeId] FROM Footer_element fe
+                        string sql = "SELECT value FROM Footer_element where reportID = @reportID";
+                        SqlCommand cmd = new SqlCommand(sql, con);
+                        using (cmd)
+                        {
+                            cmd.Parameters.AddWithValue("@reportID", Session["reportId"].ToString());
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                Session["countTitle"] = reader["value"].ToString();
+                            }
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+
+                }
+                if (Session["countTitle"] != null)
+                {
+                    reportGridView.ShowFooter = true;
+                }
+                reportGridView.DataBind();
+            }
 
         }
         //public override void VerifyRenderingInServerForm(Control control)
@@ -314,19 +420,6 @@ namespace FYP
         protected void Print(object sender, EventArgs e)
         {
             string[] coords = null;
-            coords = Regex.Split(hiddenRptTitle.Value, ",");
-            lblTitle.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
-            coords = null;
-            //set coords for desc
-            coords = Regex.Split(hiddenRptDesc.Value, ",");
-            lblDesc.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
-            coords = null;
-            if (lblDate.Text != "")
-            {
-                coords = Regex.Split(hiddenRptDate.Value, ",");
-                //99,22 [0] -> 
-                lblDate.Attributes.Add("style", " position:absolute; top:" + coords[1] + "px; left:" + coords[0] + "px;");
-            }
 
             reportGridView.AllowPaging = false;
             reportGridView.UseAccessibleHeader = true;
@@ -372,13 +465,70 @@ namespace FYP
             string lblDateTop;
             string lblDateLeft;
 
-                coords = Regex.Split(hiddenRptDate.Value, ",");
-                //99,22 [0] -> 
-                lblDateTop = coords[1];
-                lblDateLeft = coords[0];
+            coords = Regex.Split(hiddenRptDate.Value, ",");
+            //99,22 [0] -> 
+            lblDateTop = coords[1];
+            lblDateLeft = coords[0];
 
-            sb.Append("printWin.document.write(\""+ "<div style='position:absolute;top:"+ lblTitleTop + "px;left:"+ lblTitleLeft + "px;font-size:30;text-transform: uppercase;font-weight: bold;display: inline-block;'>" + lblTitle.Text + "</div><div style='position:absolute;top:" + lblDescTop + "px;left:" + lblDescLeft + "px;font-size:30;text-transform: uppercase;font-weight: bold;display: inline-block;'>"+ lblDesc.Text +"</div><div style='position:absolute;top:" + lblDateTop + "px;left:" + lblDateLeft + "px;font-size:30;text-transform: uppercase;font-weight: bold;display: inline-block;'>" + lblDate.Text + " </div>");
-            string style = "<style type = 'text/css'>thead {display:table-header-group;vertical-align: bottom;padding-bottom: 0px;padding-top: 20px;border: none;background-color: rgb(230,230,230);padding-top: 20px;text-transform: uppercase;} tfoot{display:table-footer-group;} table{width: 90%;background-color: #fff;CellPadding:6;width:100%;margin-top:100px} table td{border-left: none;border-right: none;border-color: rgb(230,230,230);text-align:center;} table th{border: none}</style>";
+            //get image path
+            string imgPath = imgprw.ImageUrl.ToString();
+
+            sb.Append("printWin.document.write(\""+ "<div class='reportHeader1'>" + lblTitle.Text + "</div><div class='reportHeader2'>" + lblDesc.Text + "</div><div class='reportHeader3'>" + lblDate.Text + "</div><img src='" + imgPath + "' />");
+            string style = "<style type = 'text/css'>" +
+                "thead {" +
+                    "display:table-header-group;" +
+                    "vertical-align: bottom;" +
+                    "padding-bottom: 0px;" +
+                    "padding-top: 20px;" +
+                    "border: none;" +
+                    "background-color: rgb(230,230,230);" +
+                    "padding-top: 20px;" +
+                    "text-transform: uppercase;} " +
+                "tfoot{" +
+                    "display:table-footer-group;} " +
+                "table{" +
+                    "width: 90%;" +
+                    "background-color: #fff;" +
+                    "CellPadding:6;" +
+                    "width:100%;" +
+                    "margin-top:180px} " +
+                "table td{" +
+                    "border-left: none;" +
+                    "border-right: none;" +
+                    "border-color: rgb(230,230,230);" +
+                    "text-align:center;} " +
+                "table th{border: none}" +
+                ".reportHeader1{" +
+                    "font-size: 30px;" +
+                    "font-family: " + lblTitle.Font.ToString() +
+                    ";font-variant: small-caps;" +
+                    "text-transform: uppercase;" +
+                    "font-weight: bold;" +
+                    "margin-left: 160px;" +
+                    //"margin-top: -80px;" +
+                    "display: inline-block;" +
+                    "position: absolute;" +
+                    "top:" + lblTitleTop + "px;" +
+                    "left:" + lblTitleTop + "px;" +
+                "}.reportHeader2{" +
+                    "font-size: 20px;" +
+                    "font-family: " + lblDesc.Font.ToString() +
+                    ";margin-left: 240px;" +
+                    //"margin-top: -80px;" +
+                    "display: inline-block;" +
+                    "position: absolute;" +
+                    "top:" + lblDescTop + "px;" +
+                    "left:" + lblDescTop + "px;" +
+                "}.reportHeader3{" +
+                    "font-size: 20px;" +
+                    "font-family: " + lblDate.Font.ToString() +
+                    ";margin-left: 200px;" +
+                    //"margin-top: -80px;" +
+                    "display: inline-block;" +
+                    "position: absolute;" +
+                    "top:" + lblDateTop + "px;" +
+                    "left:" + lblDateTop + "px;" +
+                "</style>";
             sb.Append(style + gridHTML);
             sb.Append("\");");          
             sb.Append("printWin.document.close();");

@@ -30,6 +30,7 @@
 
 <body>
     <form id="form1" runat="server">
+        <img src="Tunku-Abdul-Rahman-University-College-TARC.png" />
         <div>
             <h1>do not print this </h1>
 
