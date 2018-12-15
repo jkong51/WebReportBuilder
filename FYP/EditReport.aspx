@@ -45,9 +45,7 @@
 
         $(document).ready(function () {
             //Uncheck the CheckBox initially
-            $('#chkHrVis').removeAttr('checked');
             // Initially, Hide the horizontal line when Web Form is loaded
-            $('#hrLine').hide();
             $('#chkHrVis').change(function () {
                 if (this.checked) {
                     $('#hrLine').show();
@@ -56,13 +54,8 @@
                     $('#hrLine').hide();
                 }
             });
-
-            //Uncheck the CheckBox initially
-            $('#chkImg').removeAttr('checked');
+            
             // Initially, Hide the horizontal line when Web Form is loaded
-            $('#fileupload').hide();
-            $('#imgFrame').hide();
-            $('.fileupload').hide();
             $('#chkImg').change(function () {
                 if (this.checked) {
                     $('#fileupload').show();
@@ -76,6 +69,24 @@
                 }
             });
         });
+
+        if ($("#chkHrVis").is(':checked')) {
+            $('#hrLine').show();
+        }
+        else {
+            $('#hrLine').hide();
+        }
+
+        if ($("#chkImg").is(':checked')) {
+            $('#fileupload').show();
+            $('.fileupload').show();
+            $('#imgFrame').show();
+        }
+        else {
+            $('#fileupload').hide();
+            $('.fileupload').hide();
+            $('#imgFrame').hide();
+        }
 
         $(function () {
             $(".draggable").draggable(

@@ -108,7 +108,6 @@ namespace FYP
                 catch (SqlException ex){
                     
                 }
-
                 DataTable formTable = getFormData(Session["reportId"].ToString());
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;

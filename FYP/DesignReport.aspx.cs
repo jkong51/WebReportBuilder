@@ -590,7 +590,6 @@ namespace FYP
                         e.Row.Cells[count].Controls.Add(new Literal() { Text = total.ToString() });
                     }
                 }
-
             }
         }
         
