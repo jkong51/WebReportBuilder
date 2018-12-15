@@ -91,19 +91,6 @@ namespace FYP
 
                 }
                 reportGridView.DataBind();
-                foreach (GridViewRow row in reportGridView.Rows)
-                {
-                    if(row.RowIndex == 10)
-                    {
-                        rowCount.Text = row.ToString();
-
-                    }
-                    //rowCount.Text = row.RowIndex.ToString();
-                    if (row.RowIndex % 10 == 0 && row.RowIndex != 0)
-                    {
-                        row.Attributes["style"] = "page-break-after:always;";
-                    }
-                }
             }
 
         }
@@ -317,6 +304,7 @@ namespace FYP
             sb.Append("};");
             sb.Append("</script>");
             ClientScript.RegisterStartupScript(this.GetType(), "GridPrint", sb.ToString());
+            reportGridView.DataBind();
             reportGridView.DataBind();
         }
 

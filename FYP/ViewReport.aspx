@@ -80,7 +80,6 @@
         .rpttable {
             width: 90%;
             background-color: #fff;
-            
         }
 
         .tableheader {
@@ -125,30 +124,32 @@
             color: #000;
             border: 1px solid #3AC0F2;
         }
-        #section-to-print{
-            width:100%;
+
+        #section-to-print {
+            width: 100%;
         }
 
         @media print {
             #section-to-print {
                 position: absolute;
-                margin-left:-208px;
-                margin-top:-50px;
-                width:100%;
+                margin-left: -208px;
+                margin-top: -50px;
+                width: 100%;
             }
-            #section-to-adjust{
+
+            #section-to-adjust {
                 position: absolute;
-                margin-top:-50px;
-                width:500px;
+                margin-top: -50px;
+                width: 500px;
             }
-            #reportGridView 
-            {
-                page-break-after:always;
+
+            #reportGridView {
+                page-break-after: always;
             }
-            #reportGridView table
-            {
-                page-break-after:always;
-            }
+
+                #reportGridView table {
+                    page-break-after: always;
+                }
         }
     </style>
     <script>
@@ -187,7 +188,13 @@
                 
           </div>
 
+                    <asp:Panel ID="imgFrame" runat="server">
+                        <asp:Image ID="imgprw" runat="server"></asp:Image>
+                    </asp:Panel>
 
+                    <asp:Panel ID="hrLine" runat="server">
+                        <hr id="addline" />
+                    </asp:Panel>
             <%-- Report Content (Table) --%>
 
             <div id="reportContent" style="padding-top:175px;padding-left:40px">
