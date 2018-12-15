@@ -72,6 +72,7 @@ namespace FYP
             ColumnCbList.DataTextField = "nameOfColumn";
             ColumnCbList.DataSource = dt;
             ColumnCbList.DataBind();
+            countChkBox.Enabled = true;
             ViewState["selectedCbList"] = null;
         }
         
@@ -129,9 +130,12 @@ namespace FYP
                     
                 }
                 else {
+
                     selectCount.Visible = false;
                     Label5.Visible = false;
-                    
+                    countChkBox.Checked = false;
+                    ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "ClientScript", "alert('There is no data to be sum')", true);
+
                 }
             }
             else
@@ -327,12 +331,12 @@ namespace FYP
                 {
                     selectCount.Visible = true;
                     Label5.Visible = true;
-                    
                 }
                 else
                 {
                     selectCount.Visible = false;
                     Label5.Visible = false;
+                    countChkBox.Checked = false;
                     ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "ClientScript", "alert('There is no data to be sum')", true);
                 }
             }

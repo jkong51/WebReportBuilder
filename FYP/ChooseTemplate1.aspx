@@ -339,7 +339,7 @@
                                                 <asp:Label ID="Label6" runat="server" Text="Label"><strong>Show Total Count</strong></asp:Label>
                                             </td>
                                             <td align="left">
-                                                <asp:CheckBox ID="countChkBox" CssClass="chkbox" runat="server" AutoPostBack="true" OnCheckedChanged="CheckBox3_CheckedChanged" />
+                                                <asp:CheckBox ID="countChkBox" Enabled="false" CssClass="chkbox" runat="server" AutoPostBack="true" OnCheckedChanged="CheckBox3_CheckedChanged" />
                                             </td>
                                         </tr>
                                         <tr>
