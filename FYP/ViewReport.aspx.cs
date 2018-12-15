@@ -25,14 +25,16 @@ namespace FYP
             public string XPos { get; set; }
             public string YPos { get; set; }
             public string FontType { get; set; }
+            public string Width { get; set; }
 
-            public header_element(int reportID, string val, string eleType, string xPos, string yPos, string fontType) {
+            public header_element(int reportID, string val, string eleType, string xPos, string yPos, string fontType, string width) {
                 ReportID = reportID;
                 Value = val;
                 EleType = eleType;
                 XPos = xPos;
                 YPos = yPos;
                 FontType = fontType;
+                Width = width;
             }
         }
 
@@ -43,26 +45,69 @@ namespace FYP
                 int i = 0;
                 foreach (int key in headerEleDictionary.Keys) {
                 header_element headEle = (header_element)headerEleDictionary[key];
-                    if (key == 0) {
+                    if (headEle.EleType == "title") {
+                        //title
                         lblTitle.CssClass = "reportHeader1";
-                        lblTitle.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblTitle.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                         lblTitle.Text = headEle.Value;
                         reportGridView.Font.Name = headEle.FontType;
                         lblTitle.Font.Name = headEle.FontType;
+                        hiddenRptTitle.Value = headEle.XPos + "," + headEle.YPos;
                     }
-                    else if (key == 1) {
+                    else if (headEle.EleType == "desc") {
+                        //desc
                         lblDesc.CssClass = "reportHeader2";
-                        lblDesc.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDesc.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                         lblDesc.Text = headEle.Value;
                         lblDesc.Font.Name = headEle.FontType;
+                        hiddenRptDesc.Value = headEle.XPos + "," + headEle.YPos;
                     }
-                    else if (key == 2) {
+                    else if (headEle.EleType == "date") {
+                        //date
                         lblDate.CssClass = "reportHeader2";
                         lblDate.Font.Name = headEle.FontType;
-                        lblDate.Attributes.Add("style", " position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
+                        lblDate.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "font-family: '" + headEle.FontType + "';");
                         lblDate.Text = headEle.Value;
+                        hiddenRptDate.Value = headEle.XPos + "," + headEle.YPos;
+                    }
+                    else if (headEle.EleType == "line")
+                    {
+                        //line
+                        hrLine.Visible = true;
+                        hrLine.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + headEle.YPos + "px; left:" + headEle.XPos + "px;" + "width:" + headEle.Width + "px;");
+                        hiddenLineWidth.Value = headEle.Width;
+                        hiddenLinePosition.Value = headEle.XPos + "," + headEle.YPos;
                     }
                 }
+                try
+                {
+                    string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;
+                    using (SqlConnection con = new SqlConnection(connectionString))
+                    {
+                        con.Open();
+                        //SELECT fe.[value], fe.[eleTypeId] FROM Footer_element fe
+                        string sql = "SELECT imagePath, width, height, xPosition, yPosition FROM Header_image where reportID = @reportID";
+                        SqlCommand cmd = new SqlCommand(sql, con);
+                        using (cmd)
+                        {
+                            cmd.Parameters.AddWithValue("@reportID", Session["reportId"].ToString());
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                imgFrame.Visible = true;
+                                imgprw.ImageUrl = reader["imagePath"].ToString();
+                                imgFrame.Attributes.Add("style", "position:absolute;margin-left:-148px;margin-top:10px; top:" + reader["yPosition"].ToString() + "px; left:" + reader["xPosition"].ToString() + "px;" + "width:" + reader["width"].ToString() + "px;" + "height:" + reader["height"].ToString() + "px;");
+                                hiddenImage.Value = reader["xPosition"].ToString()  + "," + reader["yPosition"].ToString();
+                                hiddenHeight.Value = reader["height"].ToString();
+                                hiddenWidth.Value = reader["width"].ToString();
+                            }
+                        }
+                    }
+                }
+                catch (SqlException ex){
+                    
+                }
+
                 DataTable formTable = getFormData(Session["reportId"].ToString());
                 ViewState["formTable_data"] = formTable;
                 reportGridView.DataSource = formTable;
@@ -108,7 +153,7 @@ namespace FYP
                 string connectionString = ConfigurationManager.ConnectionStrings["FormNameConnectionString"].ConnectionString;             
                 using (SqlConnection con = new SqlConnection(connectionString)) {
                     con.Open();
-                    string sql = "SELECT he.value, et.name, he.xPosition, he.yPosition, et.fontType " +
+                    string sql = "SELECT he.value, et.name, he.xPosition, he.yPosition, et.fontType, he.width " +
                         "FROM Header_element he, Element_type et WHERE he.eleTypeId = et.eleTypeId AND he.reportID = @reportID";
                     SqlCommand cmd = new SqlCommand(sql, con);
                     cmd.Parameters.AddWithValue("@reportID",reportID);
@@ -116,7 +161,7 @@ namespace FYP
                         int i = 0;
                         while (sqlDataReader.Read())
                         {
-                            header_element headEle = new header_element(reportID,sqlDataReader["value"].ToString(), sqlDataReader["name"].ToString(), sqlDataReader["xPosition"].ToString(), sqlDataReader["yPosition"].ToString(), sqlDataReader["fontType"].ToString());
+                            header_element headEle = new header_element(reportID,sqlDataReader["value"].ToString(), sqlDataReader["name"].ToString(), sqlDataReader["xPosition"].ToString(), sqlDataReader["yPosition"].ToString(), sqlDataReader["fontType"].ToString(), sqlDataReader["width"].ToString());
                             headerEleDictionary.Add(i, headEle);
                             i++;
                         }

@@ -311,14 +311,14 @@ namespace FYP
                 string titlePosition = hiddenRptTitle.Value;
                 // solve the problem here, unable to split string.
                 string[] coords = Regex.Split(titlePosition, ",");
-                ReportElement reportEleTitle = new ReportElement(reportId, txtRptTitle.Text, coords[0], coords[1], "label", lblRptTitle.Font.Name,"");
+                ReportElement reportEleTitle = new ReportElement(reportId, txtRptTitle.Text, coords[0], coords[1], "title", lblRptTitle.Font.Name,"");
                 parameters.Add("@title", reportEleTitle);
                 coords = null;
 
                     // init reportElement for desc
                     string descPosition = hiddenRptDesc.Value;
                     coords = Regex.Split(descPosition, ",");
-                    ReportElement reportEleDesc = new ReportElement(reportId, txtRptDesc.Text, coords[0], coords[1], "label", lblRptDesc.Font.Name,"");
+                    ReportElement reportEleDesc = new ReportElement(reportId, txtRptDesc.Text, coords[0], coords[1], "desc", lblRptDesc.Font.Name,"");
                     parameters.Add("@desc", reportEleDesc);
                     coords = null;
 
@@ -327,7 +327,7 @@ namespace FYP
                     {
                         string datePosition = hiddenRptDate.Value;
                         coords = Regex.Split(hiddenRptDate.Value, ",");
-                        ReportElement reportEleDate = new ReportElement(reportId, lblDate.Text, coords[0], coords[1], "label", lblDate.Font.Name,"");
+                        ReportElement reportEleDate = new ReportElement(reportId, lblDate.Text, coords[0], coords[1], "date", lblDate.Font.Name,"");
                         parameters.Add("@date", reportEleDate);
                         coords = null;
                     }

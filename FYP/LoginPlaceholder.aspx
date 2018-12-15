@@ -18,7 +18,6 @@
             background-position: center;
             background-size: cover;
         }
-
         .lgcss {
             text-align: center;
             overflow-x: hidden;
